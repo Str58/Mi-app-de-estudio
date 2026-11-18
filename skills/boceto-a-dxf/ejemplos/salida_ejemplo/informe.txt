@@ -1,0 +1,23 @@
+INFORME DEL PLANO
+============================================================
+
+SUPERFICIES UTILES
+  Salón-comedor                   17,01 m2   (salon)
+  Cocina                           6,24 m2   (cocina)
+  Recibidor                        3,43 m2   (circulacion)
+  Pasillo                          3,90 m2   (circulacion)
+  Dormitorio 1                    11,58 m2   (dormitorio)
+  Baño                             4,37 m2   (bano)
+  Dormitorio 2                     5,33 m2   (dormitorio)
+  TOTAL UTIL                      51,87 m2
+  CONSTRUIDA (contorno)           63,02 m2
+
+ERRORES (0) - hay que corregirlos en el JSON:
+  ninguno
+
+AVISOS (0) - revisar; si son correctos, explicarlos al entregar:
+  ninguno
+
+SUPUESTOS DE LECTURA DEL BOCETO:
+  - Cotas de estancias leídas como luces libres interiores
+  - Puerta de dormitorio 1 centrada (sin cota en el boceto)
