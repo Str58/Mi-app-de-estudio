@@ -924,11 +924,15 @@ def genera(spec, salida):
         d["cf"], d["vs"] = cf, vs
         # marcos en las dos jambas (estilo del plano de referencia) y hoja entre ellos
         MARCO = 0.04
-        cmin, cmax = sorted((ea.c, d["c_other"]))
+        # fondo del marco: 8 cm en puertas interiores y 10 cm en la de entrada, sin salirse nunca del muro;
+        # va enrasado con la cara del muro hacia la que abre la hoja
+        espesor = abs(d["c_other"] - ea.c)
+        fondo = min(espesor, 0.10 if B is None else 0.08)
+        c_a, c_b = sorted((cf, cf - vs * fondo))
         for sa, sb in ((d["s0"], d["s0"] + MARCO), (d["s1"] - MARCO, d["s1"])):
             prims.append(dict(L="PUERTAS", k="pl", cerr=True,
-                              pts=[xy(ea.axis, sa, cmin - 0.01), xy(ea.axis, sb, cmin - 0.01),
-                                   xy(ea.axis, sb, cmax + 0.01), xy(ea.axis, sa, cmax + 0.01)]))
+                              pts=[xy(ea.axis, sa, c_a), xy(ea.axis, sb, c_a),
+                                   xy(ea.axis, sb, c_b), xy(ea.axis, sa, c_b)]))
         sh = sh + us * MARCO
         w = d["w"] - 2 * MARCO
         tip = xy(ea.axis, sh, cf + vs * w)

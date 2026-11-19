@@ -140,7 +140,7 @@ Referencia: plano «boceto-717_final» (arquitecto C. Soto, 1:50).
 | PATINILLOS | Patinillos de instalaciones |
 - Textos y cotas en letra **Calibri** (estilo de texto CALIBRI, `calibri.ttf`). La geometría sale exacta al centímetro.
 - **Sin sombreados**, ni en muros ni en suelos: los muros van solo con su contorno (capa MUROS).
-- Puertas (como en el plano de referencia «CALLE IDOIA 16»): un **marco** de 0,04 en cada jamba, la hoja como rectángulo fino entre los marcos y un arco de 90°.
+- Puertas (como en el plano de referencia «CALLE IDOIA 16»): un **marco** de 0,04 en cada jamba, **sin salirse del muro**, de 0,08 de fondo en las puertas interiores y 0,10 en la de entrada (enrasado con la cara hacia la que abre), la hoja como rectángulo fino entre los marcos y un arco de 90°.
 - Ventanas y balconeras (mismo plano de referencia): una línea en la cara exterior y la **carpintería como línea doble pegada a la cara interior**. Sin líneas en las jambas.
 - **Mobiliario** (estilo del plano final de Carlos Soto, Avenida 25-2), en la capa MOBILIARIO, en trazo fino gris (color 251) y con formas limpias, sin rellenos:
   - **Cama doble**: colchón 1,50 × 2,00 y franja de cabecero con mesitas, 0,40 a cada lado y 0,40 de fondo.
