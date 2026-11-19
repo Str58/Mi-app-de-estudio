@@ -591,6 +591,8 @@ def genera(spec, salida):
         if a == "exterior":
             a, b = b, a
         tipo = p.get("tipo", "abatible")
+        if tipo in ("cristalera", "vidrio", "mampara"):  # puerta o cierre de vidrio: da paso y se dibuja como acristalamiento
+            tipo = "balconera"
         if a not in est or (b not in est and b != "exterior"):
             aud.e(f"Puerta {k}: estancia inexistente en {p['entre']}")
             continue

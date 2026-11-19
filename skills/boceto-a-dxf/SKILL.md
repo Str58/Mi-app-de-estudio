@@ -81,6 +81,7 @@ python3 SKILL_DIR/scripts/plano.py TRABAJO/planta.json TRABAJO/salida
 - **Azul: ventanas.** Pueden venir de varias formas, todas válidas:
   - **Forma habitual:** dos rayitas azules perpendiculares a la pared que marcan el inicio y el fin del hueco.
   - **Forma rápida:** una **línea azul paralela a la pared**, dibujada sobre ella o pegada a ella. Su longitud y su posición son el hueco. Si es muy larga (casi toda la pared), es un acristalamiento corrido.
+  - **Azul sobre un tabique interior** (entre dos estancias): es una **cristalera**, es decir, una puerta de vidrio o una mampara (`"tipo": "cristalera"`), no una ventana ni una puerta normal (lección 33).
   - **Cotas de la ventana:** en azul, o **en rojo rodeadas por un óvalo azul**. Lo que está dentro del óvalo es siempre de la ventana más cercana, aunque esté en rojo: el primer número es el ancho y `h=` la altura, que se ignora. Ejemplo: `0'95 h:2'25` es una ventana de 0,95 de ancho.
   - Una cota roja **fuera** de un óvalo, junto a la ventana, es su distancia a la esquina.
   - `ventanas_azul.png` (de `zonas.py`) aísla todo lo azul sobre la planta tenue: así se ven de un vistazo todas las rayitas, líneas y óvalos.

@@ -127,6 +127,7 @@ Un hueco pequeño (menos de 1,5 m²) que quede rodeado de estancias se convierte
 {"entre":["recibidor","pasillo"], "tipo":"paso", "ancho":"total"}  // hueco sin hoja
 {"entre":["salon","terraza"], "tipo":"balconera", "ancho":1.80}    // carpintería de 3 líneas
 {"entre":["cocina","lavadero"], "tipo":"corredera"}
+{"entre":["bano","salon"], "lado":"N", "tipo":"cristalera", "ancho":"total"}  // puerta de vidrio o mampara (línea azul sobre tabique): da paso
 {"entre":["bano","galeria"], "tipo":"ventana", "ancho":0.50}   // ventana interior: no da acceso
 ```
 - Si se omiten `abre_hacia` y `bisagra`, el motor elige la combinación con la que la hoja barre dentro de la estancia sin chocar con muros, otras puertas ni muebles. Por defecto la puerta abre hacia la estancia que no es de paso, con la bisagra junto a la esquina más próxima.

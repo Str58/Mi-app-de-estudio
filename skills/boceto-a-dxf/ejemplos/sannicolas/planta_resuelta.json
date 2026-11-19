@@ -6,11 +6,11 @@
    "nombre": "Cocina",
    "poligono": [
     [
-     2.07,
+     1.72,
      0.0
     ],
     [
-     2.07,
+     1.72,
      3.02
     ],
     [
@@ -29,15 +29,15 @@
    "tipo": "salon",
    "poligono": [
     [
-     5.52,
+     5.17,
      0.0
     ],
     [
-     2.15,
+     1.8,
      0.0
     ],
     [
-     2.15,
+     1.8,
      3.1
     ],
     [
@@ -57,39 +57,47 @@
      3.99
     ],
     [
-     1.83,
+     1.48,
      3.99
     ],
     [
-     1.83,
-     8.02
+     1.48,
+     8.0
     ],
     [
-     5.44,
-     8.02
+     5.09,
+     8.0
     ],
     [
-     5.44,
+     5.09,
+     6.86
+    ],
+    [
+     5.17,
+     6.86
+    ],
+    [
+     5.17,
      6.78
     ],
     [
-     6.88,
+     6.53,
      6.78
     ],
     [
-     6.88,
+     6.53,
      5.78
     ],
     [
-     5.44,
+     5.09,
      5.78
     ],
     [
-     5.44,
+     5.09,
      3.88
     ],
     [
-     5.52,
+     5.17,
      3.88
     ]
    ]
@@ -99,110 +107,88 @@
    "nombre": "Baño",
    "poligono": [
     [
-     6.64,
+     6.31,
      3.96
     ],
     [
-     5.52,
+     5.17,
      3.96
     ],
     [
-     5.52,
-     4.68
-    ],
-    [
-     5.52,
+     5.17,
      5.7
     ],
     [
-     6.88,
+     6.53,
      5.7
     ],
     [
-     6.88,
-     4.68
+     6.53,
+     5.08
     ],
     [
-     6.64,
-     4.68
+     6.31,
+     5.08
     ]
    ]
   },
   {
-   "id": "caldera",
-   "nombre": "Cuarto de caldera",
-   "tipo": "almacen",
+   "id": "ducha",
+   "nombre": "Ducha",
+   "tipo": "bano",
    "poligono": [
     [
-     6.88,
-     8.02
-    ],
-    [
-     6.88,
+     6.53,
      6.86
     ],
     [
-     6.13,
+     6.53,
+     8.02
+    ],
+    [
+     5.17,
+     8.02
+    ],
+    [
+     5.17,
      6.86
-    ],
-    [
-     6.13,
-     6.88
-    ],
-    [
-     5.52,
-     6.88
-    ],
-    [
-     5.52,
-     8.02
-    ],
-    [
-     6.13,
-     8.02
     ]
    ]
   }
  ],
  "pilares": [
   {
-   "x": 2.87,
+   "x": 2.52,
    "y": 3.99,
    "dx": 1.3,
    "dy": 0.37
   },
   {
-   "x": 1.83,
+   "x": 1.48,
    "y": 3.99,
    "dx": 0.32,
    "dy": 0.38
   },
   {
-   "x": 5.17,
+   "x": 4.82,
    "y": 4.24,
    "dx": 0.35,
    "dy": 0.53
   },
   {
-   "x": 5.52,
+   "x": 5.17,
    "y": 4.24,
    "dx": 0.19,
    "dy": 0.54
   },
   {
-   "x": 5.41,
-   "y": 7.42,
-   "dx": 0.03,
-   "dy": 0.6
-  },
-  {
-   "x": 6.13,
+   "x": 5.78,
    "y": 7.57,
    "dx": 0.07,
    "dy": 0.45
   },
   {
-   "x": 5.3,
+   "x": 4.95,
    "y": 0,
    "dx": 0.22,
    "dy": 0.22
@@ -232,21 +218,21 @@
   },
   {
    "entre": [
-    "salon",
-    "bano"
+    "bano",
+    "salon"
    ],
-   "tipo": "corredera",
-   "ancho": 0.8,
-   "desde": 0.1
+   "lado": "N",
+   "tipo": "cristalera",
+   "ancho": "total"
   },
   {
    "entre": [
-    "salon",
-    "caldera"
+    "ducha",
+    "salon"
    ],
-   "tipo": "corredera",
-   "ancho": 0.7,
-   "desde": 0.03
+   "lado": "S",
+   "tipo": "cristalera",
+   "ancho": "total"
   }
  ],
  "ventanas": [
@@ -271,7 +257,7 @@
    "lado": "E",
    "en": 4.3,
    "ancho": 0.5,
-   "desde": 0.05
+   "desde": 0.1
   }
  ],
  "mobiliario": [
@@ -282,14 +268,6 @@
    "desde": 0,
    "ancho": 3.02,
    "fondo": 0.55
-  },
-  {
-   "tipo": "plato_ducha",
-   "estancia": "bano",
-   "contra": "E",
-   "en": 5.19,
-   "ancho": 1.0,
-   "fondo": 0.6
   },
   {
    "tipo": "inodoro",
@@ -306,24 +284,24 @@
    "fondo": 0.4
   },
   {
-   "tipo": "rect",
-   "estancia": "caldera",
-   "contra": "N",
-   "desde_fin": 0.1,
-   "ancho": 0.45,
-   "fondo": 0.35
+   "tipo": "plato_ducha",
+   "estancia": "ducha",
+   "contra": "E",
+   "desde": 0,
+   "ancho": 1.16,
+   "fondo": 0.68
   }
  ],
  "supuestos": [
-  "Estancia grande = recibidor + pasillo + salón + zona sur (sin muros entre ellos). Recibidor de 0,80 × 0,92 que se estrecha a 0,89 hasta el paso del salón.",
-  "Pilar o muro de carga de 1,30 × 0,37, a 0,72 del machón (0,32 × 0,38) y a 1,00 del pilar de bajantes; su largo sale de 5,17 − 0,72 − 1,00.",
-  "Pilar de bajantes junto al baño: 0,35 × 0,53 hacia el salón y 0,19 × 0,54 hacia dentro del baño, a 0,28 sobre el fondo del baño.",
-  "Baño: 1,12 de ancho en la parte de la ventana (0,50 × 0,50) y 1,37 (1,12 + 0,22, más 3 cm de alicatado para llegar a la fachada) en el resto; 1,74 de fondo.",
-  "Cuarto de caldera: 0,61 + tabique parcial + 0,68 = 1,37 × 1,16; pilar de 3 cm en su muro oeste (salón de 3,58 arriba y 3,61 abajo).",
-  "Cocina: 2,07 de ancho (sale de las cadenas: 5,17 − 1,00 − 0,72 − 1,30 − 0,08) × 3,02; puerta a 0,26 desde el muro oeste.",
-  "Franja de la balconera: 1,00, con la balconera de 1,00 a todo lo ancho.",
-  "La cota 2,89 del salón no cuadra: con baño 1,74 + franja 1,00 (balconera de 1,00) + caldera 1,16 y el pilar de bajantes a 0,28 sobre el fondo del baño, el salón mide 3,25 desde ese pilar. Si el 2,89 es correcto, alguna de esas cotas está mal.",
-  "Corredera del cuarto de caldera de 0,70: la pared sur tiene un quiebro de 2 cm (fondos 1,14 y 1,16) y el tramo continuo más largo mide 0,75, así que no cabe una de 0,80."
+  "Estancia grande = recibidor + paso + salón + zona sur (sin muros entre ellos). Recibidor de 0,80 × 0,92 que se estrecha a 0,89 hasta el salón.",
+  "5,17 desde la entrada hasta la pared de enfrente (muro este de la zona sur, con la balconera de 0,95). Cocina = 5,17 − 3,37 − 0,08 = 1,72 de ancho × 3,02.",
+  "El machón de 0,32 × 0,38 queda alineado con el tabique de la cocina; pilar gordo de 0,37 a 0,72 del machón y a 1,00 del pilar de bajantes (largo deducido: 1,30).",
+  "Pilar de bajantes compartido: 0,35 × 0,53 hacia el salón y 0,19 × 0,54 hacia el baño, a 0,28 sobre el suelo del baño (0,35 + 0,19 ≈ 0,55 de bloque total).",
+  "Baño (lavabo + inodoro) con puerta de vidrio a todo lo ancho hacia el paso de la balconera. 1,74 de fondo; la pared de la ventana (0,50 × 0,50) mide 1,12 y está 0,22 retranqueada respecto al resto.",
+  "Ducha de 0,61 + tabique parcial + 0,68 = 1,36 × 1,16 (interior), cerrada con cristalera hacia el paso. El tabique contiguo mide 1,14 por el lado del salón (el salón llega 2 cm menos al norte).",
+  "Paso de la balconera de 1,00 entre el baño y la ducha; 5,05 desde el muro oeste del salón hasta la fachada.",
+  "Ancho del salón al norte: se toma 3,61 (cierra con 5,05 = 3,61 + 0,08 + 1,36). El 3,58 escrito en el muro norte da 3 cm menos; no se dibuja ningún saliente porque el boceto no lo tiene.",
+  "La cota 2,89 del salón no cuadra: con el pilar de bajantes a 0,28 sobre el suelo del baño, del pilar al muro norte hay 3,23."
  ],
  "muros_exteriores": [
   {
@@ -334,12 +312,12 @@
   {
    "lado": "S",
    "de": [
-    6.64,
-    4.68
+    6.31,
+    5.08
    ],
    "a": [
-    6.88,
-    4.68
+    6.53,
+    5.08
    ],
    "tipo": "cerramiento",
    "espesor": 0.08
@@ -378,11 +356,21 @@
   },
   {
    "de": [
-    2.15,
+    0,
+    3.35
+   ],
+   "a": [
+    5.17,
+    3.35
+   ]
+  },
+  {
+   "de": [
+    1.8,
     1.0
    ],
    "a": [
-    5.52,
+    5.17,
     1.0
    ]
   },
@@ -398,112 +386,112 @@
   },
   {
    "de": [
-    2.15,
+    1.8,
     4.17
    ],
    "a": [
-    2.87,
+    2.52,
     4.17
    ]
   },
   {
    "de": [
-    4.17,
+    3.82,
     4.17
    ],
    "a": [
-    5.17,
+    4.82,
     4.17
    ]
   },
   {
    "de": [
-    1.83,
+    1.48,
     6.3
    ],
    "a": [
-    6.88,
+    6.53,
     6.3
    ]
   },
   {
    "de": [
-    1.83,
-    7.7
-   ],
-   "a": [
-    5.41,
-    7.7
-   ]
-  },
-  {
-   "de": [
-    1.83,
+    1.48,
     7.2
    ],
    "a": [
-    5.44,
+    5.09,
     7.2
    ]
   },
   {
    "de": [
-    5.52,
-    4.1
-   ],
-   "a": [
-    6.64,
-    4.1
-   ]
-  },
-  {
-   "de": [
-    5.8,
-    6.88
-   ],
-   "a": [
-    5.8,
-    8.02
-   ]
-  },
-  {
-   "de": [
-    6.5,
+    5.0,
     6.86
    ],
    "a": [
-    6.5,
+    5.0,
+    8.0
+   ]
+  },
+  {
+   "de": [
+    6.4,
+    6.86
+   ],
+   "a": [
+    6.4,
     8.02
    ]
   },
   {
    "de": [
-    5.1,
+    4.9,
     0.22
    ],
    "a": [
-    5.1,
+    4.9,
     1.05
    ]
   },
   {
    "de": [
-    5.3,
+    4.95,
     4.24
    ],
    "a": [
-    5.3,
+    4.95,
     4.77
    ]
   },
   {
    "de": [
-    5.62,
+    5.27,
     4.24
    ],
    "a": [
-    5.62,
+    5.27,
     4.78
+   ]
+  },
+  {
+   "de": [
+    6.2,
+    3.96
+   ],
+   "a": [
+    6.2,
+    5.08
+   ]
+  },
+  {
+   "de": [
+    5.6,
+    3.96
+   ],
+   "a": [
+    5.6,
+    5.7
    ]
   }
  ]
