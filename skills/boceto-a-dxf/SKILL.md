@@ -87,6 +87,7 @@ python3 SKILL_DIR/scripts/plano.py TRABAJO/planta.json TRABAJO/salida
 - **Pilares y salientes** marcados en las paredes: 0,30×0,30 si no tienen cota.
 - **Baños y cocinas**: si a la cadena de cotas le faltan unos centímetros, son baldosas (no hagas nada). Si faltan más, hay un **patinillo de instalaciones** entre las paredes.
 - Las estancias pueden tener cualquier forma ortogonal: en L, en U, con quiebros o con remetidos.
+- **Una estancia solo existe si tiene paredes dibujadas en todos sus lados** (o el nombre o el mobiliario lo indican). Una zona sin muro que la cierre es parte del espacio de al lado, aunque tenga sus propias cotas: se describe como una `parte` de esa estancia.
 
 ## Tabla de decisiones (sustituye a cualquier pregunta)
 | Situación | Decisión |

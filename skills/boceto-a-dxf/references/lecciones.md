@@ -36,3 +36,5 @@ Se leen antes de cada boceto y prevalecen sobre el resto de la skill. Cada corre
     - lavabo en encimera.
 
     Trazo fino gris, sin rellenos. El ejemplo está en `ejemplos/avenida/planta_cadenas.json`. *(Ester)*
+26. **No inventar estancias**: una estancia solo existe si el boceto dibuja sus paredes en todos sus lados (o el nombre o el mobiliario lo indican). Una zona sin muro que la separe es **parte del espacio contiguo**, aunque tenga sus propias cotas (en San Nicolás, la zona sur de 3,37 × 3,88 es el salón, y por eso el pilar queda «en medio de la estancia grande»). Comprobar, antes de cerrar cada estancia, que **hay línea negra en cada lado**. *(San Nicolás 20-22, corrección de Ester)*
+27. **Puertas con `lado`**: si dos estancias comparten más de una pared, indicar siempre en qué pared va la puerta. Si no, el motor la pone en el tramo común más largo. *(San Nicolás)*

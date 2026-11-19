@@ -3,30 +3,27 @@ INFORME DEL PLANO
 
 SUPERFICIES UTILES
   Cocina                           5,19 m2   (cocina)
-  Dormitorio                      10,36 m2   (dormitorio)
   Baño                             1,95 m2   (bano)
   Cuarto de caldera                1,46 m2   (almacen)
-  Salón                           16,22 m2   (salon)
-  TOTAL UTIL                      35,19 m2
-  CONSTRUIDA (contorno)           44,81 m2
+  Salón                           27,01 m2   (salon)
+  TOTAL UTIL                      35,61 m2
+  CONSTRUIDA (contorno)           44,94 m2
 
 ERRORES (0) - hay que corregirlos en el JSON:
   ninguno
 
-AVISOS (6) - revisar; si son correctos, explicarlos al entregar:
-  A1. Ajuste: cota dx de 'cocina' pasa de 1,80 a 1,72 (-0,08); absorbe el descuadre de las cadenas por ser circulacion
-  A2. Descuadre: cota dx de 'salon_main' (3,58) no cuadra con el resto; queda en 3,55 (-0,03). Si el boceto es correcto, revisa otra cota de esa cadena.
-  A3. Ajuste: cota dy de 'banda' pasa de 1,00 a 0,91 (-0,09); absorbe el descuadre de las cadenas por ser circulacion
-  A4. Saliente: pasillo - baño: muro de fachada E junto a 'bano' pasa de 0,00 a 0,17 (+0,17) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
-  A5. Descuadre: salón 5,05: total 5,05 (5,05) no cuadra con el resto; queda en 5,14 (+0,09). Si el boceto es correcto, revisa otra cota de esa cadena.
-  A6. Macizo de muro de mas de 0,38 m de grueso: ¿falta una estancia, un patinillo o hay un descuadre de cotas?
+AVISOS (5) - revisar; si son correctos, explicarlos al entregar:
+  A1. Descuadre: cota dx de 'salon_main' (3,58) no cuadra con el resto; queda en 3,55 (-0,03). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A2. Saliente: sur - baño: muro de fachada E junto a 'bano' pasa de 0,00 a 0,17 (+0,17) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
+  A3. Descuadre: salón 5,05: total 5,05 (5,05) no cuadra con el resto; queda en 5,14 (+0,09). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A4. Ventana 3 de 'salon' se salia de la pared: desplazada 0,05 m
+  A5. Macizo de muro de mas de 0,38 m de grueso: ¿falta una estancia, un patinillo o hay un descuadre de cotas?
 
 SUPUESTOS DE LECTURA DEL BOCETO:
-  - Estancia grande = recibidor + pasillo + salón, abierta; dentro, el pilar o muro de carga de 1,60 x 0,37, con pasos de 0,72 y 0,37.
+  - Estancia grande = recibidor + salón + zona sur hasta la fachada (no hay muro que la separe); dentro, el pilar o muro de carga de 1,60 x 0,37.
   - Machón de 0,32 x 0,38 al pie de la pared oeste del salón; caja de 0,35 x 0,53 junto al baño.
   - La cota 3,88 va desde la fachada sur hasta la cara inferior del pilar; el salón mide 2,89 desde la cara superior del pilar.
-  - Estancia suroeste con línea amarilla de encimera = cocina (1,75 de ancho estimado: el boceto no lo acota).
   - Cuarto noreste con la caldera Saunier Duval: 0,61 + 0,68 con tabique parcial.
   - Las líneas azules del baño y del cuarto de caldera hacia el salón = puertas correderas.
-  - Puerta del dormitorio junto al pasillo (no está dibujada): 0,80.
   - La franja del salón hasta la balconera este sale de 0,91; la balconera la ocupa entera (el boceto dice 1,00).
+  - Cocina: 1,72 de ancho, que sale de 5,17 − 3,37 − tabique (el boceto no lo acota).
