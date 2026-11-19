@@ -27,6 +27,7 @@ HUMEDA = 0.6    # banos, aseos, cocinas, lavaderos: pueden CRECER hasta 10 cm (a
 MAX_HUMEDA = 0.10
 MURO = 0.25     # muro grueso (fachada, galeria, medianera): engorda antes que crecer un bano (bajantes, salientes)
 CIRCULA = 1.5   # pasillo / vestibulo / distribuidor con cota: cede antes que un tabique
+FACHADA = 0.2   # estancia HUMEDA que no llega a la fachada: la fachada engorda por dentro (antes que crecer el bano)
 TABIQUE = 3.0   # tabique (<= 0,12): solo engorda como ultimo recurso
 TRAMO = 20.0    # peso de un tramo acotado {"cota": x}
 TOTAL = 20.0    # peso de una cota total de cadena
@@ -189,13 +190,13 @@ def resolver(spec, tabique=0.08):
         for clave, cara in (("desde", piezas[0][0]), ("hasta", piezas[-1][1])):
             pieza = piezas[0][2] if clave == "desde" else piezas[-1][2]
             gv = None
-            if clave in c and isinstance(c[clave], str) and pieza in R:
+            if clave in c and isinstance(c[clave], str) and pieza in R and humeda(R[pieza]):
                 try:
                     _num(c[clave])
                 except ValueError:
                     # la estancia puede quedarse corta de la fachada: ese hueco es muro de fachada mas grueso
                     gv = v(f"G:{len(var)}")
-                    previas.append([{gv: 1}, 0.0, MURO, f"{etiqueta}: muro de fachada {c[clave]} junto a '{pieza}'", ("muro",)])
+                    previas.append([{gv: 1}, 0.0, FACHADA, f"{etiqueta}: muro de fachada {c[clave]} junto a '{pieza}'", ("muro",)])
                     fachadas.append((eje, pieza, "ini" if clave == "desde" else "fin", c[clave], gv))
             if clave in c:
                 coefs, k0 = extremo(c[clave], eje)
