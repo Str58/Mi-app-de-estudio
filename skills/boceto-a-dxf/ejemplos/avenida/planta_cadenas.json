@@ -47,7 +47,7 @@
    "parte": true,
    "dx": "?",
    "dy": 0.93,
-   "flexible": true
+   "flexible": false
   },
   {
    "id": "dormB",
@@ -104,7 +104,7 @@
    "parte": true,
    "dx": "?",
    "dy": 3.04,
-   "flexible": true
+   "flexible": false
   },
   {
    "id": "salon",
@@ -126,7 +126,7 @@
    "parte": true,
    "dx": "?",
    "dy": 0.98,
-   "flexible": true
+   "flexible": false
   },
   {
    "id": "cocina",
@@ -442,6 +442,17 @@
     "S_izq"
    ],
    "desde": "Og"
+  },
+  {
+   "nombre": "dorm. 2 - baño 2 (saliente 0,25)",
+   "eje": "x",
+   "items": [
+    "B_main",
+    {
+     "muro": 0.25
+    },
+    "bano2"
+   ]
   }
  ],
  "alineaciones": [
@@ -531,6 +542,31 @@
    "esquina": "SE",
    "dx": 0.54,
    "dy": 0.25
+  },
+  {
+   "estancia": "bano1",
+   "contra": "N",
+   "desde": 0,
+   "dx": 1.37,
+   "dy": 0.19
+  },
+  {
+   "estancia": "bano2",
+   "esquina": "NO",
+   "dx": 0.7,
+   "dy": 0.28
+  },
+  {
+   "estancia": "galeria_e",
+   "esquina": "NE",
+   "dx": 0.63,
+   "dy": 0.36
+  },
+  {
+   "estancia": "galeria_e",
+   "esquina": "NE",
+   "dx": 0.28,
+   "dy": 0.87
   }
  ],
  "puertas": [
@@ -552,7 +588,8 @@
    ],
    "desde_fin": 0.05,
    "abre_hacia": "distribuidor",
-   "bisagra": "E"
+   "bisagra": "E",
+   "ancho": 0.8
   },
   {
    "entre": [
@@ -561,7 +598,8 @@
    ],
    "desde_fin": 0.05,
    "abre_hacia": "salon",
-   "bisagra": "N"
+   "bisagra": "N",
+   "ancho": 0.8
   },
   {
    "entre": [
@@ -570,14 +608,15 @@
    ],
    "desde_fin": 0.05,
    "abre_hacia": "cocina",
-   "bisagra": "N"
+   "bisagra": "N",
+   "ancho": 0.8
   },
   {
    "entre": [
     "distribuidor",
     "bano2"
    ],
-   "ancho": 0.7,
+   "ancho": 0.8,
    "desde": 0.3,
    "abre_hacia": "bano2",
    "bisagra": "S"
@@ -589,7 +628,8 @@
    ],
    "desde": 0.05,
    "abre_hacia": "dormA",
-   "bisagra": "S"
+   "bisagra": "S",
+   "ancho": 0.8
   },
   {
    "entre": [
@@ -598,14 +638,15 @@
    ],
    "desde_fin": 0.05,
    "abre_hacia": "dormB",
-   "bisagra": "N"
+   "bisagra": "N",
+   "ancho": 0.8
   },
   {
    "entre": [
     "dormA",
     "bano1"
    ],
-   "ancho": 0.7,
+   "ancho": 0.8,
    "lado": "N",
    "abre_hacia": "bano1",
    "bisagra": "O"
@@ -617,7 +658,8 @@
    ],
    "desde": 0.05,
    "abre_hacia": "dormC",
-   "bisagra": "S"
+   "bisagra": "S",
+   "ancho": 0.8
   },
   {
    "entre": [
@@ -626,7 +668,8 @@
    ],
    "desde": 0.05,
    "abre_hacia": "dormD",
-   "bisagra": "S"
+   "bisagra": "S",
+   "ancho": 0.8
   },
   {
    "entre": [
@@ -703,8 +746,8 @@
   {
    "estancia": "galeria_e",
    "lado": "N",
-   "ancho": 0.52,
-   "desde": 0.05
+   "ancho": 0.5,
+   "desde": 0.0
   },
   {
    "estancia": "galeria_o",
@@ -771,13 +814,15 @@
    "tipo": "lavabo",
    "estancia": "bano1",
    "contra": "N",
-   "desde": 0.15
+   "desde": 0.15,
+   "sep": 0.19
   },
   {
    "tipo": "inodoro",
    "estancia": "bano1",
    "contra": "N",
-   "desde": 1.3
+   "desde": 1.3,
+   "sep": 0
   },
   {
    "tipo": "ducha",
@@ -792,20 +837,20 @@
    "estancia": "bano2",
    "contra": "O",
    "desde": 0.05,
-   "ancho": 1.7,
+   "ancho": 1.45,
    "fondo": 0.7
   },
   {
    "tipo": "lavabo",
    "estancia": "bano2",
    "contra": "N",
-   "desde": 0.8
+   "desde": 0.05
   },
   {
    "tipo": "inodoro",
    "estancia": "bano2",
    "contra": "N",
-   "desde_fin": 0.2
+   "desde_fin": 0.15
   },
   {
    "tipo": "rect",
@@ -822,9 +867,10 @@
   "Los dormitorios principal y 2 tienen un pasillo propio de 0,97 y 0,93; el principal incluye el baño 1 y la zona de armario.",
   "Baño 1 de 2,57 x 1,59 con la ducha en el extremo este, separada por mampara; ventana de 0,75 (h 0,60).",
   "Lavadero (estancia pequeña al sur de la cocina): sin cota de ancho, se le dan 1,00 y se comunica con la cocina por la línea azul.",
-  "Galería este: no dibujo el pequeño quiebro de su esquina noreste (0,36 / 0,51).",
   "Pilar del baño 2 de 0,54 x 0,25, leído en la esquina sureste.",
   "Galería oeste: «1,41» es el ancho hasta el salón con su muro de 0,30 incluido (interior 1,11); junto a la cocina, 0,55.",
-  "Las cotas sitúan los dormitorios 1 y 2 alineados con la cocina por el oeste (0,57 más al oeste que el salón), aunque el boceto los dibuja alineados con el salón: mando las cotas. Si es al revés, alguna de 3,42 / 3,32 / 2,12 / 2,57 está mal."
+  "Las cotas sitúan los dormitorios 1 y 2 alineados con la cocina por el oeste (0,57 más al oeste que el salón), aunque el boceto los dibuja alineados con el salón: mando las cotas. Si es al revés, alguna de 3,42 / 3,32 / 2,12 / 2,57 está mal.",
+  "Salientes leídos del boceto: 1,37 x 0,19 en el baño 1 (de ahí 1,40 / 1,59), 0,70 x 0,28 en el baño 2, escalones de 0,36 y 0,51 en la galería este y 0,25 entre el dormitorio 2 y el baño 2.",
+  "Todas las puertas interiores de 0,80; la de entrada de 0,90."
  ]
 }

@@ -20,9 +20,12 @@ import numpy as np
 from shapely.geometry import box
 from shapely.ops import unary_union
 
-FIJO = 1e4      # peso de las ecuaciones duras (muros, alineaciones, fachadas)
-NORMAL = 1.0    # peso de la cota de una estancia
-FLEX = 0.2      # peso de la cota de una estancia de circulacion / flexible
+FIJO = 1e4      # peso de las ecuaciones duras (alineaciones, fachadas, partes que se tocan)
+NORMAL = 5.0    # peso de la cota de una estancia: casi intocable
+FLEX = 0.2      # peso de la cota de una estancia de circulacion / flexible: absorbe primero
+MURO = 0.6      # peso del espesor de un muro: absorbe despues, solo engordando (= saliente)
+TRAMO = 1.0     # peso de un tramo acotado {"cota": x}
+TOTAL = 0.5     # peso de una cota total de cadena
 CIRC = ("pasillo", "distrib", "recib", "hall", "vestib", "entrada")
 
 
@@ -140,14 +143,20 @@ def resolver(spec, tabique=0.08):
                 seg_n += 1
                 s0, sl = v(f"S0:{seg_n}"), v(f"SL:{seg_n}")
                 if it.get("cota") not in ("?", None):
-                    previas.append([{sl: 1}, _num(it["cota"]), NORMAL, f"{etiqueta}: tramo de {_fmt(_num(it['cota']))}", None])
+                    previas.append([{sl: 1}, _num(it["cota"]), TRAMO, f"{etiqueta}: tramo de {_fmt(_num(it['cota']))}", None])
                 ini, fin, nodo = {s0: 1}, {s0: 1, sl: 1}, f"seg{seg_n}"
             if piezas:
                 w = tabique if muro_pend is None else muro_pend
                 coef = dict(ini)
                 for k2, x in piezas[-1][1].items():
                     coef[k2] = coef.get(k2, 0) - x
-                duras.append([coef, w, FIJO, f"{etiqueta}: muro de {_fmt(w)}"])
+                if w <= 0:  # partes de una misma estancia: se tocan siempre
+                    duras.append([coef, w, FIJO, f"{etiqueta}: union de partes"])
+                else:  # el muro puede engordar (saliente) para absorber un descuadre
+                    mv = v(f"M:{len(var)}")
+                    coef[mv] = coef.get(mv, 0) - 1
+                    duras.append([coef, 0.0, FIJO, f"{etiqueta}: muro"])
+                    previas.append([{mv: 1}, w, MURO, f"{etiqueta}: muro entre '{piezas[-1][2]}' y '{nodo}'", ("muro",)])
                 uf(eje, piezas[-1][2], nodo)
             piezas.append((ini, fin, nodo))
             muro_pend = None
@@ -171,7 +180,7 @@ def resolver(spec, tabique=0.08):
             for k2, x in piezas[0][0].items():
                 coef[k2] = coef.get(k2, 0) - x
             # una cota total pesa la mitad que la de una estancia: suele ser la menos fiable
-            previas.append([coef, _num(c["total"]), NORMAL * _num(c.get("peso", 0.5)), f"{etiqueta}: total {_fmt(_num(c['total']))}", None])
+            previas.append([coef, _num(c["total"]), TOTAL * _num(c.get("peso", 1)), f"{etiqueta}: total {_fmt(_num(c['total']))}", None])
 
     # ---------------- alineaciones: cara de A (+ sep) = cara de B
     for al in spec.get("alineaciones", []):
@@ -229,17 +238,32 @@ def resolver(spec, tabique=0.08):
     reg = 1e-6
 
     def resuelve(prev):
+        # conjunto activo: un muro nunca adelgaza; si el ajuste lo intenta, se fija a su espesor
+        extra = []
+        for _ in range(12):
+            x, res, coste = resuelve_base(prev, extra)
+            nuevos = [i for i, (p, r_) in enumerate(zip(prev, res))
+                      if p[4] == ("muro",) and r_ < -0.002 and i not in [e[0] for e in extra]]
+            if not nuevos:
+                return x, res, coste
+            extra += [(i, prev[i]) for i in nuevos]
+        return x, res, coste
+
+    def resuelve_base(prev, extra):
+        fijas = {i for i, _ in extra}
         w = np.array([p[2] for p in prev])
         x = None
         for _ in range(25):
             filas, b = [], []
-            for coef, rhs, peso, _d in duras:
+            for coef, rhs, peso, _d in duras + [[p[0], p[1], FIJO, p[3]] for _i, p in extra]:
                 f = np.zeros(n)
                 for k2, val in coef.items():
                     f[k2] = val
                 filas.append(f * math.sqrt(peso))
                 b.append(rhs * math.sqrt(peso))
-            for (coef, rhs, peso, _d, _a), wi in zip(prev, w):
+            for k_, ((coef, rhs, peso, _d, _a), wi) in enumerate(zip(prev, w)):
+                if k_ in fijas:
+                    continue
                 f = np.zeros(n)
                 for k2, val in coef.items():
                     f[k2] = val
@@ -282,7 +306,10 @@ def resolver(spec, tabique=0.08):
         if abs(r_) < 0.015:
             continue
         valor = rhs + r_
-        if peso == FLEX:
+        if _a == ("muro",):
+            avisos.append(f"Saliente: {d} pasa de {_fmt(rhs)} a {_fmt(valor)} (+{_fmt(r_)}) para respetar las cotas "
+                          f"de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.")
+        elif peso == FLEX:
             avisos.append(f"Ajuste: {d} pasa de {_fmt(rhs)} a {_fmt(valor)} ({'+' if r_ > 0 else ''}{_fmt(r_)}); "
                           f"absorbe el descuadre de las cadenas por ser circulacion")
         else:
@@ -320,6 +347,7 @@ def resolver(spec, tabique=0.08):
             errores.append(f"'{i}' sale con dimension nula o negativa ({_fmt(W)} x {_fmt(H)}): revisa sus cadenas")
             W, H = max(W, 0.1), max(H, 0.1)
         rects[i] = box(x0, y0, x0 + W, y0 + H)
+    rects0 = dict(rects)  # rectangulos completos: son los que lleva la cota del boceto
     for i in ids:
         for rc in R[i].get("recortes", []):
             if "por" in rc:
@@ -363,6 +391,10 @@ def resolver(spec, tabique=0.08):
             resto.append(r)
     out = dict(spec)
     out["estancias"] = nuevas + resto
+    duenos = {p: r["id"] for r in ests if "union" in r for p in r["union"]}
+    out["_cotas_partes"] = [
+        {"estancia": duenos.get(i, i), "rect": [round(z, 3) for z in rects0[i].bounds],
+         "dx": R[i]["dx"] not in ("?", None), "dy": R[i]["dy"] not in ("?", None)} for i in ids]
     for k in ("cadenas", "alineaciones"):
         out.pop(k, None)
     return out, avisos, errores

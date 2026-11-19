@@ -56,7 +56,13 @@ Ejemplo real completo: `ejemplos/bergamin/planta_cadenas.json`.
 
   Las cadenas que comparten un nombre de fachada acaban en la misma línea.
 - Cada estancia o parte tiene que aparecer en al menos una cadena de cada eje, o en una alineación. Si no, el motor da un error `C#` y no dibuja.
-- `"flexible": true/false` fuerza si una estancia absorbe descuadres. Por defecto, solo la circulación.
+- **Orden en que se absorben los descuadres**:
+  1. la circulación (y lo marcado `"flexible": true`);
+  2. los muros de las cadenas, que solo pueden engordar: es un saliente y se avisa de dónde;
+  3. los totales;
+  4. las cotas de estancia, solo como último recurso.
+
+  `"flexible": true` solo para piezas sin cota real, como un lavadero sin medir. Nunca en una parte con cota.
 - `"total"` pesa la mitad que la cota de una estancia, salvo que se indique `"peso"`. `{"cota":x}` pesa como una estancia.
 - Las estancias de las cadenas se convierten en polígonos; el resultado se guarda en `salida/planta_resuelta.json`. En el modo cadenas, `puertas`, `ventanas`, `mobiliario`, `pilares` y `medianeras` funcionan igual que en el modo de coordenadas. Las puertas y los muebles se refieren a la estancia completa (el id de la `union`), no a sus partes.
 - **Mezcla de modos**: las estancias de coordenadas (`rect`, `contorno`, `pegado`) pueden convivir con las de cadenas y apoyarse en ellas con `pegado`.

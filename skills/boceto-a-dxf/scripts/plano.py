@@ -958,7 +958,7 @@ def genera(spec, salida):
         prims.append(dict(L="PATINILLOS", k="pl", pts=[(b[0], b[1]), (b[2], b[3])], cerr=False))
         prims.append(dict(L="PATINILLOS", k="pl", pts=[(b[0], b[3]), (b[2], b[1])], cerr=False))
 
-    cotas = calcula_cotas(E, ventanas, puertas, exterior) if spec.get("acotar", True) else []
+    cotas = calcula_cotas(E, ventanas, puertas, exterior, spec.get("_cotas_partes", [])) if spec.get("acotar", True) else []
     os.makedirs(salida, exist_ok=True)
     escribe_dxf(os.path.join(salida, "plano.dxf"), muros, prims, cotas)
     escribe_png(os.path.join(salida, "plano.png"), muros, E, prims, aud, spec.get("titulo", "Plano"))
@@ -970,8 +970,8 @@ def genera(spec, salida):
 
 
 # --------------------------------------------------------------------- cotas
-def calcula_cotas(E, ventanas, puertas, exterior):
-    """Cotas lineales: luces interiores de cada estancia, huecos y totales.
+def calcula_cotas(E, ventanas, puertas, exterior, partes_cad=()):
+    """Cotas lineales en metros: estancias, ventanas y totales (las puertas no se acotan).
     Cada cota: p1, p2 (puntos medidos), base (punto por donde pasa la linea) y ang."""
     cotas = []
 
@@ -995,8 +995,32 @@ def calcula_cotas(E, ventanas, puertas, exterior):
             return dict(p1=(x1, y1), p2=(x2, y2), base=(x1, y1), ang=0 if horizontal else 90)
         return None
 
+    # estancias del modo cadenas: se acota cada parte con la medida del boceto, por dentro
+    por_estancia = {}
+    for pc in partes_cad:
+        por_estancia.setdefault(pc["estancia"], []).append(pc)
+    estancias = {R.id: R for R in E}
+    for rid, lst in por_estancia.items():
+        R = estancias.get(rid)
+        if R is None:
+            continue
+        zona = R.poly.buffer(0.005)
+        for pc in lst:
+            x0, y0, x1, y1 = pc["rect"]
+            if pc["dx"]:
+                for d in (0.35, (y1 - y0) - 0.35, (y1 - y0) / 2):
+                    y = y0 + d
+                    if zona.contains(LineString([(x0, y), (x1, y)])):
+                        cotas.append(dict(p1=(x0, y), p2=(x1, y), base=(x0, y), ang=0))
+                        break
+            if pc["dy"]:
+                for d in (0.35, (x1 - x0) - 0.35, (x1 - x0) / 2):
+                    x = x0 + d
+                    if zona.contains(LineString([(x, y0), (x, y1)])):
+                        cotas.append(dict(p1=(x, y0), p2=(x, y1), base=(x, y0), ang=90))
+                        break
     for R in E:
-        if R.poly.area < 0.6:
+        if R.poly.area < 0.6 or R.id in por_estancia:
             continue
         for horizontal, desp in ((True, -0.45), (False, 0.75)):
             c = luz(R, horizontal, desp)
@@ -1007,17 +1031,6 @@ def calcula_cotas(E, ventanas, puertas, exterior):
         cext = v["c1"] if sg(e) > 0 else v["c0"]
         p1, p2 = xy(e.axis, v["s0"], cext), xy(e.axis, v["s1"], cext)
         cotas.append(dict(p1=p1, p2=p2, base=xy(e.axis, v["s0"], cext + sg(e) * 0.45), ang=0 if e.axis == "h" else 90))
-    for d in puertas:
-        ea = d["ea"]
-        if d["tipo"] == "paso":
-            continue
-        if "cf" in d:
-            otra = d["c_other"] if abs(d["cf"] - ea.c) < 1e-6 else ea.c
-            cb = otra - d["vs"] * 0.25
-        else:
-            cb = ea.c - sg(ea) * 0.25
-        p1, p2 = xy(ea.axis, d["s0"], ea.c), xy(ea.axis, d["s1"], ea.c)
-        cotas.append(dict(p1=p1, p2=p2, base=xy(ea.axis, d["s0"], cb), ang=0 if ea.axis == "h" else 90))
     bx = exterior.bounds
     cotas.append(dict(p1=(bx[0], bx[3]), p2=(bx[2], bx[3]), base=(bx[0], bx[3] + 0.8), ang=0))
     cotas.append(dict(p1=(bx[0], bx[1]), p2=(bx[0], bx[3]), base=(bx[0] - 0.8, bx[1]), ang=90))
@@ -1068,7 +1081,7 @@ def escribe_dxf(ruta, muros, prims, cotas=()):
         elif p["k"] == "tx":
             msp.add_text(p["t"], height=p["h"], dxfattribs=at).set_placement(
                 p["p"], align=TextEntityAlignment.MIDDLE_CENTER)
-    estilo = {"dimtxt": 0.10, "dimasz": 0.06, "dimexe": 0.04, "dimexo": 0.0, "dimdec": 2, "dimdsep": ord(","),
+    estilo = {"dimlfac": 1.0, "dimpost": "", "dimlunit": 2, "dimtxt": 0.10, "dimasz": 0.06, "dimexe": 0.04, "dimexo": 0.0, "dimdec": 2, "dimdsep": ord(","),
               "dimtad": 1, "dimgap": 0.02, "dimtsz": 0.05, "dimclrd": 1, "dimclre": 1, "dimclrt": 1, "dimzin": 0}
     for c in cotas:
         dim = msp.add_linear_dim(base=c["base"], p1=c["p1"], p2=c["p2"], angle=c["ang"], dimstyle="EZDXF",

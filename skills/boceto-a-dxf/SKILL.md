@@ -38,7 +38,11 @@ Genera:
 - **Cadenas**: cada fila (eje x, de oeste a este) y cada columna (eje y, de sur a norte) del boceto. Se escriben como la lista de estancias en orden, con `{"muro": 0.30}` donde el muro no es un tabique de 0,08. Se añaden `"desde":"O"` / `"hasta":"E"` cuando la cadena toca fachada. Una cota suelta que no es una estancia, como un tramo de pared o un total, va como `{"cota": 2.52}` o `"total"`.
 - **Alineaciones**: caras que el boceto dibuja en la misma línea sin estar en la misma cadena, por ejemplo los dos tramos de un pasillo.
 
-El motor calcula todas las coordenadas y elige las alternativas que cierran las cadenas. Los descuadres los absorbe la circulación. Si una cota normal no cuadra, la ajusta y la deja escrita en el informe. **Las cuentas no las hace el modelo.**
+El motor calcula todas las coordenadas y elige las alternativas que cierran las cadenas. **Las cotas de las estancias no se tocan.** Los descuadres los absorbe primero la circulación y después los muros, que engordan como salientes; el informe dice dónde. **Las cuentas no las hace el modelo.**
+
+Antes de escribir el JSON, repasa:
+- **Pilares y salientes**: todo cuadradito o escalón en un muro, y toda cota pequeña junto a un muro, va en `pilares`.
+- **Puertas interiores de 0,80** y la de entrada de 0,90, salvo cota. No se estrechan nunca.
 
 Si la planta es muy simple, también vale el modo de coordenadas (`rect`, `pegado`, `contorno`).
 
@@ -121,7 +125,7 @@ Referencia: plano «boceto-717_final» (arquitecto C. Soto, 1:50).
 | VENTANAS | Ventanas y balconeras |
 | **MOBILIARIO** | Muebles y aparatos sanitarios |
 | **ESTANCIAS** | Nombre y m² de cada estancia |
-| **COTAS** | Luces interiores, huecos y totales exteriores |
+| **COTAS** | Medidas de cada estancia (las del boceto), ventanas y totales exteriores, en metros. Las puertas no se acotan |
 | TEXTOS | Resumen de superficies y título |
 | PATINILLOS | Patinillos de instalaciones |
 - Muros con sombreado sólido gris de estilo *outermost*.
@@ -129,10 +133,12 @@ Referencia: plano «boceto-717_final» (arquitecto C. Soto, 1:50).
 - Ventanas y balconeras: carpintería de 3 líneas finas.
 - Armario: rectángulo con una X.
 - Cada estancia lleva su nombre y su **superficie útil** («10,93 m2») en la capa ESTANCIAS.
-- La capa COTAS (con `"acotar": false` no se genera) lleva:
-  - la luz interior de cada estancia en ancho y fondo;
-  - el ancho de cada puerta y ventana;
+- La capa COTAS (con `"acotar": false` no se genera) lleva, siempre en metros:
+  - cada estancia, o cada tramo de las que tienen forma en L, acotada con las mismas medidas del boceto, por dentro;
+  - el ancho de cada ventana;
   - las dos cotas totales exteriores.
+
+  Las puertas no se acotan.
 - Al pie, la superficie útil total y la construida.
 - Para pasar a DWG: en AutoCAD, `GUARDARCOMO` con formato 2018.
 
