@@ -1,0 +1,441 @@
+{
+ "titulo": "San Nicolás 20-22, 4º dcha.",
+ "estancias": [
+  {
+   "id": "cocina",
+   "nombre": "Cocina",
+   "poligono": [
+    [
+     1.72,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     3.02
+    ],
+    [
+     1.72,
+     3.02
+    ]
+   ]
+  },
+  {
+   "id": "dorm",
+   "nombre": "Dormitorio",
+   "poligono": [
+    [
+     5.17,
+     -0.0
+    ],
+    [
+     1.8,
+     -0.0
+    ],
+    [
+     1.8,
+     3.09
+    ],
+    [
+     5.17,
+     3.09
+    ]
+   ]
+  },
+  {
+   "id": "bano",
+   "nombre": "Baño",
+   "poligono": [
+    [
+     6.37,
+     3.17
+    ],
+    [
+     5.25,
+     3.17
+    ],
+    [
+     5.25,
+     4.91
+    ],
+    [
+     6.37,
+     4.91
+    ]
+   ]
+  },
+  {
+   "id": "caldera",
+   "nombre": "Cuarto de caldera",
+   "tipo": "almacen",
+   "poligono": [
+    [
+     6.54,
+     5.98
+    ],
+    [
+     5.25,
+     5.98
+    ],
+    [
+     5.25,
+     7.14
+    ],
+    [
+     6.54,
+     7.14
+    ]
+   ]
+  },
+  {
+   "id": "salon",
+   "nombre": "Salón",
+   "tipo": "salon",
+   "poligono": [
+    [
+     1.72,
+     3.1
+    ],
+    [
+     0.0,
+     3.1
+    ],
+    [
+     0.0,
+     4.02
+    ],
+    [
+     1.4,
+     4.02
+    ],
+    [
+     1.4,
+     7.14
+    ],
+    [
+     4.95,
+     7.14
+    ],
+    [
+     4.95,
+     5.9
+    ],
+    [
+     6.54,
+     5.9
+    ],
+    [
+     6.54,
+     4.99
+    ],
+    [
+     4.95,
+     4.99
+    ],
+    [
+     4.95,
+     3.88
+    ],
+    [
+     5.17,
+     3.88
+    ],
+    [
+     5.17,
+     3.17
+    ],
+    [
+     1.72,
+     3.17
+    ]
+   ]
+  }
+ ],
+ "pilares": [
+  {
+   "x": 2.44,
+   "y": 3.88,
+   "dx": 1.6,
+   "dy": 0.37
+  },
+  {
+   "x": 1.4,
+   "y": 3.88,
+   "dx": 0.32,
+   "dy": 0.38
+  },
+  {
+   "x": 4.82,
+   "y": 3.88,
+   "dx": 0.35,
+   "dy": 0.53
+  },
+  {
+   "estancia": "dorm",
+   "esquina": "SE",
+   "dx": 0.22,
+   "dy": 0.22
+  },
+  {
+   "estancia": "caldera",
+   "contra": "N",
+   "desde": 0.61,
+   "dx": 0.08,
+   "dy": 0.45
+  }
+ ],
+ "puertas": [
+  {
+   "entre": [
+    "salon",
+    "exterior"
+   ],
+   "lado": "O",
+   "ancho": 0.8,
+   "abre_hacia": "salon",
+   "en": 3.56
+  },
+  {
+   "entre": [
+    "salon",
+    "cocina"
+   ],
+   "desde": 0.26,
+   "abre_hacia": "cocina",
+   "bisagra": "O"
+  },
+  {
+   "entre": [
+    "salon",
+    "dorm"
+   ],
+   "desde": 0.1,
+   "abre_hacia": "dorm",
+   "bisagra": "O"
+  },
+  {
+   "entre": [
+    "salon",
+    "bano"
+   ],
+   "tipo": "corredera",
+   "ancho": 0.8,
+   "desde": 0.1
+  },
+  {
+   "entre": [
+    "salon",
+    "caldera"
+   ],
+   "tipo": "corredera",
+   "ancho": 0.8,
+   "desde": 0.1
+  }
+ ],
+ "ventanas": [
+  {
+   "estancia": "salon",
+   "lado": "E",
+   "ancho": 0.91,
+   "tipo": "balconera",
+   "desde": 0.0
+  },
+  {
+   "estancia": "bano",
+   "lado": "E",
+   "ancho": 0.5,
+   "desde": 0.2
+  },
+  {
+   "estancia": "dorm",
+   "lado": "E",
+   "ancho": 0.95,
+   "desde": 0.83,
+   "tipo": "balconera"
+  }
+ ],
+ "mobiliario": [
+  {
+   "tipo": "encimera",
+   "estancia": "cocina",
+   "contra": "E",
+   "desde": 0,
+   "ancho": 3.02,
+   "fondo": 0.55
+  },
+  {
+   "tipo": "cama_doble",
+   "estancia": "dorm",
+   "contra": "O",
+   "en": 1.8
+  },
+  {
+   "tipo": "armario",
+   "estancia": "dorm",
+   "contra": "N",
+   "desde_fin": 0.05,
+   "ancho": 1.2
+  },
+  {
+   "tipo": "rect",
+   "estancia": "caldera",
+   "contra": "N",
+   "desde_fin": 0.05,
+   "ancho": 0.45,
+   "fondo": 0.35
+  },
+  {
+   "tipo": "plato_ducha",
+   "estancia": "bano",
+   "contra": "S",
+   "desde": 0,
+   "ancho": 1.12,
+   "fondo": 0.75
+  },
+  {
+   "tipo": "inodoro",
+   "estancia": "bano",
+   "contra": "O",
+   "desde": 0.9
+  },
+  {
+   "tipo": "lavabo",
+   "estancia": "bano",
+   "contra": "E",
+   "desde": 0.9,
+   "ancho": 0.6,
+   "fondo": 0.4
+  }
+ ],
+ "supuestos": [
+  "Estancia grande = recibidor + pasillo + salón, abierta; dentro, el pilar o muro de carga de 1,60 x 0,37, con pasos de 0,72 y 0,37.",
+  "Machón de 0,32 x 0,38 al pie de la pared oeste del salón; caja de 0,35 x 0,53 junto al baño.",
+  "La cota 3,88 va desde la fachada sur hasta la cara inferior del pilar; el salón mide 2,89 desde la cara superior del pilar.",
+  "Estancia suroeste con línea amarilla de encimera = cocina (1,75 de ancho estimado: el boceto no lo acota).",
+  "Cuarto noreste con la caldera Saunier Duval: 0,61 + 0,68 con tabique parcial.",
+  "Las líneas azules del baño y del cuarto de caldera hacia el salón = puertas correderas.",
+  "Puerta del dormitorio junto al pasillo (no está dibujada): 0,80.",
+  "La franja del salón hasta la balconera este sale de 0,91; la balconera la ocupa entera (el boceto dice 1,00)."
+ ],
+ "_cotas_cadenas": [
+  {
+   "eje": "x",
+   "a": -0.0,
+   "b": 5.17,
+   "perp": 3.35
+  },
+  {
+   "eje": "x",
+   "a": 1.4,
+   "b": 6.54,
+   "perp": 5.22
+  },
+  {
+   "eje": "y",
+   "a": -0.0,
+   "b": 3.88,
+   "perp": 2.64
+  }
+ ],
+ "_macizos": [
+  [
+   6.37,
+   3.17,
+   6.54,
+   4.91
+  ]
+ ],
+ "_cotas_partes": [
+  {
+   "estancia": "cocina",
+   "rect": [
+    0.0,
+    0.0,
+    1.72,
+    3.02
+   ],
+   "dx": true,
+   "dy": true
+  },
+  {
+   "estancia": "dorm",
+   "rect": [
+    1.8,
+    -0.0,
+    5.17,
+    3.09
+   ],
+   "dx": true,
+   "dy": true
+  },
+  {
+   "estancia": "bano",
+   "rect": [
+    5.25,
+    3.17,
+    6.37,
+    4.91
+   ],
+   "dx": true,
+   "dy": true
+  },
+  {
+   "estancia": "caldera",
+   "rect": [
+    5.25,
+    5.98,
+    6.54,
+    7.14
+   ],
+   "dx": true,
+   "dy": true
+  },
+  {
+   "estancia": "salon",
+   "rect": [
+    -0.0,
+    3.1,
+    1.72,
+    4.02
+   ],
+   "dx": false,
+   "dy": true
+  },
+  {
+   "estancia": "salon",
+   "rect": [
+    1.72,
+    3.17,
+    5.17,
+    3.88
+   ],
+   "dx": false,
+   "dy": false
+  },
+  {
+   "estancia": "salon",
+   "rect": [
+    1.4,
+    3.88,
+    4.95,
+    7.14
+   ],
+   "dx": true,
+   "dy": true
+  },
+  {
+   "estancia": "salon",
+   "rect": [
+    4.95,
+    4.99,
+    6.54,
+    5.9
+   ],
+   "dx": false,
+   "dy": true
+  }
+ ]
+}
