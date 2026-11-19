@@ -21,12 +21,14 @@ python3 SKILL_DIR/scripts/zonas.py BOCETO.jpg TRABAJO/zonas
 Genera:
 - `completo.jpg`: el dibujo recortado, con cuadrícula A–J / 1–10 para situar las cosas;
 - 4 zonas ampliadas;
-- `cotas_rojas.png`, más dos versiones giradas 90° para leer en horizontal las cotas escritas en vertical.
+- `cotas_rojas.png`, más dos versiones giradas 90° para leer en horizontal las cotas escritas en vertical;
+- `ventanas_azul.png`: solo lo azul, para localizar todas las ventanas.
 
 **1. Leer (unos 90 s).** Una sola pasada:
 1. `completo.jpg`: qué estancias hay y cuáles están en la misma fila o columna.
 2. Las zonas: cada cota, puerta y ventana.
-3. Las cotas giradas, solo para los números dudosos.
+3. `ventanas_azul.png`: comprueba que cada trazo azul (rayita, línea paralela u óvalo) tiene su ventana.
+4. Las cotas giradas, solo para los números dudosos.
 
 **No hagas cuentas ni intentes cuadrar nada.** Copia cada cota tal cual. Si un número es dudoso, escribe las dos lecturas: `"dy": ["1'58","1'28"]`.
 
@@ -64,7 +66,12 @@ python3 SKILL_DIR/scripts/plano.py TRABAJO/planta.json TRABAJO/salida
   - El lado perpendicular a la pared es la **hoja**.
   - El triángulo queda dentro de la estancia hacia la que **abre**.
   - Anchos: **0,80** las interiores y **0,90** la de entrada, salvo cota.
-- **Azul: ventanas**, dibujadas como dos rayitas perpendiculares a la pared que marcan el inicio y el fin del hueco. Junto a ellas suelen venir su ancho y su distancia a una esquina. La altura `h=` se ignora.
+- **Azul: ventanas.** Pueden venir de varias formas, todas válidas:
+  - **Forma habitual:** dos rayitas azules perpendiculares a la pared que marcan el inicio y el fin del hueco.
+  - **Forma rápida:** una **línea azul paralela a la pared**, dibujada sobre ella o pegada a ella. Su longitud y su posición son el hueco. Si es muy larga (casi toda la pared), es un acristalamiento corrido.
+  - **Cotas de la ventana:** en azul, o **en rojo rodeadas por un óvalo azul**. Lo que está dentro del óvalo es siempre de la ventana más cercana, aunque esté en rojo: el primer número es el ancho y `h=` la altura, que se ignora. Ejemplo: `0'95 h:2'25` es una ventana de 0,95 de ancho.
+  - Una cota roja **fuera** de un óvalo, junto a la ventana, es su distancia a la esquina.
+  - `ventanas_azul.png` (de `zonas.py`) aísla todo lo azul sobre la planta tenue: así se ven de un vistazo todas las rayitas, líneas y óvalos.
 - **Amarillo: mobiliario y aparatos sanitarios.** Se colocan contra la pared donde estén dibujados y, si no hay cota, con las medidas por defecto.
 - **Pilares y salientes** marcados en las paredes: 0,30×0,30 si no tienen cota.
 - **Baños y cocinas**: si a la cadena de cotas le faltan unos centímetros, son baldosas (no hagas nada). Si faltan más, hay un **patinillo de instalaciones** entre las paredes.

@@ -27,12 +27,15 @@ im = ImageOps.exif_transpose(Image.open(src)).convert("RGB")
 a = np.asarray(im.convert("L"))
 hsv = np.asarray(im.convert("HSV"))
 negro = (a < 110) & (hsv[..., 1] < 90)
-filas = np.where(negro.sum(axis=1) > negro.shape[1] * 0.08)[0]
-cols = np.where(negro.sum(axis=0) > negro.shape[0] * 0.06)[0]
-if len(filas) and len(cols):
-    m = int(0.14 * max(filas[-1] - filas[0], cols[-1] - cols[0]))  # margen para las cotas exteriores
-    im = im.crop((max(0, cols[0] - m), max(0, filas[0] - m),
-                  min(im.width, cols[-1] + m), min(im.height, filas[-1] + m)))
+fl = np.where(negro.sum(axis=1) > negro.shape[1] * 0.08)[0]   # filas con paredes horizontales largas
+cl = np.where(negro.sum(axis=0) > negro.shape[0] * 0.06)[0]   # columnas con paredes verticales largas
+if len(fl) and len(cl):
+    xs = np.where(negro[fl].any(axis=0))[0]     # alcance horizontal de esas paredes
+    ys = np.where(negro[:, cl].any(axis=1))[0]  # alcance vertical
+    x0, x1 = min(xs[0], cl[0]), max(xs[-1], cl[-1])
+    y0, y1 = min(ys[0], fl[0]), max(ys[-1], fl[-1])
+    m = int(0.10 * max(x1 - x0, y1 - y0))  # margen para las cotas exteriores
+    im = im.crop((max(0, x0 - m), max(0, y0 - m), min(im.width, x1 + m), min(im.height, y1 + m)))
 W, H = im.size
 
 # 2. vista completa con cuadricula
@@ -71,4 +74,13 @@ rojo.thumbnail((2000, 2000))
 rojo.save(os.path.join(out, "cotas_rojas.png"))
 rojo.rotate(90, expand=True, fillcolor="white").save(os.path.join(out, "cotas_rojas_giro_izq.png"))
 rojo.rotate(-90, expand=True, fillcolor="white").save(os.path.join(out, "cotas_rojas_giro_der.png"))
+# 5. solo azul: ventanas (marcas, lineas sobre la pared y circulos alrededor de cotas rojas)
+azul = Image.eval(h, lambda p: 255 if 140 <= p <= 185 else 0)
+azul = Image.composite(azul, Image.new("L", im.size, 0), Image.eval(s, lambda p: 255 if p > 70 else 0))
+azul = Image.composite(azul, Image.new("L", im.size, 0), Image.eval(v, lambda p: 255 if p > 50 else 0))
+base = ImageEnhance.Brightness(im.convert("L").convert("RGB")).enhance(1.0)
+base = Image.blend(Image.new("RGB", im.size, "white"), base, 0.25)  # planta muy tenue de fondo
+base.paste((0, 60, 230), mask=azul)
+base.thumbnail((2000, 2000))
+base.save(os.path.join(out, "ventanas_azul.png"))
 print("Generado en", out, ":", sorted(os.listdir(out)))
