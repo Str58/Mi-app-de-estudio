@@ -1,0 +1,36 @@
+INFORME DEL PLANO
+============================================================
+
+SUPERFICIES UTILES
+  Comedor                          8,95 m2   (salon)
+  Salón                           15,48 m2   (salon)
+  Baño                             4,38 m2   (bano)
+  Cocina                           8,56 m2   (cocina)
+  Galería                          2,83 m2   (almacen)
+  Aseo                             1,18 m2   (bano)
+  Despensa                         1,56 m2   (almacen)
+  Vestíbulo y pasillo             12,58 m2   (circulacion)
+  Entrada                          1,13 m2   (circulacion)
+  Dormitorio 1                    14,75 m2   (dormitorio)
+  Dormitorio 2                    16,12 m2   (dormitorio)
+  Dormitorio 3                    15,47 m2   (dormitorio)
+  TOTAL UTIL                     103,01 m2
+  CONSTRUIDA (contorno)          120,91 m2
+
+ERRORES (0) - hay que corregirlos en el JSON:
+  ninguno
+
+AVISOS (3) - revisar; si son correctos, explicarlos al entregar:
+  A1. 'comedor' mide solo 8,95 m2 (minimo razonable 9,0 m2): revisa cotas
+  A2. 'aseo' mide solo 1,18 m2 (minimo razonable 1,5 m2): revisa cotas
+  A3. 'aseo' tiene menos de 0,90 m de anchura libre: revisa cotas
+
+SUPUESTOS DE LECTURA DEL BOCETO:
+  - Baño: leo 1,28 m de fondo (la cota girada parece 1'58, pero solo con 1,28 cierran las tres cadenas verticales en 10,10 m).
+  - Dormitorio 1: 4,79 m de ancho como el dormitorio 2 (el 4,96 no cabe entre el pasillo y la fachada).
+  - Muro de carga entre el pasillo y la cocina, el baño y el salón: 0,37-0,44 m, que es lo que hace cuadrar las cotas del vestíbulo (2,46) y el pasillo (1,28).
+  - La galería baja 0,87 m más que el baño y forma el entrante del salón (ancho 1,03 m); la ventana del salón queda en 1,75 m (0,44 + 1,75 + 0,58).
+  - Vestíbulo: 2,48 m de fondo como el comedor (el boceto dice 2,60).
+  - Pared sur, hacia el rellano: medianera de 0,20, con puerta de servicio y nicho de entrada de 1,06 x 1,07.
+  - Cocina y baño ventilan a la galería: puerta-ventana de 0,80 en la cocina y ventana de 0,50 en el baño.
+  - Pilares de 0,25 x 0,20 en el baño y de 0,20 x 0,20 en la esquina del vestíbulo.

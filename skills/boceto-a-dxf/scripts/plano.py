@@ -506,8 +506,8 @@ def genera(spec, salida):
                       A.poly.centroid.coords[0])
                 continue
             e = elige_lado(A, cand[0].dir, p.get("en"), lambda x: x in cand) if lado else max(cand, key=lambda x: x.L)
-            w = num(p.get("ancho", 0.90))
             o0, o1 = e.s0, e.s1
+            w = (o1 - o0) if p.get("ancho") == "total" else num(p.get("ancho", 0.90))
             puertas.append(dict(k=k, A=A, B=None, ea=e, eb=None, o0=o0, o1=o1, w=w, tipo=tipo, spec=p))
         else:
             B = est[b]
@@ -756,8 +756,8 @@ def genera(spec, salida):
     for d in puertas:
         ea, A, B = d["ea"], d["A"], d["B"]
         sp = d["spec"]
-        if d["tipo"] in ("paso", "balconera"):
-            if d["tipo"] == "balconera":
+        if d["tipo"] in ("paso", "balconera", "ventana"):
+            if d["tipo"] in ("balconera", "ventana"):
                 c0, c1 = sorted((ea.c, d["c_other"]))
                 for fr in (0.25, 0.5, 0.75):
                     c = c0 + (c1 - c0) * fr
@@ -838,12 +838,16 @@ def genera(spec, salida):
     muros = exterior.difference(unary_union([R.poly for R in E] + patinillos))
     if huecos:
         muros = muros.difference(unary_union(huecos))
-    muros = limpia(muros)
+    # elimina astillas y lineas sueltas de menos de 1 cm que dejan los recortes
+    muros = muros.buffer(-0.005, join_style=2, mitre_limit=10).buffer(0.005, join_style=2, mitre_limit=10)
+    muros = limpia(unary_union([p for p in partes(muros) if p.area > 0.002]))
 
     # 12. auditoria funcional -------------------------------------------------
     grafo = {R.id: set() for R in E}
     grafo["exterior"] = set()
     for d in puertas:
+        if d["tipo"] == "ventana":  # ventana interior: ilumina pero no da acceso
+            continue
         a = d["A"].id
         b = d["B"].id if d["B"] else "exterior"
         grafo[a].add(b)

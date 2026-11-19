@@ -1,0 +1,461 @@
+{
+ "titulo": "Bergamín 10, 3º izq.",
+ "estancias": [
+  {
+   "id": "comedor",
+   "nombre": "Comedor",
+   "rect": {
+    "x": 0,
+    "y": 0,
+    "dx": 3.61,
+    "dy": 2.48
+   }
+  },
+  {
+   "id": "salon",
+   "nombre": "Salón",
+   "contorno": {
+    "inicio": [
+     0,
+     2.56
+    ],
+    "pasos": [
+     "E4.50",
+     "N3.64",
+     "O3.47",
+     "S0.87",
+     "O1.03"
+    ]
+   }
+  },
+  {
+   "id": "bano",
+   "nombre": "Baño",
+   "rect": {
+    "x": 0.97,
+    "y": 6.28,
+    "dx": 3.46,
+    "dy": 1.28
+   }
+  },
+  {
+   "id": "cocina",
+   "nombre": "Cocina",
+   "rect": {
+    "x": 0.95,
+    "y": 7.64,
+    "dx": 3.48,
+    "dy": 2.46
+   }
+  },
+  {
+   "id": "galeria",
+   "nombre": "Galería",
+   "tipo": "almacen",
+   "rect": {
+    "x": 0,
+    "y": 5.41,
+    "dx": 0.87,
+    "dy": 3.25
+   }
+  },
+  {
+   "id": "aseo",
+   "nombre": "Aseo",
+   "tipo": "bano",
+   "rect": {
+    "x": 0,
+    "y": 8.74,
+    "dx": 0.87,
+    "dy": 1.36
+   }
+  },
+  {
+   "id": "despensa",
+   "nombre": "Despensa",
+   "rect": {
+    "x": 4.87,
+    "y": 8.51,
+    "dx": 0.98,
+    "dy": 1.59
+   }
+  },
+  {
+   "id": "distribuidor",
+   "nombre": "Vestíbulo y pasillo",
+   "tipo": "circulacion",
+   "contorno": {
+    "inicio": [
+     3.69,
+     0
+    ],
+    "pasos": [
+     "E2.42",
+     "N5.27",
+     "O0.24",
+     "N3.16",
+     "O1.00",
+     "S5.95",
+     "O1.18"
+    ]
+   }
+  },
+  {
+   "id": "rellano",
+   "nombre": "Entrada",
+   "tipo": "circulacion",
+   "rect": {
+    "x": 5.05,
+    "y": -1.27,
+    "dx": 1.06,
+    "dy": 1.07
+   }
+  },
+  {
+   "id": "dorm1",
+   "nombre": "Dormitorio 1",
+   "rect": {
+    "x": 5.95,
+    "y": 7.02,
+    "dx": 4.79,
+    "dy": 3.08
+   }
+  },
+  {
+   "id": "dorm2",
+   "nombre": "Dormitorio 2",
+   "contorno": {
+    "inicio": [
+     6.19,
+     3.48
+    ],
+    "pasos": [
+     "E4.55",
+     "N3.46",
+     "O4.79",
+     "S1.59",
+     "E0.24"
+    ]
+   }
+  },
+  {
+   "id": "dorm3",
+   "nombre": "Dormitorio 3",
+   "rect": {
+    "x": 6.19,
+    "y": 0,
+    "dx": 4.55,
+    "dy": 3.4
+   }
+  }
+ ],
+ "medianeras": [
+  {
+   "lado": "S",
+   "de": [
+    0,
+    0
+   ],
+   "a": [
+    10.74,
+    0
+   ]
+  }
+ ],
+ "pilares": [
+  {
+   "estancia": "bano",
+   "esquina": "SO",
+   "dx": 0.25,
+   "dy": 0.2
+  },
+  {
+   "estancia": "distribuidor",
+   "esquina": "SE",
+   "dx": 0.2,
+   "dy": 0.2
+  }
+ ],
+ "puertas": [
+  {
+   "entre": [
+    "rellano",
+    "exterior"
+   ],
+   "lado": "S",
+   "tipo": "paso",
+   "ancho": "total"
+  },
+  {
+   "entre": [
+    "rellano",
+    "distribuidor"
+   ],
+   "ancho": 0.8,
+   "desde": 0.05,
+   "abre_hacia": "distribuidor",
+   "bisagra": "E"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "exterior"
+   ],
+   "lado": "S",
+   "ancho": 0.8,
+   "desde": 0.16,
+   "abre_hacia": "distribuidor",
+   "bisagra": "O"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "comedor"
+   ],
+   "desde": 0.2,
+   "abre_hacia": "comedor",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "salon"
+   ],
+   "desde_fin": 0.1,
+   "abre_hacia": "salon",
+   "bisagra": "N"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "bano"
+   ],
+   "ancho": 0.62,
+   "desde_fin": 0.02,
+   "abre_hacia": "bano",
+   "bisagra": "N"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "cocina"
+   ],
+   "ancho": 0.7,
+   "desde": 0.05,
+   "abre_hacia": "cocina",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "despensa"
+   ],
+   "ancho": 0.7,
+   "desde_fin": 0.05,
+   "abre_hacia": "distribuidor",
+   "bisagra": "E"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "dorm1"
+   ],
+   "desde": 0.1,
+   "abre_hacia": "dorm1",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "dorm2"
+   ],
+   "desde_fin": 0.1,
+   "abre_hacia": "dorm2",
+   "bisagra": "N"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "dorm3"
+   ],
+   "desde": 0.25,
+   "abre_hacia": "dorm3",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "cocina",
+    "galeria"
+   ],
+   "tipo": "balconera",
+   "ancho": 0.8,
+   "desde": 0.1
+  },
+  {
+   "entre": [
+    "aseo",
+    "galeria"
+   ],
+   "ancho": 0.6,
+   "desde": 0.08,
+   "abre_hacia": "galeria",
+   "bisagra": "O"
+  },
+  {
+   "entre": [
+    "bano",
+    "galeria"
+   ],
+   "tipo": "ventana",
+   "ancho": 0.5,
+   "desde": 0.05
+  }
+ ],
+ "ventanas": [
+  {
+   "estancia": "galeria",
+   "lado": "O",
+   "ancho": 1.0
+  },
+  {
+   "estancia": "salon",
+   "lado": "O",
+   "ancho": 1.75,
+   "desde": 0.58
+  },
+  {
+   "estancia": "comedor",
+   "lado": "O",
+   "ancho": 1.05,
+   "desde": 0.72
+  },
+  {
+   "estancia": "dorm1",
+   "lado": "E",
+   "ancho": 1.3,
+   "desde": 1.18
+  },
+  {
+   "estancia": "dorm2",
+   "lado": "E",
+   "ancho": 1.35
+  },
+  {
+   "estancia": "dorm3",
+   "lado": "E",
+   "ancho": 1.35,
+   "desde_fin": 0.18
+  }
+ ],
+ "mobiliario": [
+  {
+   "tipo": "encimera",
+   "estancia": "cocina",
+   "contra": "N",
+   "desde": 0,
+   "ancho": 3.3
+  },
+  {
+   "tipo": "fregadero",
+   "estancia": "cocina",
+   "contra": "N",
+   "desde": 1.3,
+   "sep": 0.05
+  },
+  {
+   "tipo": "placa",
+   "estancia": "cocina",
+   "contra": "N",
+   "desde": 2.4,
+   "sep": 0.03
+  },
+  {
+   "tipo": "mesa",
+   "estancia": "cocina",
+   "contra": "S",
+   "desde": 1.2,
+   "ancho": 0.8,
+   "fondo": 0.8
+  },
+  {
+   "tipo": "inodoro",
+   "estancia": "aseo",
+   "contra": "E",
+   "desde_fin": 0.05
+  },
+  {
+   "tipo": "lavabo",
+   "estancia": "aseo",
+   "contra": "E",
+   "desde": 0.2,
+   "ancho": 0.45,
+   "fondo": 0.35
+  },
+  {
+   "tipo": "inodoro",
+   "estancia": "bano",
+   "contra": "S",
+   "desde": 0.4
+  },
+  {
+   "tipo": "lavabo",
+   "estancia": "bano",
+   "contra": "S",
+   "desde": 1.0
+  },
+  {
+   "tipo": "banera",
+   "estancia": "bano",
+   "contra": "S",
+   "desde_fin": 0,
+   "ancho": 1.4,
+   "fondo": 0.65
+  },
+  {
+   "tipo": "armario",
+   "estancia": "dorm1",
+   "contra": "O",
+   "desde_fin": 0,
+   "ancho": 1.2
+  },
+  {
+   "tipo": "cama",
+   "estancia": "dorm1",
+   "contra": "N",
+   "en": 8.54,
+   "ancho": 1.35,
+   "fondo": 1.9
+  },
+  {
+   "tipo": "armario",
+   "estancia": "dorm2",
+   "contra": "N",
+   "desde": 1.6,
+   "ancho": 1.4
+  },
+  {
+   "tipo": "cama",
+   "estancia": "dorm2",
+   "contra": "S",
+   "en": 8.8,
+   "ancho": 1.35,
+   "fondo": 1.9
+  },
+  {
+   "tipo": "cama",
+   "estancia": "dorm3",
+   "contra": "S",
+   "en": 8.5
+  }
+ ],
+ "supuestos": [
+  "Baño: leo 1,28 m de fondo (la cota girada parece 1'58, pero solo con 1,28 cierran las tres cadenas verticales en 10,10 m).",
+  "Dormitorio 1: 4,79 m de ancho como el dormitorio 2 (el 4,96 no cabe entre el pasillo y la fachada).",
+  "Muro de carga entre el pasillo y la cocina, el baño y el salón: 0,37-0,44 m, que es lo que hace cuadrar las cotas del vestíbulo (2,46) y el pasillo (1,28).",
+  "La galería baja 0,87 m más que el baño y forma el entrante del salón (ancho 1,03 m); la ventana del salón queda en 1,75 m (0,44 + 1,75 + 0,58).",
+  "Vestíbulo: 2,48 m de fondo como el comedor (el boceto dice 2,60).",
+  "Pared sur, hacia el rellano: medianera de 0,20, con puerta de servicio y nicho de entrada de 1,06 x 1,07.",
+  "Cocina y baño ventilan a la galería: puerta-ventana de 0,80 en la cocina y ventana de 0,50 en el baño.",
+  "Pilares de 0,25 x 0,20 en el baño y de 0,20 x 0,20 en la esquina del vestíbulo."
+ ]
+}
