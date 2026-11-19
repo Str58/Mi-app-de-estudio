@@ -8,35 +8,43 @@
    "poligono": [
     [
      3.42,
-     11.643
+     11.56
     ],
     [
      3.42,
-     11.54
+     11.46
     ],
     [
      0.0,
-     11.54
+     11.46
     ],
     [
      0.0,
-     14.388
+     14.31
     ],
     [
-     4.124,
-     14.388
+     4.28,
+     14.31
     ],
     [
-     4.124,
-     12.614
+     4.28,
+     12.54
     ],
     [
-     5.319,
-     12.614
+     3.42,
+     12.54
     ],
     [
-     5.319,
-     11.643
+     3.42,
+     12.53
+    ],
+    [
+     5.32,
+     12.53
+    ],
+    [
+     5.32,
+     11.56
     ]
    ]
   },
@@ -45,20 +53,20 @@
    "nombre": "Baño 1",
    "poligono": [
     [
-     6.774,
-     12.797
+     6.93,
+     12.72
     ],
     [
-     4.204,
-     12.797
+     4.36,
+     12.72
     ],
     [
-     4.204,
-     14.388
+     4.36,
+     14.31
     ],
     [
-     6.774,
-     14.388
+     6.93,
+     14.31
     ]
    ]
   },
@@ -69,27 +77,27 @@
    "poligono": [
     [
      0.0,
-     9.06
+     8.98
     ],
     [
      0.0,
-     11.46
+     11.38
     ],
     [
-     5.319,
-     11.46
+     5.32,
+     11.38
     ],
     [
-     5.319,
-     10.531
-    ],
-    [
-     3.32,
-     10.531
+     5.32,
+     10.45
     ],
     [
      3.32,
-     9.06
+     10.45
+    ],
+    [
+     3.32,
+     8.98
     ]
    ]
   },
@@ -98,20 +106,20 @@
    "nombre": "Baño 2",
    "poligono": [
     [
-     5.693,
-     8.611
+     5.79,
+     8.53
     ],
     [
-     3.572,
-     8.611
+     3.67,
+     8.53
     ],
     [
-     3.572,
-     10.451
+     3.67,
+     10.37
     ],
     [
-     5.693,
-     10.451
+     5.79,
+     10.37
     ]
    ]
   },
@@ -121,28 +129,28 @@
    "tipo": "circulacion",
    "poligono": [
     [
-     5.774,
-     5.495
+     5.97,
+     5.35
     ],
     [
-     5.774,
-     10.531
+     5.97,
+     10.45
     ],
     [
-     5.398,
-     10.531
+     5.4,
+     10.45
     ],
     [
-     5.398,
-     12.549
+     5.4,
+     12.4
     ],
     [
-     6.774,
-     12.549
+     6.93,
+     12.4
     ],
     [
-     6.774,
-     5.495
+     6.93,
+     5.35
     ]
    ]
   },
@@ -152,36 +160,44 @@
    "tipo": "salon",
    "poligono": [
     [
-     0.774,
-     4.2
+     0.93,
+     4.12
     ],
     [
-     0.774,
-     8.98
+     0.93,
+     8.9
     ],
     [
-     3.492,
-     8.98
+     3.59,
+     8.9
     ],
     [
-     3.492,
-     8.531
+     3.59,
+     8.45
     ],
     [
-     5.693,
-     8.531
+     5.05,
+     8.45
     ],
     [
-     5.693,
-     5.492
+     5.05,
+     8.42
     ],
     [
-     4.894,
-     5.492
+     5.85,
+     8.42
     ],
     [
-     4.894,
-     4.2
+     5.85,
+     5.38
+    ],
+    [
+     5.05,
+     5.38
+    ],
+    [
+     5.05,
+     4.12
     ]
    ]
   },
@@ -191,28 +207,28 @@
    "tipo": "cocina",
    "poligono": [
     [
-     0.208,
-     1.73
+     0.33,
+     1.65
     ],
     [
-     0.208,
-     4.12
+     0.33,
+     4.04
     ],
     [
-     4.894,
-     4.12
+     5.02,
+     4.04
     ],
     [
-     4.894,
-     3.14
+     5.02,
+     3.06
     ],
     [
-     3.507,
-     3.14
+     3.63,
+     3.06
     ],
     [
-     3.507,
-     1.73
+     3.63,
+     1.65
     ]
    ]
   },
@@ -222,43 +238,43 @@
    "tipo": "circulacion",
    "poligono": [
     [
-     6.774,
-     2.932
+     6.93,
+     2.79
     ],
     [
-     4.974,
-     2.932
+     5.13,
+     2.79
     ],
     [
-     4.974,
-     5.412
+     5.13,
+     5.27
     ],
     [
-     6.774,
-     5.412
+     6.93,
+     5.27
     ]
    ]
   },
   {
    "id": "lavadero",
-   "nombre": "Lavadero",
+   "nombre": "Despensa",
    "tipo": "almacen",
    "poligono": [
     [
-     1.209,
-     -0.0
+     1.02,
+     0.0
     ],
     [
-     0.208,
-     -0.0
+     0.31,
+     0.0
     ],
     [
-     0.208,
-     1.65
+     0.31,
+     1.3
     ],
     [
-     1.209,
-     1.65
+     1.02,
+     1.3
     ]
    ]
   },
@@ -268,27 +284,27 @@
    "tipo": "terraza",
    "poligono": [
     [
-     -0.637,
+     -0.54,
      0.0
     ],
     [
-     -0.637,
-     8.98
+     -0.54,
+     8.9
     ],
     [
-     0.474,
-     8.98
+     0.63,
+     8.9
     ],
     [
-     0.474,
-     4.43
+     0.63,
+     4.35
     ],
     [
-     -0.091,
-     4.43
+     0.01,
+     4.35
     ],
     [
-     -0.091,
+     0.01,
      0.0
     ]
    ]
@@ -298,20 +314,20 @@
    "nombre": "Dormitorio 3",
    "poligono": [
     [
-     10.393,
-     7.761
+     10.55,
+     7.68
     ],
     [
-     6.854,
-     7.761
+     7.01,
+     7.68
     ],
     [
-     6.854,
-     10.451
+     7.01,
+     10.37
     ],
     [
-     10.393,
-     10.451
+     10.55,
+     10.37
     ]
    ]
   },
@@ -320,20 +336,20 @@
    "nombre": "Dormitorio 4",
    "poligono": [
     [
-     10.304,
-     4.981
+     10.46,
+     4.9
     ],
     [
-     6.943,
-     4.981
+     7.1,
+     4.9
     ],
     [
-     6.943,
-     7.681
+     7.1,
+     7.6
     ],
     [
-     10.304,
-     7.681
+     10.46,
+     7.6
     ]
    ]
   },
@@ -343,20 +359,20 @@
    "tipo": "terraza",
    "poligono": [
     [
-     11.843,
-     5.421
+     12.0,
+     5.34
     ],
     [
-     10.693,
-     5.421
+     10.85,
+     5.34
     ],
     [
-     10.693,
-     10.451
+     10.85,
+     10.37
     ],
     [
-     11.843,
-     10.451
+     12.0,
+     10.37
     ]
    ]
   }
@@ -525,7 +541,7 @@
    ],
    "tipo": "balconera",
    "ancho": 1.0,
-   "desde": 0.05
+   "desde": 0.0
   },
   {
    "entre": [
@@ -534,7 +550,7 @@
    ],
    "tipo": "balconera",
    "ancho": 2.3,
-   "desde_fin": 1.43
+   "desde_fin": 0.94
   },
   {
    "entre": [
@@ -551,7 +567,7 @@
     "lavadero"
    ],
    "tipo": "balconera",
-   "ancho": 0.8,
+   "ancho": 0.61,
    "desde": 0.05
   }
  ],
@@ -584,7 +600,7 @@
   {
    "estancia": "galeria_e",
    "lado": "N",
-   "ancho": 0.5,
+   "ancho": 0.52,
    "desde": 0.0
   },
   {
@@ -704,21 +720,55 @@
   "Las ventanas con h=2,25 de los dormitorios y el salón son balconeras; las de los dormitorios 3 y 4, la cocina y el salón dan a galerías acristaladas.",
   "Los dormitorios principal y 2 tienen un pasillo propio de 0,97 y 0,93; el principal incluye el baño 1 y la zona de armario.",
   "Baño 1 de 2,57 x 1,59 con la ducha en el extremo este, separada por mampara; ventana de 0,75 (h 0,60).",
-  "Lavadero (estancia pequeña al sur de la cocina): sin cota de ancho, se le dan 1,00 y se comunica con la cocina por la línea azul.",
   "Pilar del baño 2 de 0,54 x 0,25, leído en la esquina sureste.",
-  "Galería oeste: «1,41» es el ancho hasta el salón con su muro de 0,30 incluido (interior 1,11); junto a la cocina, 0,55.",
   "Las cotas sitúan los dormitorios 1 y 2 alineados con la cocina por el oeste (0,57 más al oeste que el salón), aunque el boceto los dibuja alineados con el salón: mando las cotas. Si es al revés, alguna de 3,42 / 3,32 / 2,12 / 2,57 está mal.",
   "Salientes leídos del boceto: 1,37 x 0,19 en el baño 1 (de ahí 1,40 / 1,59), 0,70 x 0,28 en el baño 2, escalones de 0,36 y 0,51 en la galería este y 0,25 entre el dormitorio 2 y el baño 2.",
-  "Todas las puertas interiores de 0,80; la de entrada de 0,90."
+  "Todas las puertas interiores de 0,80; la de entrada de 0,90.",
+  "Galería oeste: 1,17 de ancho junto al salón y 0,55 junto a la cocina y la despensa.",
+  "Despensa de 0,71 x 1,30 entre la cocina y la galería; se comunica con la cocina por el hueco marcado en azul.",
+  "Balconera del salón (2,30) a 1,13 de la cara norte del salón (por debajo del pilar de 0,49 x 0,19).",
+  "Cota 1,65 de la galería oeste: desde el fondo de la despensa hasta la cocina; el muro entre despensa y cocina queda más grueso que un tabique."
+ ],
+ "_cotas_cadenas": [
+  {
+   "eje": "x",
+   "a": 0.93,
+   "b": 5.85,
+   "perp": 6.14
+  },
+  {
+   "eje": "x",
+   "a": 0.33,
+   "b": 5.02,
+   "perp": 3.31
+  },
+  {
+   "eje": "y",
+   "a": 5.35,
+   "b": 12.4,
+   "perp": 6.21
+  },
+  {
+   "eje": "y",
+   "a": 4.9,
+   "b": 5.34,
+   "perp": 11.14
+  },
+  {
+   "eje": "y",
+   "a": -0.0,
+   "b": 1.65,
+   "perp": 1.16
+  }
  ],
  "_cotas_partes": [
   {
    "estancia": "dormA",
    "rect": [
     0.0,
-    11.54,
+    11.46,
     3.42,
-    14.388
+    14.31
    ],
    "dx": true,
    "dy": true
@@ -727,9 +777,9 @@
    "estancia": "dormA",
    "rect": [
     3.42,
-    12.614,
-    4.124,
-    14.388
+    12.54,
+    4.28,
+    14.31
    ],
    "dx": false,
    "dy": false
@@ -738,9 +788,9 @@
    "estancia": "dormA",
    "rect": [
     3.42,
-    11.643,
-    5.319,
-    12.614
+    11.56,
+    5.32,
+    12.53
    ],
    "dx": true,
    "dy": true
@@ -748,10 +798,10 @@
   {
    "estancia": "bano1",
    "rect": [
-    4.204,
-    12.797,
-    6.774,
-    14.388
+    4.36,
+    12.72,
+    6.93,
+    14.31
    ],
    "dx": true,
    "dy": true
@@ -760,9 +810,9 @@
    "estancia": "dormB",
    "rect": [
     0.0,
-    9.06,
+    8.98,
     3.32,
-    11.46
+    11.38
    ],
    "dx": true,
    "dy": true
@@ -771,9 +821,9 @@
    "estancia": "dormB",
    "rect": [
     3.32,
-    10.531,
-    5.319,
-    11.46
+    10.45,
+    5.32,
+    11.38
    ],
    "dx": false,
    "dy": true
@@ -781,10 +831,10 @@
   {
    "estancia": "bano2",
    "rect": [
-    3.572,
-    8.611,
-    5.693,
-    10.451
+    3.67,
+    8.53,
+    5.79,
+    10.37
    ],
    "dx": true,
    "dy": true
@@ -792,10 +842,10 @@
   {
    "estancia": "distribuidor",
    "rect": [
-    5.398,
-    10.531,
-    6.774,
-    12.549
+    5.4,
+    10.45,
+    6.93,
+    12.4
    ],
    "dx": true,
    "dy": true
@@ -803,10 +853,10 @@
   {
    "estancia": "distribuidor",
    "rect": [
-    5.774,
-    5.495,
-    6.774,
-    10.531
+    5.97,
+    5.35,
+    6.93,
+    10.45
    ],
    "dx": true,
    "dy": false
@@ -814,10 +864,10 @@
   {
    "estancia": "salon",
    "rect": [
-    0.774,
-    4.2,
-    4.894,
-    8.98
+    0.93,
+    4.12,
+    5.05,
+    8.9
    ],
    "dx": true,
    "dy": true
@@ -825,10 +875,10 @@
   {
    "estancia": "salon",
    "rect": [
-    4.894,
-    5.492,
-    5.693,
-    8.531
+    5.05,
+    5.38,
+    5.85,
+    8.42
    ],
    "dx": false,
    "dy": true
@@ -836,10 +886,10 @@
   {
    "estancia": "cocina",
    "rect": [
-    0.208,
-    1.73,
-    3.507,
-    4.12
+    0.33,
+    1.65,
+    3.63,
+    4.04
    ],
    "dx": true,
    "dy": true
@@ -847,10 +897,10 @@
   {
    "estancia": "cocina",
    "rect": [
-    3.507,
-    3.14,
-    4.894,
-    4.12
+    3.63,
+    3.06,
+    5.02,
+    4.04
    ],
    "dx": false,
    "dy": true
@@ -858,10 +908,10 @@
   {
    "estancia": "recibidor",
    "rect": [
-    4.974,
-    2.932,
-    6.774,
-    5.412
+    5.13,
+    2.79,
+    6.93,
+    5.27
    ],
    "dx": true,
    "dy": true
@@ -869,10 +919,10 @@
   {
    "estancia": "lavadero",
    "rect": [
-    0.208,
-    -0.0,
-    1.209,
-    1.65
+    0.31,
+    0.0,
+    1.02,
+    1.3
    ],
    "dx": true,
    "dy": true
@@ -880,21 +930,21 @@
   {
    "estancia": "galeria_o",
    "rect": [
-    -0.637,
-    4.43,
-    0.474,
-    8.98
+    -0.54,
+    4.35,
+    0.63,
+    8.9
    ],
-   "dx": false,
+   "dx": true,
    "dy": true
   },
   {
    "estancia": "galeria_o",
    "rect": [
-    -0.637,
-    -0.0,
-    -0.091,
-    4.43
+    -0.54,
+    0.0,
+    0.01,
+    4.35
    ],
    "dx": true,
    "dy": false
@@ -902,10 +952,10 @@
   {
    "estancia": "dormC",
    "rect": [
-    6.854,
-    7.761,
-    10.393,
-    10.451
+    7.01,
+    7.68,
+    10.55,
+    10.37
    ],
    "dx": true,
    "dy": true
@@ -913,10 +963,10 @@
   {
    "estancia": "dormD",
    "rect": [
-    6.943,
-    4.981,
-    10.304,
-    7.681
+    7.1,
+    4.9,
+    10.46,
+    7.6
    ],
    "dx": true,
    "dy": true
@@ -924,10 +974,10 @@
   {
    "estancia": "galeria_e",
    "rect": [
-    10.693,
-    5.421,
-    11.843,
-    10.451
+    10.85,
+    5.34,
+    12.0,
+    10.37
    ],
    "dx": true,
    "dy": false

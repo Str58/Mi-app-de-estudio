@@ -468,9 +468,9 @@ def genera(spec, salida):
             w = max(0.4, e.L - 0.20)
         else:
             w = num(v.get("ancho", 1.20))
-        if w > e.L - 0.10:
+        if w > e.L + 0.005:
             aud.a(f"Ventana {k} de '{R.id}': ancho {fmt(w)} no cabe en {fmt(e.L)} m; se reduce")
-            w = max(0.4, e.L - 0.10)
+            w = max(0.4, e.L)
         s0 = posicion(v, e.s0, e.s1, w)
         if "desde" not in v and "desde_fin" not in v and "en" not in v:
             m = muestras_ext(R, e)
@@ -479,7 +479,8 @@ def genera(spec, salida):
                 a = e.s0 + (e.s1 - e.s0) * (idx[0] + 0.5) / len(m)
                 b = e.s0 + (e.s1 - e.s0) * (idx[-1] + 0.5) / len(m)
                 s0 = (a + b) / 2 - w / 2
-        s0c = min(max(s0, e.s0 + 0.05), e.s1 - 0.05 - w)
+        mg = min(0.05, max(0.0, (e.L - w) / 2))  # una ventana puede ocupar la pared entera
+        s0c = min(max(s0, e.s0 + mg), e.s1 - mg - w)
         if abs(s0c - s0) > 0.02:
             aud.a(f"Ventana {k} de '{R.id}' se salia de la pared: desplazada {fmt(abs(s0c - s0))} m")
         s0 = s0c
@@ -958,7 +959,8 @@ def genera(spec, salida):
         prims.append(dict(L="PATINILLOS", k="pl", pts=[(b[0], b[1]), (b[2], b[3])], cerr=False))
         prims.append(dict(L="PATINILLOS", k="pl", pts=[(b[0], b[3]), (b[2], b[1])], cerr=False))
 
-    cotas = calcula_cotas(E, ventanas, puertas, exterior, spec.get("_cotas_partes", [])) if spec.get("acotar", True) else []
+    cotas = calcula_cotas(E, ventanas, puertas, exterior, spec.get("_cotas_partes", []),
+                          spec.get("_cotas_cadenas", []), pilares) if spec.get("acotar", True) else []
     os.makedirs(salida, exist_ok=True)
     escribe_dxf(os.path.join(salida, "plano.dxf"), muros, prims, cotas)
     escribe_png(os.path.join(salida, "plano.png"), muros, E, prims, aud, spec.get("titulo", "Plano"))
@@ -970,7 +972,7 @@ def genera(spec, salida):
 
 
 # --------------------------------------------------------------------- cotas
-def calcula_cotas(E, ventanas, puertas, exterior, partes_cad=()):
+def calcula_cotas(E, ventanas, puertas, exterior, partes_cad=(), cadenas_cot=(), pilares=()):
     """Cotas lineales en metros: estancias, ventanas y totales (las puertas no se acotan).
     Cada cota: p1, p2 (puntos medidos), base (punto por donde pasa la linea) y ang."""
     cotas = []
@@ -1026,14 +1028,99 @@ def calcula_cotas(E, ventanas, puertas, exterior, partes_cad=()):
             c = luz(R, horizontal, desp)
             if c:
                 cotas.append(c)
+    def extremos_pared(R, e, s0, s1):
+        """Caras de las paredes perpendiculares mas proximas (ignora pilares de esquina): asi la
+        posicion de la ventana se mide como en el boceto, desde la cara de la estancia."""
+        franja = sbox(e.axis, e.s0 - 6, e.s1 + 6, e.c, e.c - sg(e) * 0.6).intersection(R.poly)
+        pm = Point(xy(e.axis, (s0 + s1) / 2, e.c - sg(e) * 0.01))
+        trozo = min(partes(franja), key=lambda q: q.distance(pm)) if partes(franja) else None
+        if trozo is None:
+            return e.s0, e.s1
+        b_ = trozo.bounds
+        return (b_[0], b_[2]) if e.axis == "h" else (b_[1], b_[3])
+
+    def cadena_hueco(e, s0, s1, c_med, c_base, R=None):
+        """esquina - hueco - esquina, como en el boceto (posicion y ancho de la ventana)"""
+        ang = 0 if e.axis == "h" else 90
+        a0, a1 = extremos_pared(R, e, s0, s1) if R is not None else (e.s0, e.s1)
+        for a, b in ((a0, s0), (s0, s1), (s1, a1)):
+            if b - a > 0.03:
+                cotas.append(dict(p1=xy(e.axis, a, c_med), p2=xy(e.axis, b, c_med), base=xy(e.axis, a, c_base), ang=ang))
+
     for v in ventanas:
         e = v["e"]
         cext = v["c1"] if sg(e) > 0 else v["c0"]
-        p1, p2 = xy(e.axis, v["s0"], cext), xy(e.axis, v["s1"], cext)
-        cotas.append(dict(p1=p1, p2=p2, base=xy(e.axis, v["s0"], cext + sg(e) * 0.45), ang=0 if e.axis == "h" else 90))
+        cadena_hueco(e, v["s0"], v["s1"], cext, cext + sg(e) * 0.45, v["R"])
+    for d in puertas:  # balconeras y ventanas entre estancias (p. ej. hacia una galeria)
+        if d["tipo"] in ("balconera", "ventana") and d["B"] is not None:
+            ea = d["ea"]
+            cadena_hueco(ea, d["s0"], d["s1"], ea.c, ea.c - sg(ea) * 0.30, d["A"])  # por dentro de la estancia
+    # totales y tramos acotados de las cadenas
+    for cc in cadenas_cot:
+        if cc["b"] - cc["a"] < 0.05:
+            continue
+        if cc["eje"] == "x":
+            cotas.append(dict(p1=(cc["a"], cc["perp"]), p2=(cc["b"], cc["perp"]), base=(cc["a"], cc["perp"]), ang=0))
+        else:
+            cotas.append(dict(p1=(cc["perp"], cc["a"]), p2=(cc["perp"], cc["b"]), base=(cc["perp"], cc["a"]), ang=90))
+    # pilares y salientes: su tamano
+    zona_est = unary_union([R.poly for R in E]).buffer(0.001)
+    def tramo_libre(linea, extremo):
+        g = linea.intersection(zona_est)
+        segs = [g] if g.geom_type == "LineString" else [q for q in getattr(g, "geoms", []) if q.geom_type == "LineString"]
+        segs = [q for q in segs if q.length > 0.03 and Point(extremo).distance(q) < 0.02]
+        return segs[0] if segs else None
+
+    for pl in pilares:
+        x0, y0, x1, y1 = pl.bounds
+        cy, cx = (y0 + y1) / 2, (x0 + x1) / 2
+        # saliente largo (>= 0,5 m a lo largo de la pared): fondo libre que deja hasta la pared opuesta
+        if (x1 - x0) >= 0.5 and (x1 - x0) > (y1 - y0):
+            for ya, yb in ((y0, y0 - 8), (y1, y1 + 8)):
+                g = tramo_libre(LineString([(cx, ya), (cx, yb)]), (cx, ya))
+                if g is not None and g.length < 4:
+                    (_, a_), (_, b_) = g.coords[0], g.coords[-1]
+                    cotas.append(dict(p1=(cx, min(a_, b_)), p2=(cx, max(a_, b_)), base=(cx, min(a_, b_)), ang=90))
+        elif (y1 - y0) >= 0.5:
+            for xa, xb in ((x0, x0 - 8), (x1, x1 + 8)):
+                g = tramo_libre(LineString([(xa, cy), (xb, cy)]), (xa, cy))
+                if g is not None and g.length < 4:
+                    (a_, _), (b_, _) = g.coords[0], g.coords[-1]
+                    cotas.append(dict(p1=(min(a_, b_), cy), p2=(max(a_, b_), cy), base=(min(a_, b_), cy), ang=0))
+        # posicion: solo a lo largo de la pared en la que se apoya (si esta en una esquina, ninguna)
+        cy, cx = (y0 + y1) / 2, (x0 + x1) / 2
+        libre = lambda px, py: zona_est.contains(Point(px, py))
+        toca_ns = not libre(cx, y1 + 0.03) or not libre(cx, y0 - 0.03)
+        toca_eo = not libre(x1 + 0.03, cy) or not libre(x0 - 0.03, cy)
+        cand = [(tramo_libre(LineString([(x0 - 8, cy), (x0, cy)]), (x0, cy)), 0),
+                (tramo_libre(LineString([(x1, cy), (x1 + 8, cy)]), (x1, cy)), 0)]
+        cand = [c for c in cand if c[0] is not None and c[0].length < 4]
+        if toca_ns and not toca_eo and cand and min(c[0].length for c in cand) > 0.03:
+            g = min(cand, key=lambda c: c[0].length)[0]
+            (ax_, ay_), (bx_, by_) = g.coords[0], g.coords[-1]
+            cotas.append(dict(p1=(min(ax_, bx_), cy), p2=(max(ax_, bx_), cy), base=(min(ax_, bx_), cy), ang=0))
+        cand = [(tramo_libre(LineString([(cx, y0 - 8), (cx, y0)]), (cx, y0)), 0),
+                (tramo_libre(LineString([(cx, y1), (cx, y1 + 8)]), (cx, y1)), 0)]
+        cand = [c for c in cand if c[0] is not None and c[0].length < 4]
+        if toca_eo and not toca_ns and cand and min(c[0].length for c in cand) > 0.03:
+            g = min(cand, key=lambda c: c[0].length)[0]
+            (ax_, ay_), (bx_, by_) = g.coords[0], g.coords[-1]
+            cotas.append(dict(p1=(cx, min(ay_, by_)), p2=(cx, max(ay_, by_)), base=(cx, min(ay_, by_)), ang=90))
+        for yb in (y0 - 0.12, y1 + 0.12):
+            if zona_est.contains(Point((x0 + x1) / 2, yb)):
+                cotas.append(dict(p1=(x0, yb), p2=(x1, yb), base=(x0, yb), ang=0))
+                break
+        for xb in (x0 - 0.12, x1 + 0.12):
+            if zona_est.contains(Point(xb, (y0 + y1) / 2)):
+                cotas.append(dict(p1=(xb, y0), p2=(xb, y1), base=(xb, y0), ang=90))
+                break
     bx = exterior.bounds
     cotas.append(dict(p1=(bx[0], bx[3]), p2=(bx[2], bx[3]), base=(bx[0], bx[3] + 0.8), ang=0))
     cotas.append(dict(p1=(bx[0], bx[1]), p2=(bx[0], bx[3]), base=(bx[0] - 0.8, bx[1]), ang=90))
+    # extremos al centimetro cuando caen a menos de 2,5 mm (quita el milimetro de margen de calculo)
+    sn = lambda z: round(z, 2) if abs(z - round(z, 2)) < 0.0025 else z
+    for c in cotas:
+        c["p1"], c["p2"] = tuple(sn(z) for z in c["p1"]), tuple(sn(z) for z in c["p2"])
     return cotas
 
 
@@ -1049,6 +1136,8 @@ def escribe_dxf(ruta, muros, prims, cotas=()):
     doc = ezdxf.new("R2010", setup=True)
     doc.header["$INSUNITS"] = 6
     doc.header["$MEASUREMENT"] = 1
+    if "CALIBRI" not in doc.styles:
+        doc.styles.add("CALIBRI", font="calibri.ttf")
     capas = {"MUROS": 7, "MUROS_RELLENO": 8, "PUERTAS": 3, "VENTANAS": 5, "MOBILIARIO": 2, "TEXTOS": 7,
              "ESTANCIAS": 4, "COTAS": 1, "PATINILLOS": 9}
     for n, c in capas.items():
@@ -1079,9 +1168,9 @@ def escribe_dxf(ruta, muros, prims, cotas=()):
         elif p["k"] == "arc":
             msp.add_arc(p["c"], p["r"], p["a0"], p["a1"], dxfattribs=at)
         elif p["k"] == "tx":
-            msp.add_text(p["t"], height=p["h"], dxfattribs=at).set_placement(
+            msp.add_text(p["t"], height=p["h"], dxfattribs=dict(at, style="CALIBRI")).set_placement(
                 p["p"], align=TextEntityAlignment.MIDDLE_CENTER)
-    estilo = {"dimlfac": 1.0, "dimpost": "", "dimlunit": 2, "dimtxt": 0.10, "dimasz": 0.06, "dimexe": 0.04, "dimexo": 0.0, "dimdec": 2, "dimdsep": ord(","),
+    estilo = {"dimtxsty": "CALIBRI", "dimlfac": 1.0, "dimpost": "", "dimlunit": 2, "dimtxt": 0.10, "dimasz": 0.06, "dimexe": 0.04, "dimexo": 0.0, "dimdec": 2, "dimdsep": ord(","),
               "dimtad": 1, "dimgap": 0.02, "dimtsz": 0.05, "dimclrd": 1, "dimclre": 1, "dimclrt": 1, "dimzin": 0}
     for c in cotas:
         dim = msp.add_linear_dim(base=c["base"], p1=c["p1"], p2=c["p2"], angle=c["ang"], dimstyle="EZDXF",
@@ -1094,6 +1183,19 @@ def escribe_png(ruta, muros, E, prims, aud, titulo, cotas=None):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
+    import glob
+    import logging
+    from matplotlib import font_manager
+    logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)
+    for f_ in glob.glob("/usr/share/fonts/**/Carlito*.ttf", recursive=True) + \
+            glob.glob("/usr/share/fonts/**/[Cc]alibri*.ttf", recursive=True):
+        try:
+            font_manager.fontManager.addfont(f_)
+        except Exception:
+            pass
+    nombres = {f_.name for f_ in font_manager.fontManager.ttflist}
+    # Calibri si existe; si no, Carlito (mismas medidas que Calibri); si no, la de serie
+    plt.rcParams["font.family"] = [n for n in ("Calibri", "Carlito") if n in nombres] or ["DejaVu Sans"]
     from matplotlib.path import Path
     from matplotlib.patches import PathPatch, Arc, Circle
     b = muros.bounds

@@ -21,14 +21,14 @@ python3 SKILL_DIR/scripts/zonas.py BOCETO.jpg TRABAJO/zonas
 Genera:
 - `completo.jpg`: el dibujo recortado, con cuadrícula A–J / 1–10 para situar las cosas;
 - 4 zonas ampliadas;
-- `cotas_rojas.png`, más dos versiones giradas 90° para leer en horizontal las cotas escritas en vertical;
+- `cotas_rojas.png`, más tres versiones giradas (90° a cada lado y 180°) para leer derechas las cotas escritas en vertical o boca abajo;
 - `ventanas_azul.png`: solo lo azul, para localizar todas las ventanas.
 
 **1. Leer (unos 90 s).** Una sola pasada:
 1. `completo.jpg`: qué estancias hay y cuáles están en la misma fila o columna.
 2. Las zonas: cada cota, puerta y ventana.
 3. `ventanas_azul.png`: comprueba que cada trazo azul (rayita, línea paralela u óvalo) tiene su ventana.
-4. Las cotas giradas, solo para los números dudosos.
+4. **Cotas giradas**: todo número escrito en vertical o boca abajo se lee en `cotas_rojas_giro_izq/der/180.png`, nunca sobre el dibujo sin girar, porque confunde 1 con 4 o 7, y 2 con 5. Si sigue dudoso, recorta esa zona, amplíala y gírala.
 
 **No hagas cuentas ni intentes cuadrar nada.** Copia cada cota tal cual. Si un número es dudoso, escribe las dos lecturas: `"dy": ["1'58","1'28"]`.
 
@@ -38,7 +38,7 @@ Genera:
 - **Cadenas**: cada fila (eje x, de oeste a este) y cada columna (eje y, de sur a norte) del boceto. Se escriben como la lista de estancias en orden, con `{"muro": 0.30}` donde el muro no es un tabique de 0,08. Se añaden `"desde":"O"` / `"hasta":"E"` cuando la cadena toca fachada. Una cota suelta que no es una estancia, como un tramo de pared o un total, va como `{"cota": 2.52}` o `"total"`.
 - **Alineaciones**: caras que el boceto dibuja en la misma línea sin estar en la misma cadena, por ejemplo los dos tramos de un pasillo.
 
-El motor calcula todas las coordenadas y elige las alternativas que cierran las cadenas. **Las cotas de las estancias no se tocan.** Los descuadres los absorbe primero la circulación y después los muros, que engordan como salientes; el informe dice dónde. **Las cuentas no las hace el modelo.**
+El motor calcula todas las coordenadas y elige las alternativas que cierran las cadenas. **Ninguna cota escrita se toca**, ni de estancias ni de pasillos ni totales: los descuadres los absorben los muros, que engordan como salientes, y el informe dice dónde. La geometría sale exacta al centímetro y la capa COTAS reproduce todas las cotas del boceto. **Las cuentas no las hace el modelo.**
 
 Antes de escribir el JSON, repasa:
 - **Pilares y salientes**: todo cuadradito o escalón en un muro, y toda cota pequeña junto a un muro, va en `pilares`.
@@ -128,6 +128,7 @@ Referencia: plano «boceto-717_final» (arquitecto C. Soto, 1:50).
 | **COTAS** | Medidas de cada estancia (las del boceto), ventanas y totales exteriores, en metros. Las puertas no se acotan |
 | TEXTOS | Resumen de superficies y título |
 | PATINILLOS | Patinillos de instalaciones |
+- Textos y cotas en letra **Calibri** (estilo de texto CALIBRI, `calibri.ttf`). La geometría sale exacta al centímetro.
 - Muros con sombreado sólido gris de estilo *outermost*.
 - Puertas: hoja como rectángulo de 0,04 más un arco de 90°.
 - Ventanas y balconeras: carpintería de 3 líneas finas.
@@ -135,7 +136,9 @@ Referencia: plano «boceto-717_final» (arquitecto C. Soto, 1:50).
 - Cada estancia lleva su nombre y su **superficie útil** («10,93 m2») en la capa ESTANCIAS.
 - La capa COTAS (con `"acotar": false` no se genera) lleva, siempre en metros:
   - cada estancia, o cada tramo de las que tienen forma en L, acotada con las mismas medidas del boceto, por dentro;
-  - el ancho de cada ventana;
+  - cada ventana o balconera como cadena esquina – hueco – esquina, medida desde la cara de la estancia aunque haya un pilar en la esquina;
+  - las cotas totales y los tramos sueltos de las cadenas (`total`, `{"cota": x}`);
+  - el tamaño de pilares y salientes, y su distancia a la pared más próxima;
   - las dos cotas totales exteriores.
 
   Las puertas no se acotan.

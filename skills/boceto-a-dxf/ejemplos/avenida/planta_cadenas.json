@@ -146,25 +146,25 @@
   },
   {
    "id": "lavadero",
-   "nombre": "Lavadero",
+   "nombre": "Despensa",
    "tipo": "almacen",
-   "dx": 1.0,
-   "dy": 1.65,
-   "flexible": true
+   "dx": 0.71,
+   "dy": 1.3,
+   "flexible": false
   },
   {
    "id": "G_alto",
    "parte": true,
-   "dx": "?",
+   "dx": 1.17,
    "dy": 4.55,
-   "flexible": true
+   "flexible": false
   },
   {
    "id": "G_bajo",
    "parte": true,
    "dx": 0.55,
    "dy": "?",
-   "flexible": true
+   "flexible": false
   },
   {
    "id": "galeria_o",
@@ -430,20 +430,6 @@
    }
   },
   {
-   "nombre": "galería oeste 1,41 (con muro)",
-   "eje": "x",
-   "items": [
-    {
-     "cota": 1.41
-    },
-    {
-     "muro": 0
-    },
-    "S_izq"
-   ],
-   "desde": "Og"
-  },
-  {
    "nombre": "dorm. 2 - baño 2 (saliente 0,25)",
    "eje": "x",
    "items": [
@@ -453,6 +439,23 @@
     },
     "bano2"
    ]
+  },
+  {
+   "nombre": "galería oeste 1,65",
+   "eje": "y",
+   "items": [
+    {
+     "cota": 1.65
+    },
+    {
+     "muro": 0
+    },
+    "K_izq"
+   ],
+   "desde": {
+    "estancia": "lavadero",
+    "lado": "S"
+   }
   }
  ],
  "alineaciones": [
@@ -687,7 +690,7 @@
    ],
    "tipo": "balconera",
    "ancho": 1.0,
-   "desde": 0.05
+   "desde": 0.0
   },
   {
    "entre": [
@@ -696,7 +699,7 @@
    ],
    "tipo": "balconera",
    "ancho": 2.3,
-   "desde_fin": 1.43
+   "desde_fin": 0.94
   },
   {
    "entre": [
@@ -713,7 +716,7 @@
     "lavadero"
    ],
    "tipo": "balconera",
-   "ancho": 0.8,
+   "ancho": 0.61,
    "desde": 0.05
   }
  ],
@@ -746,7 +749,7 @@
   {
    "estancia": "galeria_e",
    "lado": "N",
-   "ancho": 0.5,
+   "ancho": 0.52,
    "desde": 0.0
   },
   {
@@ -866,11 +869,13 @@
   "Las ventanas con h=2,25 de los dormitorios y el salón son balconeras; las de los dormitorios 3 y 4, la cocina y el salón dan a galerías acristaladas.",
   "Los dormitorios principal y 2 tienen un pasillo propio de 0,97 y 0,93; el principal incluye el baño 1 y la zona de armario.",
   "Baño 1 de 2,57 x 1,59 con la ducha en el extremo este, separada por mampara; ventana de 0,75 (h 0,60).",
-  "Lavadero (estancia pequeña al sur de la cocina): sin cota de ancho, se le dan 1,00 y se comunica con la cocina por la línea azul.",
   "Pilar del baño 2 de 0,54 x 0,25, leído en la esquina sureste.",
-  "Galería oeste: «1,41» es el ancho hasta el salón con su muro de 0,30 incluido (interior 1,11); junto a la cocina, 0,55.",
   "Las cotas sitúan los dormitorios 1 y 2 alineados con la cocina por el oeste (0,57 más al oeste que el salón), aunque el boceto los dibuja alineados con el salón: mando las cotas. Si es al revés, alguna de 3,42 / 3,32 / 2,12 / 2,57 está mal.",
   "Salientes leídos del boceto: 1,37 x 0,19 en el baño 1 (de ahí 1,40 / 1,59), 0,70 x 0,28 en el baño 2, escalones de 0,36 y 0,51 en la galería este y 0,25 entre el dormitorio 2 y el baño 2.",
-  "Todas las puertas interiores de 0,80; la de entrada de 0,90."
+  "Todas las puertas interiores de 0,80; la de entrada de 0,90.",
+  "Galería oeste: 1,17 de ancho junto al salón y 0,55 junto a la cocina y la despensa.",
+  "Despensa de 0,71 x 1,30 entre la cocina y la galería; se comunica con la cocina por el hueco marcado en azul.",
+  "Balconera del salón (2,30) a 1,13 de la cara norte del salón (por debajo del pilar de 0,49 x 0,19).",
+  "Cota 1,65 de la galería oeste: desde el fondo de la despensa hasta la cocina; el muro entre despensa y cocina queda más grueso que un tabique."
  ]
 }

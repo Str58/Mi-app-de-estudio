@@ -25,7 +25,7 @@ NORMAL = 5.0    # peso de la cota de una estancia: casi intocable
 FLEX = 0.2      # peso de la cota de una estancia de circulacion / flexible: absorbe primero
 MURO = 0.6      # peso del espesor de un muro: absorbe despues, solo engordando (= saliente)
 TRAMO = 1.0     # peso de un tramo acotado {"cota": x}
-TOTAL = 0.5     # peso de una cota total de cadena
+TOTAL = 1.0     # peso de una cota total de cadena: por encima de los muros
 CIRC = ("pasillo", "distrib", "recib", "hall", "vestib", "entrada")
 
 
@@ -71,10 +71,9 @@ def resolver(spec, tabique=0.08):
     alternativas = []         # (indice_variable, [valores], id, eje)
 
     def flexible(r):
-        if "flexible" in r:
-            return bool(r["flexible"])
-        txt = (r["id"] + " " + r.get("nombre", "") + " " + r.get("tipo", "")).lower()
-        return any(k in txt for k in CIRC) or r.get("tipo") == "circulacion"
+        # toda cota escrita se respeta, tambien la de pasillos y vestibulos: solo absorbe lo que
+        # se marca expresamente como flexible (piezas sin medir); el resto lo absorben los muros
+        return bool(r.get("flexible", False))
 
     for i in ids:
         r = R[i]
@@ -122,6 +121,8 @@ def resolver(spec, tabique=0.08):
 
     anclas = {"x": set(), "y": set()}
     seg_n = 0
+    acotar = []  # (eje, coefs_inicio, coefs_fin, estancias de la cadena)
+    fachadas = []  # (eje, estancia, "ini"/"fin", nombre de fachada): caras que deben quedar en la fachada
     for nc, c in enumerate(spec.get("cadenas", []), 1):
         eje = c["eje"].lower()
         P, D = ("X", "W") if eje == "x" else ("Y", "H")
@@ -145,6 +146,8 @@ def resolver(spec, tabique=0.08):
                 if it.get("cota") not in ("?", None):
                     previas.append([{sl: 1}, _num(it["cota"]), TRAMO, f"{etiqueta}: tramo de {_fmt(_num(it['cota']))}", None])
                 ini, fin, nodo = {s0: 1}, {s0: 1, sl: 1}, f"seg{seg_n}"
+                if it.get("cota") not in ("?", None):
+                    acotar.append([eje, ini, fin, None, None, None])
             if piezas:
                 w = tabique if muro_pend is None else muro_pend
                 coef = dict(ini)
@@ -163,6 +166,12 @@ def resolver(spec, tabique=0.08):
         if not piezas:
             continue
         for clave, cara in (("desde", piezas[0][0]), ("hasta", piezas[-1][1])):
+            pieza = piezas[0][2] if clave == "desde" else piezas[-1][2]
+            if clave in c and isinstance(c[clave], str) and pieza in R:
+                try:
+                    _num(c[clave])
+                except ValueError:
+                    fachadas.append((eje, pieza, "ini" if clave == "desde" else "fin", c[clave]))
             if clave in c:
                 coefs, k0 = extremo(c[clave], eje)
                 coef = dict(cara)
@@ -175,7 +184,12 @@ def resolver(spec, tabique=0.08):
                     uf(eje, piezas[0][2] if clave == "desde" else piezas[-1][2], "F:" + str(c[clave]) if isinstance(c[clave], str) else str(c[clave]))
                     if isinstance(c[clave], dict):
                         uf(eje, piezas[0][2], c[clave]["estancia"])
+        rooms_c = [p_[2] for p_ in piezas if p_[2] in R]
+        for a_ in acotar:
+            if a_[3] is None:
+                a_[3] = rooms_c
         if "total" in c:
+            acotar.append([eje, piezas[0][0], piezas[-1][1], rooms_c, piezas[0][2], piezas[-1][2]])
             coef = dict(piezas[-1][1])
             for k2, x in piezas[0][0].items():
                 coef[k2] = coef.get(k2, 0) - x
@@ -331,18 +345,29 @@ def resolver(spec, tabique=0.08):
             if z is not None and z - grupo[-1] < 0.003:
                 grupo.append(z)
                 continue
-            m = round(sum(grupo) / len(grupo), 3)
+            m = round(sum(grupo) / len(grupo), 2)  # geometria exacta al centimetro
             for g_ in grupo:
                 mapa[(eje, round(g_, 6))] = m
             if z is not None:
                 grupo = [z]
-    snap = lambda eje, z: mapa.get((eje, round(z, 6)), round(z, 3))
+    snap = lambda eje, z: mapa.get((eje, round(z, 6)), round(z, 2))
     rects = {}
     for i in ids:
         # caras redondeadas al milimetro: dos caras que deben coincidir quedan identicas
+        # origen redondeado al cm y fin = origen + medida al cm: cada estancia mide exactamente su cota
         x0, y0 = snap("x", val(f"X:{i}")), snap("y", val(f"Y:{i}"))
-        x1, y1 = snap("x", val(f"X:{i}") + val(f"W:{i}")), snap("y", val(f"Y:{i}") + val(f"H:{i}"))
-        X, Y, W, H = x0, y0, round(x1 - x0, 3), round(y1 - y0, 3)
+        W, H = round(val(f"W:{i}"), 2), round(val(f"H:{i}"), 2)
+        # las estancias que tocan una fachada con nombre quedan exactamente en ella (sin escalones de 1 cm)
+        for eje_f, pieza, lado, nombre in fachadas:
+            if pieza != i:
+                continue
+            F = round(val("F:" + nombre), 2)
+            if eje_f == "x":
+                x0 = F if lado == "ini" else round(F - W, 2)
+            else:
+                y0 = F if lado == "ini" else round(F - H, 2)
+        x1, y1 = round(x0 + W, 2), round(y0 + H, 2)
+        X, Y = x0, y0
         if W <= 0.05 or H <= 0.05:
             errores.append(f"'{i}' sale con dimension nula o negativa ({_fmt(W)} x {_fmt(H)}): revisa sus cadenas")
             W, H = max(W, 0.1), max(H, 0.1)
@@ -364,7 +389,7 @@ def resolver(spec, tabique=0.08):
 
     def a_poligono(g, nombre):
         g = g.buffer(0)
-        if g.geom_type != "Polygon":
+        if g.geom_type != "Polygon" and len(getattr(g, "geoms", [])) > 1:
             errores.append(f"'{nombre}' queda partida en varios trozos: sus partes no se tocan")
             g = max(g.geoms, key=lambda q: q.area)
         g = g.simplify(0.0015)
@@ -392,6 +417,22 @@ def resolver(spec, tabique=0.08):
     out = dict(spec)
     out["estancias"] = nuevas + resto
     duenos = {p: r["id"] for r in ests if "union" in r for p in r["union"]}
+    ev = lambda cf: sum(val_ * x[k_] for k_, val_ in cf.items())
+    out["_cotas_cadenas"] = []
+    for eje_, ci, cf, rooms_c, ini_id, fin_id in acotar:
+        a_, b_ = ev(ci), ev(cf)
+        k_a, k_b = (0, 2) if eje_ == "x" else (1, 3)
+        a_ = rects0[ini_id].bounds[k_a] if ini_id in rects0 else snap(eje_, a_)
+        b_ = rects0[fin_id].bounds[k_b] if fin_id in rects0 else round(a_ + round(b_ - ev(ci), 2), 2)
+        rangos = [rects0[r_].bounds for r_ in rooms_c if r_ in rects0]
+        if not rangos:
+            continue
+        k0, k1 = (1, 3) if eje_ == "x" else (0, 2)
+        lo, hi = max(r_[k0] for r_ in rangos), min(r_[k1] for r_ in rangos)
+        if lo >= hi:
+            lo, hi = rangos[0][k0], rangos[0][k1]
+        out["_cotas_cadenas"].append({"eje": eje_, "a": round(a_, 2), "b": round(b_, 2),
+                                      "perp": round(lo + (hi - lo) * 0.25, 2)})
     out["_cotas_partes"] = [
         {"estancia": duenos.get(i, i), "rect": [round(z, 3) for z in rects0[i].bounds],
          "dx": R[i]["dx"] not in ("?", None), "dy": R[i]["dy"] not in ("?", None)} for i in ids]

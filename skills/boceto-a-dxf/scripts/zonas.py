@@ -74,6 +74,7 @@ rojo.thumbnail((2000, 2000))
 rojo.save(os.path.join(out, "cotas_rojas.png"))
 rojo.rotate(90, expand=True, fillcolor="white").save(os.path.join(out, "cotas_rojas_giro_izq.png"))
 rojo.rotate(-90, expand=True, fillcolor="white").save(os.path.join(out, "cotas_rojas_giro_der.png"))
+rojo.rotate(180, expand=True, fillcolor="white").save(os.path.join(out, "cotas_rojas_giro_180.png"))  # numeros boca abajo
 # 5. solo azul: ventanas (marcas, lineas sobre la pared y circulos alrededor de cotas rojas)
 azul = Image.eval(h, lambda p: 255 if 140 <= p <= 185 else 0)
 azul = Image.composite(azul, Image.new("L", im.size, 0), Image.eval(s, lambda p: 255 if p > 70 else 0))
