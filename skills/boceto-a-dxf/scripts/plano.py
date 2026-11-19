@@ -655,7 +655,17 @@ def genera(spec, salida):
     huecos, prims = [], []
 
     def hueco_exterior(e, s0, s1):
-        g = sbox(e.axis, s0, s1, e.c - sg(e) * 0.002, e.c + sg(e) * 0.8).intersection(exterior)
+        # profundidad = espesor real del muro en ese punto (no recorta muros vecinos)
+        medidas = []
+        for sm in (s0 + 0.02, (s0 + s1) / 2, s1 - 0.02):
+            ray = LineString([xy(e.axis, sm, e.c), xy(e.axis, sm, e.c + sg(e) * 0.8)]).intersection(exterior)
+            trozos = [ray] if ray.geom_type == "LineString" else list(getattr(ray, "geoms", []))
+            ini = Point(xy(e.axis, sm, e.c))
+            for t in trozos:
+                if t.distance(ini) < 1e-3:
+                    medidas.append(t.length)
+        prof = (min(medidas) if medidas else 0.8) + 0.002
+        g = sbox(e.axis, s0, s1, e.c - sg(e) * 0.002, e.c + sg(e) * prof).intersection(exterior)
         g = max(partes(g), key=lambda q: q.area) if partes(g) else g
         return g
 

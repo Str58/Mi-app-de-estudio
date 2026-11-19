@@ -22,9 +22,9 @@
     "pasos": [
      "E4.50",
      "N3.64",
-     "O3.47",
-     "S0.87",
-     "O1.03"
+     "O3.48",
+     "S1.12",
+     "O1.02"
     ]
    }
   },
@@ -32,7 +32,7 @@
    "id": "bano",
    "nombre": "Baño",
    "rect": {
-    "x": 0.97,
+    "x": 1.04,
     "y": 6.28,
     "dx": 3.46,
     "dy": 1.28
@@ -42,7 +42,7 @@
    "id": "cocina",
    "nombre": "Cocina",
    "rect": {
-    "x": 0.95,
+    "x": 1.02,
     "y": 7.64,
     "dx": 3.48,
     "dy": 2.46
@@ -53,8 +53,8 @@
    "nombre": "Galería",
    "tipo": "almacen",
    "rect": {
-    "x": 0,
-    "y": 5.41,
+    "x": -0.15,
+    "y": 5.38,
     "dx": 0.87,
     "dy": 3.25
    }
@@ -64,7 +64,7 @@
    "nombre": "Aseo",
    "tipo": "bano",
    "rect": {
-    "x": 0,
+    "x": -0.15,
     "y": 8.74,
     "dx": 0.87,
     "dy": 1.36
@@ -74,7 +74,7 @@
    "id": "despensa",
    "nombre": "Despensa",
    "rect": {
-    "x": 4.87,
+    "x": 4.58,
     "y": 8.51,
     "dx": 0.98,
     "dy": 1.59
@@ -90,13 +90,13 @@
      0
     ],
     "pasos": [
-     "E2.42",
+     "E2.13",
      "N5.27",
      "O0.24",
      "N3.16",
      "O1.00",
      "S5.95",
-     "O1.18"
+     "O0.89"
     ]
    }
   },
@@ -105,7 +105,7 @@
    "nombre": "Entrada",
    "tipo": "circulacion",
    "rect": {
-    "x": 5.05,
+    "x": 4.76,
     "y": -1.27,
     "dx": 1.06,
     "dy": 1.07
@@ -115,7 +115,7 @@
    "id": "dorm1",
    "nombre": "Dormitorio 1",
    "rect": {
-    "x": 5.95,
+    "x": 5.66,
     "y": 7.02,
     "dx": 4.79,
     "dy": 3.08
@@ -126,7 +126,7 @@
    "nombre": "Dormitorio 2",
    "contorno": {
     "inicio": [
-     6.19,
+     5.9,
      3.48
     ],
     "pasos": [
@@ -142,7 +142,7 @@
    "id": "dorm3",
    "nombre": "Dormitorio 3",
    "rect": {
-    "x": 6.19,
+    "x": 5.9,
     "y": 0,
     "dx": 4.55,
     "dy": 3.4
@@ -157,7 +157,7 @@
     0
    ],
    "a": [
-    10.74,
+    10.45,
     0
    ]
   }
@@ -203,7 +203,7 @@
    ],
    "lado": "S",
    "ancho": 0.8,
-   "desde": 0.16,
+   "desde": 0.05,
    "abre_hacia": "distribuidor",
    "bisagra": "O"
   },
@@ -320,7 +320,7 @@
   {
    "estancia": "salon",
    "lado": "O",
-   "ancho": 1.75,
+   "ancho": 1.5,
    "desde": 0.58
   },
   {
@@ -422,7 +422,7 @@
    "tipo": "cama",
    "estancia": "dorm1",
    "contra": "N",
-   "en": 8.54,
+   "en": 8.25,
    "ancho": 1.35,
    "fondo": 1.9
   },
@@ -437,7 +437,7 @@
    "tipo": "cama",
    "estancia": "dorm2",
    "contra": "S",
-   "en": 8.8,
+   "en": 8.51,
    "ancho": 1.35,
    "fondo": 1.9
   },
@@ -445,17 +445,19 @@
    "tipo": "cama",
    "estancia": "dorm3",
    "contra": "S",
-   "en": 8.5
+   "en": 8.21
   }
  ],
  "supuestos": [
-  "Baño: leo 1,28 m de fondo (la cota girada parece 1'58, pero solo con 1,28 cierran las tres cadenas verticales en 10,10 m).",
-  "Dormitorio 1: 4,79 m de ancho como el dormitorio 2 (el 4,96 no cabe entre el pasillo y la fachada).",
-  "Muro de carga entre el pasillo y la cocina, el baño y el salón: 0,37-0,44 m, que es lo que hace cuadrar las cotas del vestíbulo (2,46) y el pasillo (1,28).",
-  "La galería baja 0,87 m más que el baño y forma el entrante del salón (ancho 1,03 m); la ventana del salón queda en 1,75 m (0,44 + 1,75 + 0,58).",
-  "Vestíbulo: 2,48 m de fondo como el comedor (el boceto dice 2,60).",
-  "Pared sur, hacia el rellano: medianera de 0,20, con puerta de servicio y nicho de entrada de 1,06 x 1,07.",
-  "Cocina y baño ventilan a la galería: puerta-ventana de 0,80 en la cocina y ventana de 0,50 en el baño.",
+  "Tabiques de 0,08 en todo el interior; el del pasillo es uno solo y recto.",
+  "Muro de 0,30 entre la galería/aseo y la cocina, el baño y el salón (antigua fachada).",
+  "La galería y el aseo sobresalen 0,15 m de la fachada oeste para respetar 0,87 + 0,30 + 3,48. Así cuadra el entrante del salón: 1,03 de ancho, 2,52 de pared y ventana de 1,50 (0,44 + 1,50 + 0,58).",
+  "Vestíbulo de 2,13 de ancho: absorbe los 0,33 m que no cuadran (comedor 3,61 + 2,46 frente a salón 4,50 + pasillo 1,28, ambos encajados con los dormitorios).",
+  "Baño de 1,28 de fondo (la cota girada parece 1'58, pero solo con 1,28 cierran las tres cadenas verticales en 10,10 m).",
+  "Dormitorio 1 de 4,79 de ancho como el 2 (el 4,96 no cabe entre el pasillo y la fachada).",
+  "Vestíbulo de 2,48 de fondo como el comedor (el boceto dice 2,60).",
+  "Pared sur hacia el rellano: medianera de 0,20, con puerta de servicio y nicho de entrada de 1,06 x 1,07.",
+  "Cocina y baño ventilan a la galería: puerta-ventana de 0,80 y ventana de 0,50.",
   "Pilares de 0,25 x 0,20 en el baño y de 0,20 x 0,20 en la esquina del vestíbulo."
  ]
 }
