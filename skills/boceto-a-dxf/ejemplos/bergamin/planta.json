@@ -315,7 +315,8 @@
   {
    "estancia": "galeria",
    "lado": "O",
-   "ancho": 1.0
+   "ancho": 3.05,
+   "desde": 0.1
   },
   {
    "estancia": "salon",
@@ -458,6 +459,7 @@
   "Vestíbulo de 2,48 de fondo como el comedor (el boceto dice 2,60).",
   "Pared sur hacia el rellano: medianera de 0,20, con puerta de servicio y nicho de entrada de 1,06 x 1,07.",
   "Cocina y baño ventilan a la galería: puerta-ventana de 0,80 y ventana de 0,50.",
-  "Pilares de 0,25 x 0,20 en el baño y de 0,20 x 0,20 en la esquina del vestíbulo."
+  "Pilares de 0,25 x 0,20 en el baño y de 0,20 x 0,20 en la esquina del vestíbulo.",
+  "Galería: acristalamiento corrido de 3,05 en casi toda su pared de 3,25 (marcas en los extremos)."
  ]
 }

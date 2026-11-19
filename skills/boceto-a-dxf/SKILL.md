@@ -77,6 +77,7 @@ python3 SKILL_DIR/scripts/plano.py TRABAJO/planta.json TRABAJO/salida
 | Ventana sin cotas | Centrada en la pared de fachada de esa estancia: 1,20 en dormitorios, 1,50 a 2,00 en el salón, 1,00 en la cocina, 0,60 en el baño. |
 | Pasillo o recibidor sin cota de ancho | 1,00 (mínimo 0,90). |
 | Cocina abierta al salón (sin línea entre ambos) | Estancias pegadas, declaradas en `"abiertas"`. |
+| Marcas de hueco en los dos extremos de una pared (aunque no sean azules) | Acristalamiento corrido: ancho = pared − 0,10 a cada lado. Prevalece sobre un ancho escrito que no cuadre. |
 | Galería, tendedero o terraza cerrada | Su pared hacia las estancias interiores es la antigua fachada: **0,30**, que se deja como hueco entre ellas. |
 | Una cadena horizontal no cuadra con otra paralela | **Nunca engordar un tabique** para absorberlo: los tabiques son siempre de 0,08 y rectos. La diferencia va a la circulación (vestíbulo o pasillo). Si con eso la pieza queda con un ancho absurdo, va a la galería o al cuerpo saliente, y se anota. |
 | Hueco en un tabique sin dibujo de puerta | `"tipo":"paso"`. |
