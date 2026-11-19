@@ -3,13 +3,15 @@ INFORME DEL PLANO
 
 SUPERFICIES UTILES
   Dormitorio                      12,89 m2   (dormitorio)
-  Salón                           12,80 m2   (salon)
-  Pasillo                          9,35 m2   (circulacion)
+  Salón                           10,80 m2   (salon)
+  Pasillo                         12,02 m2   (circulacion)
   Baño                             6,12 m2   (bano)
-  Escalera                         3,94 m2   (circulacion)
-  Cocina                          16,15 m2   (cocina)
-  TOTAL UTIL                      61,25 m2
-  CONSTRUIDA (contorno)           73,02 m2
+  Escalera                         3,96 m2   (circulacion)
+  Cocina                          16,99 m2   (cocina)
+  Balcón                           1,45 m2   (terraza)
+  TOTAL UTIL                      62,78 m2
+  TERRAZAS                         1,45 m2
+  CONSTRUIDA (contorno)           76,73 m2
 
 ERRORES (0) - hay que corregirlos en el JSON:
   ninguno
@@ -17,22 +19,23 @@ ERRORES (0) - hay que corregirlos en el JSON:
 AVISOS (4) - revisar; si son correctos, explicarlos al entregar:
   A1. Macizo de muro de mas de 0,38 m de grueso: ¿falta una estancia, un patinillo o hay un descuadre de cotas?
   A2. Cota C11/C12: el boceto dice 0,81 y el plano da 0,91 (discrepancia del boceto, indicada en supuestos)
-  A3. Cota C25/C32: el boceto dice 3,86 y el plano da 4,49 (discrepancia del boceto, indicada en supuestos)
-  A4. Cota C42: el boceto dice 3,00 y el plano da 3,06 (discrepancia del boceto, indicada en supuestos)
+  A3. Cota C42: el boceto dice 3,00 y el plano da 3,06 (discrepancia del boceto, indicada en supuestos)
+  A4. Cota C46: el boceto dice 4,76 y el plano da 4,45 (discrepancia del boceto, indicada en supuestos)
 
-COTAS DEL BOCETO COMPROBADAS: 31 (28 cumplen, 3 no)
+COTAS DEL BOCETO COMPROBADAS: 33 (30 cumplen, 3 no)
   C11/C12: boceto 0,81 / plano 0,91  (no cuadra en el boceto)
-  C25/C32: boceto 3,86 / plano 4,49  (no cuadra en el boceto)
   C42: boceto 3,00 / plano 3,06  (no cuadra en el boceto)
+  C46: boceto 4,76 / plano 4,45  (no cuadra en el boceto)
 
 SUPUESTOS DE LECTURA DEL BOCETO:
   - Las estancias se dibujan con las cotas escritas; el boceto no está a escala.
-  - Ancho total 4,90 = pasillo 1,76 + tabique + baño 3,06; el salón empieza 0,41 al este del pasillo, así que mide 4,49 de ancho. El 3,86 escrito en el salón no encaja como ancho total.
-  - El salón tiene un entrante al oeste (bajo el dormitorio) de 1,44 de ancho, 0,47 más alto que el resto (escalón de 0,47); 3,05 desde ese escalón hasta la fachada este.
+  - Pasillo (corrección de Ester): desde el 3,52, 1,76 → 0,11 → 0,83 arriba (2,59 de ancho junto al baño); abajo, 0,71 → 0,37 → 0,31 → tramo inclinado + recto (0,45 de bajada) → muro de 0,84 de la cocina, con la puerta de la cocina.
+  - El pasillo mide 3,52 + 0,37 + 0,45 = 4,34 por el oeste (4,45 contando el 0,11); el 4,76 de inicio a fin no cuadra con esa suma (31 cm).
+  - Ancho total 5,73 = pasillo 2,59 + tabique + baño 3,06. Salón de 3,86 de ancho con entrante de 0,81 al oeste (3,86 − 3,05), 0,47 más hondo, bajo el dormitorio.
+  - Dormitorio 3,59 × 3,59, a 1,37 al este del escalón del salón.
+  - Cocina de 3,69 × 4,76, con un escalón en su esquina noroeste (el muro de 0,84 del pasillo). Balcón con salida de 1,12 a 1,16 del muro oeste; balcón de 1,25 × 1,16.
   - Columna este: cocina 4,76 + escalera 1,75 + baño 2,00 + salón 2,70, con tabiques de 0,08.
-  - Escalera en U de dos tramos de 0,82 con muro central de 0,11 (1,75 en total), abierta al pasillo; meseta junto a la pared este («es pared»). Largo de 2,25 tomado del dibujo.
-  - Ventana del dormitorio: 1,83 + 0,85 + 0,81 = 3,49, 10 cm menos que los 3,59 del dormitorio: es el error que indica la nota «todo +10 cm, error en medio». Se mantienen 1,83 y 0,85 y el lado este queda en 0,91.
-  - Baño: 3,06 abajo y 3,00 arriba; se dibuja 3,06.
-  - Pasillo: 3,52 por el oeste y 4,76 por el este, con escalones de 0,32 hacia la cocina; puerta de la cocina de 0,81 a 0,18.
-  - Cocina de 3,69 × 4,76 con balconera de 0,96 a 1,40 (1,12 + 0,28) del muro oeste.
+  - Escalera en U de dos tramos de 0,82 con muro central (1,75 en total), abierta al pasillo; meseta junto a la pared este («es pared»). Largo de 2,26 tomado del dibujo.
+  - Ventana del dormitorio: 1,83 + 0,85 + 0,81 = 3,49, 10 cm menos que los 3,59: es el error que indica la nota «todo +10 cm, error en medio»; el lado este queda en 0,91.
+  - Paso entre el pasillo y el salón: el tramo común mide 0,72 y se deja como hueco completo.
   - Es la planta +1: no se dibuja puerta de entrada.

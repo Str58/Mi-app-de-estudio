@@ -24,6 +24,9 @@ Resumen de las correcciones. El detalle y los ejemplos están en `lecciones_hist
 19. Unifamiliares: la escalera (recuadrada en amarillo) es una estancia de circulación abierta al pasillo y va en `escaleras` (tramos, muro central, meseta). Si una pared lleva la nota «es pared», es muro, no barandilla. Las letras rosas son las iniciales de las estancias (k cocina, b baño, d dormitorio, p pasillo, s salón). En una planta alta no hay puerta de entrada (`"sin_entrada": true`).
 20. Si una nota dice que la suma de los tramos difiere del total («todo +10 cm, error en medio»), se respetan el total y los extremos, y la diferencia se deja en el tramo central, marcándolo como `no_cuadra`.
 
+21. Los escalonados y las inclinaciones se dibujan **vértice a vértice** como `poligono`, siguiendo la secuencia de tramos (recto 0,71 → perpendicular 0,37 → 0,31 → inclinado + recto con 0,45 de bajada → 0,84). No se simplifican a un rectángulo y no se confunde un tramo de pared con una puerta (en Garmendia, el 0,83 y el 0,11 del pasillo eran tramos de pared) (h Garmendia).
+22. Una cocina o un salón con «salida» a balcón: el balcón es una estancia `terraza` exterior y la salida es una `balconera` con el ancho indicado.
+
 **Huecos**
 14. Puertas interiores de 0,80 y la de entrada de 0,90, salvo cota. No se estrechan: si no caben, la lectura está mal. Deben caber en un tramo de pared continuo (h12, h32). Si dos estancias comparten más de una pared, se indica el `lado` (h27).
 15. Azul sobre un tabique interior = cristalera (`"tipo": "cristalera"`). Un cuarto pequeño cerrado con cristalera junto al baño es la ducha (h33).

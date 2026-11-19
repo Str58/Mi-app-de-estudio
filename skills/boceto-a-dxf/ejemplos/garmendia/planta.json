@@ -7,19 +7,19 @@
    "tipo": "dormitorio",
    "poligono": [
     [
-     3.22,
+     4.05,
      12.0
     ],
     [
-     3.22,
+     4.05,
      15.59
     ],
     [
-     -0.37,
+     0.46,
      15.59
     ],
     [
-     -0.37,
+     0.46,
      12.0
     ]
    ]
@@ -30,27 +30,27 @@
    "tipo": "salon",
    "poligono": [
     [
-     4.9,
+     5.73,
      11.45
     ],
     [
-     4.9,
+     5.73,
      8.75
     ],
     [
-     0.41,
+     1.87,
      8.75
     ],
     [
-     0.41,
+     1.87,
      11.92
     ],
     [
-     1.85,
+     2.68,
      11.92
     ],
     [
-     1.85,
+     2.68,
      11.45
     ]
    ]
@@ -62,43 +62,63 @@
    "poligono": [
     [
      0,
-     8.67
+     8.56
+    ],
+    [
+     1.76,
+     8.56
     ],
     [
      1.76,
      8.67
     ],
     [
-     1.76,
+     2.59,
+     8.67
+    ],
+    [
+     2.59,
      6.59
     ],
     [
-     2.65,
+     3.47,
      6.59
     ],
     [
-     2.65,
-     3.91
+     3.47,
+     4.84
     ],
     [
-     1.21,
-     3.91
+     2.88,
+     4.84
     ],
     [
-     1.21,
-     4.83
+     2.88,
+     4.22
     ],
     [
-     0.94,
-     4.83
+     2.04,
+     4.22
     ],
     [
-     0.94,
-     5.15
+     2.04,
+     4.37
+    ],
+    [
+     1.02,
+     4.67
+    ],
+    [
+     0.71,
+     4.67
+    ],
+    [
+     0.71,
+     5.04
     ],
     [
      0,
-     5.15
+     5.04
     ]
    ]
   },
@@ -108,19 +128,19 @@
    "tipo": "bano",
    "poligono": [
     [
-     4.9,
+     5.73,
      6.67
     ],
     [
-     4.9,
+     5.73,
      8.67
     ],
     [
-     1.84,
+     2.67,
      8.67
     ],
     [
-     1.84,
+     2.67,
      6.67
     ]
    ]
@@ -131,19 +151,19 @@
    "tipo": "circulacion",
    "poligono": [
     [
-     4.9,
+     5.73,
      4.84
     ],
     [
-     4.9,
+     5.73,
      6.59
     ],
     [
-     2.65,
+     3.47,
      6.59
     ],
     [
-     2.65,
+     3.47,
      4.84
     ]
    ]
@@ -154,28 +174,51 @@
    "tipo": "cocina",
    "poligono": [
     [
-     1.21,
+     2.04,
      0
     ],
     [
-     4.9,
+     5.73,
      0
     ],
     [
-     4.9,
+     5.73,
      4.76
     ],
     [
-     2.73,
+     2.96,
      4.76
     ],
     [
-     2.73,
-     3.83
+     2.96,
+     4.14
     ],
     [
-     1.21,
-     3.83
+     2.04,
+     4.14
+    ]
+   ]
+  },
+  {
+   "id": "balcon",
+   "nombre": "Balcón",
+   "tipo": "terraza",
+   "poligono": [
+    [
+     4.385,
+     -1.46
+    ],
+    [
+     4.385,
+     -0.3
+    ],
+    [
+     3.135,
+     -0.3
+    ],
+    [
+     3.135,
+     -1.46
     ]
    ]
   }
@@ -189,9 +232,9 @@
  "escaleras": [
   {
    "rect": {
-    "x": 2.65,
+    "x": 3.47,
     "y": 4.84,
-    "dx": 2.25,
+    "dx": 2.26,
     "dy": 1.75
    },
    "eje": "x",
@@ -207,7 +250,7 @@
     "dorm",
     "salon"
    ],
-   "en": 1.15,
+   "desde": 0,
    "ancho": 0.8,
    "abre_hacia": "dorm"
   },
@@ -216,10 +259,8 @@
     "salon",
     "pasillo"
    ],
-   "desde": 0,
-   "ancho": 0.83,
-   "abre_hacia": "salon",
-   "bisagra": "O"
+   "ancho": "total",
+   "abre_hacia": "salon"
   },
   {
    "entre": [
@@ -236,10 +277,20 @@
     "cocina",
     "pasillo"
    ],
-   "desde": 0.18,
-   "ancho": 0.81,
+   "lado": "N",
+   "desde": 0.02,
+   "ancho": 0.8,
    "abre_hacia": "cocina",
    "bisagra": "O"
+  },
+  {
+   "entre": [
+    "cocina",
+    "balcon"
+   ],
+   "tipo": "balconera",
+   "desde": 0.065,
+   "ancho": 1.12
   }
  ],
  "ventanas": [
@@ -254,13 +305,6 @@
    "lado": "O",
    "desde_fin": 0.36,
    "ancho": 1.06
-  },
-  {
-   "estancia": "cocina",
-   "lado": "S",
-   "desde": 1.4,
-   "ancho": 0.96,
-   "tipo": "balconera"
   }
  ],
  "sin_entrada": true,
@@ -296,7 +340,7 @@
    "estancia": "cocina",
    "contra": "N",
    "desde_fin": 0,
-   "ancho": 2.17,
+   "ancho": 2.77,
    "fondo": 0.6
   },
   {
@@ -314,11 +358,11 @@
    "id": "C7",
    "valor": 0.85,
    "de": [
-    1.46,
+    2.29,
     15.59
    ],
    "a": [
-    2.31,
+    3.14,
     15.59
    ]
   },
@@ -326,11 +370,11 @@
    "id": "C10",
    "valor": 1.83,
    "de": [
-    -0.37,
+    0.46,
     15.59
    ],
    "a": [
-    1.46,
+    2.29,
     15.59
    ]
   },
@@ -338,11 +382,11 @@
    "id": "C11/C12",
    "valor": 0.81,
    "de": [
-    2.31,
+    3.14,
     15.59
    ],
    "a": [
-    3.22,
+    4.05,
     15.59
    ],
    "no_cuadra": true
@@ -363,11 +407,11 @@
    "id": "C17",
    "valor": 1.37,
    "de": [
-    1.85,
+    2.68,
     12.0
    ],
    "a": [
-    3.22,
+    4.05,
     12.0
    ]
   },
@@ -375,11 +419,11 @@
    "id": "C26",
    "valor": 0.47,
    "de": [
-    1.85,
+    2.68,
     11.45
    ],
    "a": [
-    1.85,
+    2.68,
     11.92
    ]
   },
@@ -388,11 +432,10 @@
    "valor": 3.86,
    "estancia": "salon",
    "eje": "x",
-   "frac": [
-    0.5,
-    0.3
-   ],
-   "no_cuadra": true
+   "en": [
+    3.5,
+    10.0
+   ]
   },
   {
    "id": "C33",
@@ -400,7 +443,7 @@
    "estancia": "salon",
    "eje": "y",
    "en": [
-    2.2,
+    3.0,
     10.0
    ]
   },
@@ -418,11 +461,11 @@
    "id": "C43",
    "valor": 3.05,
    "de": [
-    1.85,
+    2.68,
     11.45
    ],
    "a": [
-    4.9,
+    5.73,
     11.45
    ]
   },
@@ -430,11 +473,11 @@
    "id": "C29",
    "valor": 1.06,
    "de": [
-    0.41,
+    1.87,
     10.5
    ],
    "a": [
-    0.41,
+    1.87,
     11.56
    ]
   },
@@ -442,45 +485,47 @@
    "id": "C30",
    "valor": 0.36,
    "de": [
-    0.41,
+    1.87,
     11.56
    ],
    "a": [
-    0.41,
+    1.87,
     11.92
    ]
   },
   {
    "id": "C36",
-   "valor": 0.41,
+   "valor": 1.76,
    "de": [
     0,
-    8.67
+    8.56
    ],
    "a": [
-    0.41,
-    8.67
+    1.76,
+    8.56
    ]
   },
   {
    "id": "C36",
-   "valor": 1.76,
-   "estancia": "pasillo",
-   "eje": "x",
-   "en": [
-    0.8,
-    8.3
+   "valor": 0.11,
+   "de": [
+    1.76,
+    8.56
+   ],
+   "a": [
+    1.76,
+    8.67
    ]
   },
   {
    "id": "C37",
    "valor": 0.83,
    "de": [
-    0.41,
+    1.76,
     8.67
    ],
    "a": [
-    1.24,
+    2.59,
     8.67
    ]
   },
@@ -516,11 +561,11 @@
    "valor": 3.52,
    "de": [
     0,
-    8.67
+    8.56
    ],
    "a": [
     0,
-    5.15
+    5.04
    ]
   },
   {
@@ -529,19 +574,81 @@
    "estancia": "pasillo",
    "eje": "y",
    "en": [
-    1.7,
-    7.0
+    2.3,
+    6.0
+   ],
+   "no_cuadra": true
+  },
+  {
+   "id": "C51",
+   "valor": 0.71,
+   "de": [
+    0,
+    5.04
+   ],
+   "a": [
+    0.71,
+    5.04
+   ]
+  },
+  {
+   "id": "C53",
+   "valor": 0.37,
+   "de": [
+    0.71,
+    5.04
+   ],
+   "a": [
+    0.71,
+    4.67
+   ]
+  },
+  {
+   "id": "C53/C54",
+   "valor": 0.31,
+   "de": [
+    0.71,
+    4.67
+   ],
+   "a": [
+    1.02,
+    4.67
+   ]
+  },
+  {
+   "id": "C54",
+   "valor": 0.45,
+   "de": [
+    2.04,
+    4.67
+   ],
+   "a": [
+    2.04,
+    4.22
+   ],
+   "sin_cara": true
+  },
+  {
+   "id": "C54/C55",
+   "valor": 0.84,
+   "de": [
+    2.04,
+    4.22
+   ],
+   "a": [
+    2.88,
+    4.22
    ]
   },
   {
    "id": "C52",
    "valor": 0.82,
    "de": [
-    4.5,
+    5.4,
     4.84
    ],
    "a": [
-    4.5,
+    5.4,
     5.66
    ],
    "sin_cara": true
@@ -551,42 +658,6 @@
    "valor": 1.75,
    "estancia": "escalera",
    "eje": "y"
-  },
-  {
-   "id": "C53",
-   "valor": 0.32,
-   "de": [
-    0.94,
-    5.15
-   ],
-   "a": [
-    0.94,
-    4.83
-   ]
-  },
-  {
-   "id": "C55",
-   "valor": 0.18,
-   "de": [
-    1.21,
-    3.83
-   ],
-   "a": [
-    1.39,
-    3.83
-   ]
-  },
-  {
-   "id": "C55",
-   "valor": 0.81,
-   "de": [
-    1.39,
-    3.83
-   ],
-   "a": [
-    2.2,
-    3.83
-   ]
   },
   {
    "id": "C58",
@@ -612,39 +683,31 @@
    "id": "C60/C61",
    "valor": 1.12,
    "de": [
-    1.21,
+    3.2,
     0
    ],
    "a": [
-    2.33,
-    0
-   ],
-   "sin_cara": true
-  },
-  {
-   "id": "C60",
-   "valor": 0.28,
-   "de": [
-    2.33,
-    0
-   ],
-   "a": [
-    2.61,
-    0
-   ],
-   "sin_cara": true
-  },
-  {
-   "id": "C62/C63",
-   "valor": 0.96,
-   "de": [
-    2.61,
-    0
-   ],
-   "a": [
-    3.57,
+    4.32,
     0
    ]
+  },
+  {
+   "id": "C62",
+   "valor": 1.16,
+   "de": [
+    2.04,
+    0
+   ],
+   "a": [
+    3.2,
+    0
+   ]
+  },
+  {
+   "id": "C63",
+   "valor": 1.25,
+   "estancia": "balcon",
+   "eje": "x"
   }
  ],
  "cotas_descartadas": {
@@ -654,25 +717,24 @@
   "C28": "h=1,12: altura de la ventana",
   "C22/C23/C24/C34/C41/C44": "sin número (líneas de cota)",
   "C10/C12": "0,50 y 1,33 junto a la ventana del dormitorio: alturas (antepecho)",
-  "C31": "1,18 junto a la ventana del salón: no identificado",
   "C38/C39": "«4,5?» vertical en el salón: no identificado",
   "C49/C50": "1,51: largo del plato de ducha (mobiliario)",
-  "C51": "0,71 en el pasillo: no identificado",
-  "C54": "0,45 y 1,3 en los escalones del pasillo: no identificados",
   "C57": "0,60: fondo de la encimera",
   "C59": "2,88 en la cocina: no identificado",
-  "C62/C63": "1,16, 1,25 y 0,37 bajo la balconera: balcón exterior, no dibujado"
+  "C31": "1,18 junto a la ventana del salón: no identificado",
+  "C62/C63": "0,37 y la cota de 0,96 del óvalo junto al balcón: no identificados (el balcón tiene salida de 1,12)"
  },
  "supuestos": [
   "Las estancias se dibujan con las cotas escritas; el boceto no está a escala.",
-  "Ancho total 4,90 = pasillo 1,76 + tabique + baño 3,06; el salón empieza 0,41 al este del pasillo, así que mide 4,49 de ancho. El 3,86 escrito en el salón no encaja como ancho total.",
-  "El salón tiene un entrante al oeste (bajo el dormitorio) de 1,44 de ancho, 0,47 más alto que el resto (escalón de 0,47); 3,05 desde ese escalón hasta la fachada este.",
+  "Pasillo (corrección de Ester): desde el 3,52, 1,76 → 0,11 → 0,83 arriba (2,59 de ancho junto al baño); abajo, 0,71 → 0,37 → 0,31 → tramo inclinado + recto (0,45 de bajada) → muro de 0,84 de la cocina, con la puerta de la cocina.",
+  "El pasillo mide 3,52 + 0,37 + 0,45 = 4,34 por el oeste (4,45 contando el 0,11); el 4,76 de inicio a fin no cuadra con esa suma (31 cm).",
+  "Ancho total 5,73 = pasillo 2,59 + tabique + baño 3,06. Salón de 3,86 de ancho con entrante de 0,81 al oeste (3,86 − 3,05), 0,47 más hondo, bajo el dormitorio.",
+  "Dormitorio 3,59 × 3,59, a 1,37 al este del escalón del salón.",
+  "Cocina de 3,69 × 4,76, con un escalón en su esquina noroeste (el muro de 0,84 del pasillo). Balcón con salida de 1,12 a 1,16 del muro oeste; balcón de 1,25 × 1,16.",
   "Columna este: cocina 4,76 + escalera 1,75 + baño 2,00 + salón 2,70, con tabiques de 0,08.",
-  "Escalera en U de dos tramos de 0,82 con muro central de 0,11 (1,75 en total), abierta al pasillo; meseta junto a la pared este («es pared»). Largo de 2,25 tomado del dibujo.",
-  "Ventana del dormitorio: 1,83 + 0,85 + 0,81 = 3,49, 10 cm menos que los 3,59 del dormitorio: es el error que indica la nota «todo +10 cm, error en medio». Se mantienen 1,83 y 0,85 y el lado este queda en 0,91.",
-  "Baño: 3,06 abajo y 3,00 arriba; se dibuja 3,06.",
-  "Pasillo: 3,52 por el oeste y 4,76 por el este, con escalones de 0,32 hacia la cocina; puerta de la cocina de 0,81 a 0,18.",
-  "Cocina de 3,69 × 4,76 con balconera de 0,96 a 1,40 (1,12 + 0,28) del muro oeste.",
+  "Escalera en U de dos tramos de 0,82 con muro central (1,75 en total), abierta al pasillo; meseta junto a la pared este («es pared»). Largo de 2,26 tomado del dibujo.",
+  "Ventana del dormitorio: 1,83 + 0,85 + 0,81 = 3,49, 10 cm menos que los 3,59: es el error que indica la nota «todo +10 cm, error en medio»; el lado este queda en 0,91.",
+  "Paso entre el pasillo y el salón: el tramo común mide 0,72 y se deja como hueco completo.",
   "Es la planta +1: no se dibuja puerta de entrada."
  ]
 }
