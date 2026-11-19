@@ -11,7 +11,8 @@ Si Ester da instrucciones nuevas sobre sus bocetos, esas instrucciones prevalece
 ## Reglas de oro
 1. **No preguntar nunca.** Toda ambigüedad se resuelve con la tabla de decisiones de abajo, se dibuja y se anota en `"supuestos"`.
 2. **Menos de 5 minutos.** No escribas código de geometría: el motor `scripts/plano.py` ya dibuja, comprueba y exporta. Tu trabajo es **leer el boceto y escribir un JSON**.
-3. **No se entrega con errores.** Solo se entrega cuando el informe da **0 errores** y cada aviso está revisado.
+3. **Todas las cotas del boceto deben estar en el plano.** Haz una lista numerada con cada cota roja (leída en las cuatro orientaciones), asígnala a un tramo y, al final, comprueba que aparece en `plano_cotas.png`. Si falta alguna, añádela en `"cotas"`. Si una cota no cierra, no la fuerces: indícalo (lecciones 28 y 29).
+4. **No se entrega con errores.** Solo se entrega cuando el informe da **0 errores** y cada aviso está revisado.
 
 ## Flujo (con tiempos objetivo)
 **0. Preparar (unos 10 s).** Lee `references/lecciones.md`: son correcciones de Ester que prevalecen sobre todo lo demás. `SKILL_DIR` es la carpeta de esta skill. El motor instala solo sus dependencias si faltan.

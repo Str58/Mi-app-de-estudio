@@ -6,65 +6,20 @@
    "nombre": "Cocina",
    "poligono": [
     [
-     1.72,
+     2.07,
      0.0
     ],
     [
-     0.0,
-     0.0
+     2.07,
+     3.02
     ],
     [
      0.0,
      3.02
     ],
     [
-     1.72,
-     3.02
-    ]
-   ]
-  },
-  {
-   "id": "bano",
-   "nombre": "Baño",
-   "poligono": [
-    [
-     6.37,
-     3.08
-    ],
-    [
-     5.25,
-     3.08
-    ],
-    [
-     5.25,
-     4.82
-    ],
-    [
-     6.37,
-     4.82
-    ]
-   ]
-  },
-  {
-   "id": "caldera",
-   "nombre": "Cuarto de caldera",
-   "tipo": "almacen",
-   "poligono": [
-    [
-     6.54,
-     5.98
-    ],
-    [
-     5.25,
-     5.98
-    ],
-    [
-     5.25,
-     7.14
-    ],
-    [
-     6.54,
-     7.14
+     0.0,
+     0.0
     ]
    ]
   },
@@ -74,7 +29,15 @@
    "tipo": "salon",
    "poligono": [
     [
-     1.8,
+     5.52,
+     0.0
+    ],
+    [
+     2.15,
+     0.0
+    ],
+    [
+     2.15,
      3.1
     ],
     [
@@ -86,81 +49,161 @@
      4.02
     ],
     [
-     1.4,
+     0.8,
      4.02
     ],
     [
-     1.4,
-     7.14
+     0.8,
+     3.99
     ],
     [
-     4.95,
-     7.14
+     1.83,
+     3.99
     ],
     [
-     4.95,
-     5.9
+     1.83,
+     8.02
     ],
     [
-     6.54,
-     5.9
+     5.44,
+     8.02
     ],
     [
-     6.54,
-     4.9
+     5.44,
+     6.78
     ],
     [
-     4.95,
-     4.9
+     6.88,
+     6.78
     ],
     [
-     4.95,
+     6.88,
+     5.78
+    ],
+    [
+     5.44,
+     5.78
+    ],
+    [
+     5.44,
      3.88
     ],
     [
-     5.17,
+     5.52,
      3.88
+    ]
+   ]
+  },
+  {
+   "id": "bano",
+   "nombre": "Baño",
+   "poligono": [
+    [
+     6.64,
+     3.96
     ],
     [
-     5.17,
-     0.0
+     5.52,
+     3.96
     ],
     [
-     1.8,
-     0.0
+     5.52,
+     4.68
+    ],
+    [
+     5.52,
+     5.7
+    ],
+    [
+     6.88,
+     5.7
+    ],
+    [
+     6.88,
+     4.68
+    ],
+    [
+     6.64,
+     4.68
+    ]
+   ]
+  },
+  {
+   "id": "caldera",
+   "nombre": "Cuarto de caldera",
+   "tipo": "almacen",
+   "poligono": [
+    [
+     6.88,
+     8.02
+    ],
+    [
+     6.88,
+     6.86
+    ],
+    [
+     6.13,
+     6.86
+    ],
+    [
+     6.13,
+     6.88
+    ],
+    [
+     5.52,
+     6.88
+    ],
+    [
+     5.52,
+     8.02
+    ],
+    [
+     6.13,
+     8.02
     ]
    ]
   }
  ],
  "pilares": [
   {
-   "x": 2.44,
-   "y": 3.88,
-   "dx": 1.6,
+   "x": 2.87,
+   "y": 3.99,
+   "dx": 1.3,
    "dy": 0.37
   },
   {
-   "x": 1.4,
-   "y": 3.88,
+   "x": 1.83,
+   "y": 3.99,
    "dx": 0.32,
    "dy": 0.38
   },
   {
-   "x": 4.82,
-   "y": 3.88,
+   "x": 5.17,
+   "y": 4.24,
    "dx": 0.35,
    "dy": 0.53
   },
   {
-   "estancia": "caldera",
-   "contra": "N",
-   "desde": 0.61,
-   "dx": 0.08,
+   "x": 5.52,
+   "y": 4.24,
+   "dx": 0.19,
+   "dy": 0.54
+  },
+  {
+   "x": 5.41,
+   "y": 7.42,
+   "dx": 0.03,
+   "dy": 0.6
+  },
+  {
+   "x": 6.13,
+   "y": 7.57,
+   "dx": 0.07,
    "dy": 0.45
   },
   {
-   "estancia": "salon",
-   "esquina": "SE",
+   "x": 5.3,
+   "y": 0,
    "dx": 0.22,
    "dy": 0.22
   }
@@ -172,19 +215,20 @@
     "exterior"
    ],
    "lado": "O",
+   "en": 3.56,
    "ancho": 0.8,
    "abre_hacia": "salon",
-   "en": 3.56
+   "bisagra": "N"
   },
   {
    "entre": [
     "salon",
     "cocina"
    ],
+   "lado": "S",
    "desde": 0.26,
    "abre_hacia": "cocina",
-   "bisagra": "O",
-   "lado": "S"
+   "bisagra": "O"
   },
   {
    "entre": [
@@ -201,30 +245,33 @@
     "caldera"
    ],
    "tipo": "corredera",
-   "ancho": 0.8,
-   "desde": 0.1
+   "ancho": 0.7,
+   "desde": 0.03
   }
  ],
  "ventanas": [
   {
+   "estancia": "salon",
+   "lado": "E",
+   "en": 6.28,
+   "ancho": 1.0,
+   "desde": 0,
+   "tipo": "balconera"
+  },
+  {
+   "estancia": "salon",
+   "lado": "E",
+   "en": 1.5,
+   "ancho": 0.95,
+   "desde": 0.83,
+   "tipo": "balconera"
+  },
+  {
    "estancia": "bano",
    "lado": "E",
+   "en": 4.3,
    "ancho": 0.5,
-   "desde": 0.2
-  },
-  {
-   "estancia": "salon",
-   "lado": "E",
-   "ancho": 0.95,
-   "tipo": "balconera",
-   "en": 1.5
-  },
-  {
-   "estancia": "salon",
-   "lado": "E",
-   "ancho": 0.91,
-   "en": 5.45,
-   "tipo": "balconera"
+   "desde": 0.05
   }
  ],
  "mobiliario": [
@@ -237,144 +284,226 @@
    "fondo": 0.55
   },
   {
-   "tipo": "rect",
-   "estancia": "caldera",
-   "contra": "N",
-   "desde_fin": 0.05,
-   "ancho": 0.45,
-   "fondo": 0.35
-  },
-  {
    "tipo": "plato_ducha",
    "estancia": "bano",
-   "contra": "S",
-   "desde": 0,
-   "ancho": 1.12,
-   "fondo": 0.75
+   "contra": "E",
+   "en": 5.19,
+   "ancho": 1.0,
+   "fondo": 0.6
   },
   {
    "tipo": "inodoro",
    "estancia": "bano",
    "contra": "O",
-   "desde": 0.9
+   "en": 5.3
   },
   {
    "tipo": "lavabo",
    "estancia": "bano",
-   "contra": "E",
-   "desde": 0.9,
+   "contra": "S",
+   "desde": 0.35,
    "ancho": 0.6,
    "fondo": 0.4
+  },
+  {
+   "tipo": "rect",
+   "estancia": "caldera",
+   "contra": "N",
+   "desde_fin": 0.1,
+   "ancho": 0.45,
+   "fondo": 0.35
   }
  ],
  "supuestos": [
-  "Estancia grande = recibidor + salón + zona sur hasta la fachada (no hay muro que la separe); dentro, el pilar o muro de carga de 1,60 x 0,37.",
-  "Machón de 0,32 x 0,38 al pie de la pared oeste del salón; caja de 0,35 x 0,53 junto al baño.",
-  "La cota 3,88 va desde la fachada sur hasta la cara inferior del pilar; el salón mide 2,89 desde la cara superior del pilar.",
-  "Cuarto noreste con la caldera Saunier Duval: 0,61 + 0,68 con tabique parcial.",
-  "Las líneas azules del baño y del cuarto de caldera hacia el salón = puertas correderas.",
-  "La franja del salón hasta la balconera este sale de 0,91; la balconera la ocupa entera (el boceto dice 1,00).",
-  "Cocina: 1,72 de ancho, que sale de 5,17 − 3,37 − tabique (el boceto no lo acota)."
+  "Estancia grande = recibidor + pasillo + salón + zona sur (sin muros entre ellos). Recibidor de 0,80 × 0,92 que se estrecha a 0,89 hasta el paso del salón.",
+  "Pilar o muro de carga de 1,30 × 0,37, a 0,72 del machón (0,32 × 0,38) y a 1,00 del pilar de bajantes; su largo sale de 5,17 − 0,72 − 1,00.",
+  "Pilar de bajantes junto al baño: 0,35 × 0,53 hacia el salón y 0,19 × 0,54 hacia dentro del baño, a 0,28 sobre el fondo del baño.",
+  "Baño: 1,12 de ancho en la parte de la ventana (0,50 × 0,50) y 1,37 (1,12 + 0,22, más 3 cm de alicatado para llegar a la fachada) en el resto; 1,74 de fondo.",
+  "Cuarto de caldera: 0,61 + tabique parcial + 0,68 = 1,37 × 1,16; pilar de 3 cm en su muro oeste (salón de 3,58 arriba y 3,61 abajo).",
+  "Cocina: 2,07 de ancho (sale de las cadenas: 5,17 − 1,00 − 0,72 − 1,30 − 0,08) × 3,02; puerta a 0,26 desde el muro oeste.",
+  "Franja de la balconera: 1,00, con la balconera de 1,00 a todo lo ancho.",
+  "La cota 2,89 del salón no cuadra: con baño 1,74 + franja 1,00 (balconera de 1,00) + caldera 1,16 y el pilar de bajantes a 0,28 sobre el fondo del baño, el salón mide 3,25 desde ese pilar. Si el 2,89 es correcto, alguna de esas cotas está mal."
  ],
- "_cotas_cadenas": [
+ "muros_exteriores": [
   {
-   "eje": "x",
-   "a": -0.0,
-   "b": 5.17,
-   "perp": 3.29
+   "lado": "E",
+   "estancia": "bano",
+   "tipo": "cerramiento"
   },
   {
-   "eje": "x",
-   "a": 1.4,
-   "b": 6.54,
-   "perp": 5.15
+   "lado": "S",
+   "de": [
+    6.64,
+    4.68
+   ],
+   "a": [
+    6.88,
+    4.68
+   ],
+   "tipo": "cerramiento",
+   "espesor": 0.08
   }
  ],
- "_macizos": [
-  [
-   6.37,
-   3.08,
-   6.54,
-   4.82
-  ]
- ],
- "_cotas_partes": [
+ "cotas": [
   {
-   "estancia": "cocina",
-   "rect": [
-    0.0,
-    0.0,
-    1.72,
-    3.02
+   "de": [
+    0,
+    3.6
    ],
-   "dx": false,
-   "dy": true
+   "a": [
+    0.8,
+    3.6
+   ]
   },
   {
-   "estancia": "bano",
-   "rect": [
-    5.25,
-    3.08,
-    6.37,
-    4.82
+   "de": [
+    0.4,
+    3.1
    ],
-   "dx": true,
-   "dy": true
-  },
-  {
-   "estancia": "caldera",
-   "rect": [
-    5.25,
-    5.98,
-    6.54,
-    7.14
-   ],
-   "dx": true,
-   "dy": true
-  },
-  {
-   "estancia": "salon",
-   "rect": [
-    1.8,
-    -0.0,
-    5.17,
-    3.88
-   ],
-   "dx": true,
-   "dy": true
-  },
-  {
-   "estancia": "salon",
-   "rect": [
-    -0.0,
-    3.1,
-    1.8,
+   "a": [
+    0.4,
     4.02
-   ],
-   "dx": false,
-   "dy": true
+   ]
   },
   {
-   "estancia": "salon",
-   "rect": [
-    1.4,
-    3.88,
-    4.95,
-    7.14
+   "de": [
+    1.2,
+    3.1
    ],
-   "dx": true,
-   "dy": true
+   "a": [
+    1.2,
+    3.99
+   ]
   },
   {
-   "estancia": "salon",
-   "rect": [
-    4.95,
-    4.9,
-    6.54,
-    5.9
+   "de": [
+    2.15,
+    1.0
    ],
-   "dx": false,
-   "dy": true
+   "a": [
+    5.52,
+    1.0
+   ]
+  },
+  {
+   "de": [
+    5.0,
+    0
+   ],
+   "a": [
+    5.0,
+    3.88
+   ]
+  },
+  {
+   "de": [
+    2.15,
+    4.17
+   ],
+   "a": [
+    2.87,
+    4.17
+   ]
+  },
+  {
+   "de": [
+    4.17,
+    4.17
+   ],
+   "a": [
+    5.17,
+    4.17
+   ]
+  },
+  {
+   "de": [
+    1.83,
+    6.3
+   ],
+   "a": [
+    6.88,
+    6.3
+   ]
+  },
+  {
+   "de": [
+    1.83,
+    7.7
+   ],
+   "a": [
+    5.41,
+    7.7
+   ]
+  },
+  {
+   "de": [
+    1.83,
+    7.2
+   ],
+   "a": [
+    5.44,
+    7.2
+   ]
+  },
+  {
+   "de": [
+    5.52,
+    4.1
+   ],
+   "a": [
+    6.64,
+    4.1
+   ]
+  },
+  {
+   "de": [
+    5.8,
+    6.88
+   ],
+   "a": [
+    5.8,
+    8.02
+   ]
+  },
+  {
+   "de": [
+    6.5,
+    6.86
+   ],
+   "a": [
+    6.5,
+    8.02
+   ]
+  },
+  {
+   "de": [
+    5.1,
+    0.22
+   ],
+   "a": [
+    5.1,
+    1.05
+   ]
+  },
+  {
+   "de": [
+    5.3,
+    4.24
+   ],
+   "a": [
+    5.3,
+    4.77
+   ]
+  },
+  {
+   "de": [
+    5.62,
+    4.24
+   ],
+   "a": [
+    5.62,
+    4.78
+   ]
   }
  ]
 }

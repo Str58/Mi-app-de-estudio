@@ -87,6 +87,7 @@ Ejemplo real completo: `ejemplos/bergamin/planta_cadenas.json`.
   "control": {"exterior_dx": 10.6, "exterior_dy": 8.3, "interior_dx": 10.0, "interior_dy": 7.7},  // cotas totales del boceto
   "rotular_nombres": true,
   "acotar": true,            // capa COTAS: luces interiores, huecos y totales (false = sin cotas)
+  "cotas": [{"de":[x1,y1],"a":[x2,y2],"desp":0.3}],   // opcional: cotas explícitas del boceto que el motor no genere solo
   "supuestos": ["texto de cada decisión tomada al leer el boceto"]
 }
 ```
@@ -181,6 +182,9 @@ Tipos y medidas por defecto (ancho × fondo, en m). El dibujo sigue el estilo de
 Colocación: `contra` es la pared en la que se apoya la parte trasera del mueble (el cabecero, el respaldo o la cisterna). `en` es la coordenada absoluta de su centro a lo largo de esa pared y sirve para elegir el tramo de pared en estancias en L. `sep` es la separación respecto a la pared; por ejemplo, la mesa de centro va a 1,25–1,35 del muro del sofá.
 
 `ancho` y `fondo` sustituyen a las medidas por defecto. El ancho se mide a lo largo de la pared y el fondo, hacia dentro de la estancia.
+
+## Cotas explícitas (`"cotas"`)
+Cada entrada dibuja una cota alineada entre `de` y `a` (en metros, en coordenadas de la planta). Si la diferencia en x es mayor o igual que la diferencia en y, la cota es horizontal; si no, es vertical. `desp` desplaza la línea de cota en perpendicular (+ arriba o a la derecha). Se dibujan siempre, no se descartan como duplicadas y van en la capa COTAS. Úsalas para reproducir **toda** cota del boceto que no salga sola (estrechamientos, pilares, fondos parciales). Funcionan en modo de coordenadas y en modo cadenas.
 
 ## Qué audita el motor
 **Errores (E#)**: la entrega queda bloqueada hasta corregirlos.

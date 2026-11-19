@@ -2,28 +2,25 @@ INFORME DEL PLANO
 ============================================================
 
 SUPERFICIES UTILES
-  Cocina                           5,19 m2   (cocina)
-  Baño                             1,95 m2   (bano)
-  Cuarto de caldera                1,46 m2   (almacen)
-  Salón                           27,01 m2   (salon)
-  TOTAL UTIL                      35,61 m2
-  CONSTRUIDA (contorno)           44,94 m2
+  Cocina                           6,25 m2   (cocina)
+  Salón                           30,55 m2   (salon)
+  Baño                             2,09 m2   (bano)
+  Cuarto de caldera                1,53 m2   (almacen)
+  TOTAL UTIL                      40,43 m2
+  CONSTRUIDA (contorno)           49,66 m2
 
 ERRORES (0) - hay que corregirlos en el JSON:
   ninguno
 
-AVISOS (5) - revisar; si son correctos, explicarlos al entregar:
-  A1. Descuadre: cota dx de 'salon_main' (3,58) no cuadra con el resto; queda en 3,55 (-0,03). Si el boceto es correcto, revisa otra cota de esa cadena.
-  A2. Saliente: sur - baño: muro de fachada E junto a 'bano' pasa de 0,00 a 0,17 (+0,17) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
-  A3. Descuadre: salón 5,05: total 5,05 (5,05) no cuadra con el resto; queda en 5,14 (+0,09). Si el boceto es correcto, revisa otra cota de esa cadena.
-  A4. Ventana 3 de 'salon' se salia de la pared: desplazada 0,05 m
-  A5. Macizo de muro de mas de 0,38 m de grueso: ¿falta una estancia, un patinillo o hay un descuadre de cotas?
+AVISOS (1) - revisar; si son correctos, explicarlos al entregar:
+  A1. Quiebro de 3 cm en el contorno exterior: probable descuadre de cotas
 
 SUPUESTOS DE LECTURA DEL BOCETO:
-  - Estancia grande = recibidor + salón + zona sur hasta la fachada (no hay muro que la separe); dentro, el pilar o muro de carga de 1,60 x 0,37.
-  - Machón de 0,32 x 0,38 al pie de la pared oeste del salón; caja de 0,35 x 0,53 junto al baño.
-  - La cota 3,88 va desde la fachada sur hasta la cara inferior del pilar; el salón mide 2,89 desde la cara superior del pilar.
-  - Cuarto noreste con la caldera Saunier Duval: 0,61 + 0,68 con tabique parcial.
-  - Las líneas azules del baño y del cuarto de caldera hacia el salón = puertas correderas.
-  - La franja del salón hasta la balconera este sale de 0,91; la balconera la ocupa entera (el boceto dice 1,00).
-  - Cocina: 1,72 de ancho, que sale de 5,17 − 3,37 − tabique (el boceto no lo acota).
+  - Estancia grande = recibidor + pasillo + salón + zona sur (sin muros entre ellos). Recibidor de 0,80 × 0,92 que se estrecha a 0,89 hasta el paso del salón.
+  - Pilar o muro de carga de 1,30 × 0,37, a 0,72 del machón (0,32 × 0,38) y a 1,00 del pilar de bajantes; su largo sale de 5,17 − 0,72 − 1,00.
+  - Pilar de bajantes junto al baño: 0,35 × 0,53 hacia el salón y 0,19 × 0,54 hacia dentro del baño, a 0,28 sobre el fondo del baño.
+  - Baño: 1,12 de ancho en la parte de la ventana (0,50 × 0,50) y 1,37 (1,12 + 0,22, más 3 cm de alicatado para llegar a la fachada) en el resto; 1,74 de fondo.
+  - Cuarto de caldera: 0,61 + tabique parcial + 0,68 = 1,37 × 1,16; pilar de 3 cm en su muro oeste (salón de 3,58 arriba y 3,61 abajo).
+  - Cocina: 2,07 de ancho (sale de las cadenas: 5,17 − 1,00 − 0,72 − 1,30 − 0,08) × 3,02; puerta a 0,26 desde el muro oeste.
+  - Franja de la balconera: 1,00, con la balconera de 1,00 a todo lo ancho.
+  - La cota 2,89 del salón no cuadra: con baño 1,74 + franja 1,00 (balconera de 1,00) + caldera 1,16 y el pilar de bajantes a 0,28 sobre el fondo del baño, el salón mide 3,25 desde ese pilar. Si el 2,89 es correcto, alguna de esas cotas está mal.

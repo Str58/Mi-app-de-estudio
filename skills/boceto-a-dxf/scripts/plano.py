@@ -1043,7 +1043,7 @@ def genera(spec, salida):
         prims.append(dict(L="PATINILLOS", k="pl", pts=[(b[0], b[3]), (b[2], b[1])], cerr=False))
 
     cotas = calcula_cotas(E, ventanas, puertas, exterior, spec.get("_cotas_partes", []),
-                          spec.get("_cotas_cadenas", []), pilares) if spec.get("acotar", True) else []
+                          spec.get("_cotas_cadenas", []), pilares, spec.get("cotas", [])) if spec.get("acotar", True) else []
     os.makedirs(salida, exist_ok=True)
     escribe_dxf(os.path.join(salida, "plano.dxf"), muros, prims, cotas)
     escribe_png(os.path.join(salida, "plano.png"), muros, E, prims, aud, spec.get("titulo", "Plano"))
@@ -1055,7 +1055,7 @@ def genera(spec, salida):
 
 
 # --------------------------------------------------------------------- cotas
-def calcula_cotas(E, ventanas, puertas, exterior, partes_cad=(), cadenas_cot=(), pilares=()):
+def calcula_cotas(E, ventanas, puertas, exterior, partes_cad=(), cadenas_cot=(), pilares=(), explicitas=()):
     """Cotas lineales en metros: estancias, ventanas y totales (las puertas no se acotan).
     Cada cota: p1, p2 (puntos medidos), base (punto por donde pasa la linea) y ang."""
     cotas = []
@@ -1080,6 +1080,14 @@ def calcula_cotas(E, ventanas, puertas, exterior, partes_cad=(), cadenas_cot=(),
             return dict(p1=(x1, y1), p2=(x2, y2), base=(x1, y1), ang=0 if horizontal else 90)
         return None
 
+    # cotas explicitas del JSON (las del boceto que no salen solas): van primero y nunca se descartan
+    for ce in explicitas:
+        (x1, y1), (x2, y2) = [tuple(num(z) for z in pt) for pt in (ce["de"], ce["a"])]
+        d_ = num(ce.get("desp", 0))
+        if abs(x2 - x1) >= abs(y2 - y1):
+            cotas.append(dict(p1=(x1, y1), p2=(x2, y1), base=(x1, y1 + d_), ang=0))
+        else:
+            cotas.append(dict(p1=(x1, y1), p2=(x1, y2), base=(x1 + d_, y1), ang=90))
     # estancias del modo cadenas: se acota cada parte con la medida del boceto, por dentro
     por_estancia = {}
     for pc in partes_cad:
@@ -1217,7 +1225,7 @@ def calcula_cotas(E, ventanas, puertas, exterior, partes_cad=(), cadenas_cot=(),
         k = 0 if c["ang"] == 0 else 1
         a, b = sorted((c["p1"][k], c["p2"][k]))
         perp = c["base"][1 - k]
-        if any(c["ang"] == v[0] and abs(a - v[1]) < 0.015 and abs(b - v[2]) < 0.015 and abs(perp - v[3]) < 3.0
+        if any(c["ang"] == v[0] and abs(a - v[1]) < 0.004 and abs(b - v[2]) < 0.004 and abs(perp - v[3]) < 3.0
                for v in vistas):
             continue
         vistas.append((c["ang"], a, b, perp))
