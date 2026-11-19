@@ -22,6 +22,14 @@ import os
 import re
 import sys
 
+import importlib.util
+import subprocess
+
+_FALTAN = [p for m, p in (("ezdxf", "ezdxf"), ("shapely", "shapely"), ("matplotlib", "matplotlib"),
+                          ("numpy", "numpy")) if importlib.util.find_spec(m) is None]
+if _FALTAN:  # instalacion automatica la primera vez
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", *_FALTAN], check=False)
+
 from shapely.geometry import Polygon, box, Point, LineString
 from shapely.geometry.polygon import orient
 from shapely.ops import unary_union, polylabel
@@ -342,6 +350,8 @@ def dibujo_mueble(t, W, D):
 # --------------------------------------------------------------------- motor
 def genera(spec, salida):
     aud = Auditoria()
+    for m in spec.pop("_avisos_cadenas", []):
+        aud.a(m)
     esp = dict(ESP_DEF)
     esp.update({k: num(v) for k, v in spec.get("espesores", {}).items()})
     ESP_DEF.update(esp)  # 'pegado' usa el tabique configurado
@@ -829,6 +839,7 @@ def genera(spec, salida):
             aud.a(f"{pdesc}: al abrir choca con un mueble", secp.centroid.coords[0])
         barridos.append(secp)
         d["abre"] = Rr
+        d["cf"], d["vs"] = cf, vs
         w = d["w"]
         tip = xy(ea.axis, sh, cf + vs * w)
         hing = xy(ea.axis, sh, cf)
@@ -924,10 +935,11 @@ def genera(spec, salida):
         zona = max(partes(libre), key=lambda q: q.area) if partes(libre) else R.poly
         c = polylabel(zona if zona.area > 0.6 else R.poly, 0.01)
         if spec.get("rotular_nombres", True):
-            prims.append(dict(L="TEXTOS", k="tx", p=(c.x, c.y + 0.14), h=0.16, t=R.nombre.upper()))
-            prims.append(dict(L="TEXTOS", k="tx", p=(c.x, c.y - 0.14), h=0.20, t=f"{fmt(R.poly.area)} m2"))
+            prims.append(dict(L="ESTANCIAS", k="tx", p=(c.x, c.y + 0.14), h=0.16, t=R.nombre.upper()))
+            prims.append(dict(L="ESTANCIAS", k="tx", p=(c.x, c.y - 0.14), h=0.20, t=f"{fmt(R.poly.area)} m2"))
         else:
-            prims.append(dict(L="TEXTOS", k="tx", p=(c.x, c.y), h=0.20, t=f"{fmt(R.poly.area)} m2"))
+            prims.append(dict(L="ESTANCIAS", k="tx", p=(c.x, c.y), h=0.20, t=f"{fmt(R.poly.area)} m2"))
+        R.etiqueta = (c.x, c.y)
     util = sum(R.poly.area for R in E if R.tipo != "terraza")
     terr = sum(R.poly.area for R in E if R.tipo == "terraza")
     resumen = f"SUP. UTIL: {fmt(util)} m2" + (f"  +  TERRAZAS: {fmt(terr)} m2" if terr else "") + \
@@ -942,15 +954,78 @@ def genera(spec, salida):
         prims.append(dict(L="PATINILLOS", k="pl", pts=[(b[0], b[1]), (b[2], b[3])], cerr=False))
         prims.append(dict(L="PATINILLOS", k="pl", pts=[(b[0], b[3]), (b[2], b[1])], cerr=False))
 
+    cotas = calcula_cotas(E, ventanas, puertas, exterior) if spec.get("acotar", True) else []
     os.makedirs(salida, exist_ok=True)
-    escribe_dxf(os.path.join(salida, "plano.dxf"), muros, prims)
+    escribe_dxf(os.path.join(salida, "plano.dxf"), muros, prims, cotas)
     escribe_png(os.path.join(salida, "plano.png"), muros, E, prims, aud, spec.get("titulo", "Plano"))
+    if cotas:
+        escribe_png(os.path.join(salida, "plano_cotas.png"), muros, E,
+                    [p for p in prims if p["L"] not in ("MOBILIARIO",)], None, spec.get("titulo", "Plano"), cotas)
     informe = escribe_informe(os.path.join(salida, "informe.txt"), E, aud, util, terr, exterior, spec)
     return aud, informe
 
 
+# --------------------------------------------------------------------- cotas
+def calcula_cotas(E, ventanas, puertas, exterior):
+    """Cotas lineales: luces interiores de cada estancia, huecos y totales.
+    Cada cota: p1, p2 (puntos medidos), base (punto por donde pasa la linea) y ang."""
+    cotas = []
+
+    def luz(R, horizontal, desp):
+        cx, cy = R.etiqueta
+        b = R.poly.bounds
+        for d in (desp, -desp, desp / 2, 0):
+            if horizontal:
+                y = cy + d
+                linea = LineString([(b[0] - 1, y), (b[2] + 1, y)])
+            else:
+                x = cx + d
+                linea = LineString([(x, b[1] - 1), (x, b[3] + 1)])
+            seg = linea.intersection(R.poly)
+            segs = [seg] if seg.geom_type == "LineString" else [g for g in getattr(seg, "geoms", []) if g.geom_type == "LineString"]
+            segs = [g for g in segs if g.length > 0.3]
+            if not segs:
+                continue
+            g = max(segs, key=lambda q: q.length)
+            (x1, y1), (x2, y2) = g.coords[0], g.coords[-1]
+            return dict(p1=(x1, y1), p2=(x2, y2), base=(x1, y1), ang=0 if horizontal else 90)
+        return None
+
+    for R in E:
+        if R.poly.area < 0.6:
+            continue
+        for horizontal, desp in ((True, -0.45), (False, 0.75)):
+            c = luz(R, horizontal, desp)
+            if c:
+                cotas.append(c)
+    for v in ventanas:
+        e = v["e"]
+        cext = v["c1"] if sg(e) > 0 else v["c0"]
+        p1, p2 = xy(e.axis, v["s0"], cext), xy(e.axis, v["s1"], cext)
+        cotas.append(dict(p1=p1, p2=p2, base=xy(e.axis, v["s0"], cext + sg(e) * 0.45), ang=0 if e.axis == "h" else 90))
+    for d in puertas:
+        ea = d["ea"]
+        if d["tipo"] == "paso":
+            continue
+        if "cf" in d:
+            otra = d["c_other"] if abs(d["cf"] - ea.c) < 1e-6 else ea.c
+            cb = otra - d["vs"] * 0.25
+        else:
+            cb = ea.c - sg(ea) * 0.25
+        p1, p2 = xy(ea.axis, d["s0"], ea.c), xy(ea.axis, d["s1"], ea.c)
+        cotas.append(dict(p1=p1, p2=p2, base=xy(ea.axis, d["s0"], cb), ang=0 if ea.axis == "h" else 90))
+    bx = exterior.bounds
+    cotas.append(dict(p1=(bx[0], bx[3]), p2=(bx[2], bx[3]), base=(bx[0], bx[3] + 0.8), ang=0))
+    cotas.append(dict(p1=(bx[0], bx[1]), p2=(bx[0], bx[3]), base=(bx[0] - 0.8, bx[1]), ang=90))
+    return cotas
+
+
+def valor_cota(c):
+    return abs(c["p2"][0] - c["p1"][0]) if c["ang"] == 0 else abs(c["p2"][1] - c["p1"][1])
+
+
 # ------------------------------------------------------------------- salidas
-def escribe_dxf(ruta, muros, prims):
+def escribe_dxf(ruta, muros, prims, cotas=()):
     import ezdxf
     from ezdxf import const
     from ezdxf.enums import TextEntityAlignment
@@ -958,7 +1033,7 @@ def escribe_dxf(ruta, muros, prims):
     doc.header["$INSUNITS"] = 6
     doc.header["$MEASUREMENT"] = 1
     capas = {"MUROS": 7, "MUROS_RELLENO": 8, "PUERTAS": 3, "VENTANAS": 5, "MOBILIARIO": 2, "TEXTOS": 7,
-             "COTAS": 1, "PATINILLOS": 9}
+             "ESTANCIAS": 4, "COTAS": 1, "PATINILLOS": 9}
     for n, c in capas.items():
         if n not in doc.layers:
             doc.layers.add(n, color=c)
@@ -989,10 +1064,16 @@ def escribe_dxf(ruta, muros, prims):
         elif p["k"] == "tx":
             msp.add_text(p["t"], height=p["h"], dxfattribs=at).set_placement(
                 p["p"], align=TextEntityAlignment.MIDDLE_CENTER)
+    estilo = {"dimtxt": 0.10, "dimasz": 0.06, "dimexe": 0.04, "dimexo": 0.0, "dimdec": 2, "dimdsep": ord(","),
+              "dimtad": 1, "dimgap": 0.02, "dimtsz": 0.05, "dimclrd": 1, "dimclre": 1, "dimclrt": 1, "dimzin": 0}
+    for c in cotas:
+        dim = msp.add_linear_dim(base=c["base"], p1=c["p1"], p2=c["p2"], angle=c["ang"], dimstyle="EZDXF",
+                                 override=estilo, dxfattribs={"layer": "COTAS"})
+        dim.render()
     doc.saveas(ruta)
 
 
-def escribe_png(ruta, muros, E, prims, aud, titulo):
+def escribe_png(ruta, muros, E, prims, aud, titulo, cotas=None):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -1023,7 +1104,24 @@ def escribe_png(ruta, muros, E, prims, aud, titulo):
             ax.add_patch(Arc(p["c"], 2 * p["r"], 2 * p["r"], theta1=p["a0"], theta2=p["a1"], ec=c, lw=0.6))
         elif p["k"] == "tx":
             ax.text(p["p"][0], p["p"][1], p["t"], ha="center", va="center", fontsize=6.5 if p["h"] < 0.21 else 8)
-    for lista, pref, color in ((aud.err, "E", "red"), (aud.avi, "A", "darkorange")):
+    for c in cotas or []:
+        if c["ang"] == 0:
+            yb = c["base"][1]
+            a, b_ = (c["p1"][0], yb), (c["p2"][0], yb)
+            for p, q in ((c["p1"], a), (c["p2"], b_)):
+                ax.plot([p[0], q[0]], [p[1], q[1]], color="#c62828", lw=0.3)
+            tx, ty, rot = (a[0] + b_[0]) / 2, yb + 0.07, 0
+        else:
+            xb = c["base"][0]
+            a, b_ = (xb, c["p1"][1]), (xb, c["p2"][1])
+            for p, q in ((c["p1"], a), (c["p2"], b_)):
+                ax.plot([p[0], q[0]], [p[1], q[1]], color="#c62828", lw=0.3)
+            tx, ty, rot = xb - 0.07, (a[1] + b_[1]) / 2, 90
+        ax.plot([a[0], b_[0]], [a[1], b_[1]], color="#c62828", lw=0.6)
+        for p in (a, b_):
+            ax.plot([p[0] - 0.04, p[0] + 0.04], [p[1] - 0.04, p[1] + 0.04], color="#c62828", lw=0.8)
+        ax.text(tx, ty, fmt(valor_cota(c)), color="#c62828", fontsize=5.5, ha="center", va="center", rotation=rot)
+    for lista, pref, color in (((aud.err, "E", "red"), (aud.avi, "A", "darkorange")) if aud else ()):
         for i, (msg, pt) in enumerate(lista, 1):
             if pt is not None:
                 ax.add_patch(Circle(pt, 0.22, fill=False, ec=color, lw=1.6))
@@ -1031,7 +1129,7 @@ def escribe_png(ruta, muros, E, prims, aud, titulo):
     ax.set_aspect("equal")
     ax.set_xlim(b[0] - 1, b[2] + 1)
     ax.set_ylim(b[1] - 1.5, b[3] + 1)
-    ax.set_title(f"{titulo} - {len(aud.err)} errores, {len(aud.avi)} avisos", fontsize=10)
+    ax.set_title(f"{titulo} - {len(aud.err)} errores, {len(aud.avi)} avisos" if aud else f"{titulo} - cotas", fontsize=10)
     ax.axis("off")
     fig.savefig(ruta, dpi=170, bbox_inches="tight")
     plt.close(fig)
@@ -1065,6 +1163,18 @@ def main():
     with open(sys.argv[1], encoding="utf-8") as f:
         spec = json.load(f)
     salida = sys.argv[2] if len(sys.argv) > 2 else os.path.dirname(os.path.abspath(sys.argv[1]))
+    os.makedirs(salida, exist_ok=True)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from cadenas import resolver
+    spec, avisos_cad, errores_cad = resolver(spec, num(spec.get("espesores", {}).get("tabique", 0.08)))
+    if errores_cad:
+        print("ERRORES EN LAS CADENAS DE COTAS - corrige el JSON:")
+        for i, m in enumerate(errores_cad, 1):
+            print(f"  C{i}. {m}")
+        sys.exit(2)
+    with open(os.path.join(salida, "planta_resuelta.json"), "w", encoding="utf-8") as f:
+        json.dump(spec, f, ensure_ascii=False, indent=1)
+    spec["_avisos_cadenas"] = avisos_cad
     aud, informe = genera(spec, salida)
     try:
         import ezdxf
@@ -1076,7 +1186,7 @@ def main():
     except Exception as ex:  # pragma: no cover
         informe += f"\nNo se pudo auditar el DXF: {ex}\n"
     print(informe)
-    print(f"Archivos en: {os.path.abspath(salida)}  (plano.dxf, plano.png, informe.txt)")
+    print(f"Archivos en: {os.path.abspath(salida)}  (plano.dxf, plano.png, plano_cotas.png, informe.txt, planta_resuelta.json)")
     sys.exit(2 if aud.err else 0)
 
 

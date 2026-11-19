@@ -1,0 +1,252 @@
+{
+ "titulo": "Piso ejemplo - planta",
+ "estancias": [
+  {
+   "id": "salon",
+   "nombre": "Salón-comedor",
+   "rect": {
+    "x": 0,
+    "y": 0,
+    "dx": 4.5,
+    "dy": 3.8
+   }
+  },
+  {
+   "id": "cocina",
+   "nombre": "Cocina",
+   "rect": {
+    "dx": 2.6,
+    "dy": 2.4
+   },
+   "pegado": {
+    "a": "salon",
+    "lado": "E",
+    "alinear": "S"
+   }
+  },
+  {
+   "id": "recibidor",
+   "nombre": "Recibidor",
+   "rect": {
+    "dx": 2.6,
+    "dy": 1.32
+   },
+   "pegado": {
+    "a": "cocina",
+    "lado": "N",
+    "alinear": "O"
+   }
+  },
+  {
+   "id": "pasillo",
+   "nombre": "Pasillo",
+   "rect": {
+    "x": 3.28,
+    "y": 3.88,
+    "dx": 3.9,
+    "dy": 1.0
+   }
+  },
+  {
+   "id": "dorm1",
+   "nombre": "Dormitorio 1",
+   "contorno": {
+    "inicio": [
+     0,
+     3.88
+    ],
+    "pasos": [
+     "E3.20",
+     "N3.62",
+     "O3.20"
+    ]
+   }
+  },
+  {
+   "id": "bano",
+   "nombre": "Baño",
+   "rect": {
+    "x": 3.28,
+    "y": 4.96,
+    "dx": 1.72,
+    "dy": 2.54
+   }
+  },
+  {
+   "id": "dorm2",
+   "nombre": "Dormitorio 2",
+   "rect": {
+    "dx": 2.1,
+    "dy": 2.54
+   },
+   "pegado": {
+    "a": "bano",
+    "lado": "E",
+    "alinear": "S"
+   }
+  }
+ ],
+ "pilares": [
+  {
+   "estancia": "salon",
+   "esquina": "SO",
+   "dx": 0.3,
+   "dy": 0.3
+  }
+ ],
+ "puertas": [
+  {
+   "entre": [
+    "recibidor",
+    "exterior"
+   ],
+   "lado": "E"
+  },
+  {
+   "entre": [
+    "recibidor",
+    "salon"
+   ],
+   "desde": 0.1
+  },
+  {
+   "entre": [
+    "recibidor",
+    "cocina"
+   ],
+   "desde": 0.15
+  },
+  {
+   "entre": [
+    "recibidor",
+    "pasillo"
+   ],
+   "tipo": "paso",
+   "ancho": "total"
+  },
+  {
+   "entre": [
+    "pasillo",
+    "dorm1"
+   ]
+  },
+  {
+   "entre": [
+    "pasillo",
+    "bano"
+   ],
+   "desde": 0.2
+  },
+  {
+   "entre": [
+    "pasillo",
+    "dorm2"
+   ],
+   "desde_fin": 0.15
+  }
+ ],
+ "ventanas": [
+  {
+   "estancia": "salon",
+   "lado": "S",
+   "ancho": 2.0
+  },
+  {
+   "estancia": "cocina",
+   "lado": "S",
+   "ancho": 1.0
+  },
+  {
+   "estancia": "dorm1",
+   "lado": "O",
+   "ancho": 1.4
+  },
+  {
+   "estancia": "dorm2",
+   "lado": "N",
+   "ancho": 1.0
+  },
+  {
+   "estancia": "bano",
+   "lado": "N",
+   "ancho": 0.6
+  }
+ ],
+ "mobiliario": [
+  {
+   "tipo": "sofa",
+   "estancia": "salon",
+   "contra": "O"
+  },
+  {
+   "tipo": "mesa",
+   "estancia": "salon",
+   "centro": true,
+   "contra": "S"
+  },
+  {
+   "tipo": "cama",
+   "estancia": "dorm1",
+   "contra": "N"
+  },
+  {
+   "tipo": "armario",
+   "estancia": "dorm1",
+   "contra": "E",
+   "desde_fin": 0.0,
+   "ancho": 1.5
+  },
+  {
+   "tipo": "cama_individual",
+   "estancia": "dorm2",
+   "contra": "E",
+   "desde_fin": 0
+  },
+  {
+   "tipo": "inodoro",
+   "estancia": "bano",
+   "contra": "O",
+   "desde": 0.25
+  },
+  {
+   "tipo": "lavabo",
+   "estancia": "bano",
+   "contra": "E",
+   "desde_fin": 0.3
+  },
+  {
+   "tipo": "ducha",
+   "estancia": "bano",
+   "contra": "N",
+   "desde": 0,
+   "ancho": 0.9
+  },
+  {
+   "tipo": "encimera",
+   "estancia": "cocina",
+   "contra": "E",
+   "ancho": 2.4
+  },
+  {
+   "tipo": "fregadero",
+   "estancia": "cocina",
+   "contra": "E",
+   "en": 1.2,
+   "sep": 0.05
+  },
+  {
+   "tipo": "frigorifico",
+   "estancia": "cocina",
+   "contra": "O",
+   "desde": 0
+  }
+ ],
+ "control": {
+  "exterior_dx": 7.78,
+  "exterior_dy": 8.1
+ },
+ "supuestos": [
+  "Cotas de estancias leídas como luces libres interiores",
+  "Puerta de dormitorio 1 centrada (sin cota en el boceto)"
+ ]
+}

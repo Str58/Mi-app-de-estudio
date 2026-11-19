@@ -1,0 +1,606 @@
+{
+ "titulo": "Bergamín 10, 3º izq.",
+ "estancias": [
+  {
+   "id": "aseo",
+   "nombre": "Aseo",
+   "tipo": "bano",
+   "poligono": [
+    [
+     0.731,
+     8.728
+    ],
+    [
+     -0.144,
+     8.728
+    ],
+    [
+     -0.144,
+     10.095
+    ],
+    [
+     0.731,
+     10.095
+    ]
+   ]
+  },
+  {
+   "id": "galeria",
+   "nombre": "Galería",
+   "tipo": "almacen",
+   "poligono": [
+    [
+     0.731,
+     5.391
+    ],
+    [
+     -0.144,
+     5.391
+    ],
+    [
+     -0.144,
+     8.648
+    ],
+    [
+     0.731,
+     8.648
+    ]
+   ]
+  },
+  {
+   "id": "cocina",
+   "nombre": "Cocina",
+   "poligono": [
+    [
+     4.501,
+     7.638
+    ],
+    [
+     1.031,
+     7.638
+    ],
+    [
+     1.031,
+     10.095
+    ],
+    [
+     4.501,
+     10.095
+    ]
+   ]
+  },
+  {
+   "id": "bano",
+   "nombre": "Baño",
+   "poligono": [
+    [
+     4.501,
+     6.281
+    ],
+    [
+     1.031,
+     6.281
+    ],
+    [
+     1.031,
+     7.558
+    ],
+    [
+     4.501,
+     7.558
+    ]
+   ]
+  },
+  {
+   "id": "salon",
+   "nombre": "Salón",
+   "poligono": [
+    [
+     4.501,
+     6.201
+    ],
+    [
+     4.501,
+     2.563
+    ],
+    [
+     -0.0,
+     2.563
+    ],
+    [
+     0.0,
+     5.091
+    ],
+    [
+     1.031,
+     5.091
+    ],
+    [
+     1.031,
+     6.201
+    ]
+   ]
+  },
+  {
+   "id": "comedor",
+   "nombre": "Comedor",
+   "poligono": [
+    [
+     3.609,
+     -0.0
+    ],
+    [
+     -0.0,
+     -0.0
+    ],
+    [
+     -0.0,
+     2.483
+    ],
+    [
+     3.609,
+     2.483
+    ]
+   ]
+  },
+  {
+   "id": "despensa",
+   "nombre": "Despensa",
+   "poligono": [
+    [
+     5.562,
+     8.507
+    ],
+    [
+     4.581,
+     8.507
+    ],
+    [
+     4.581,
+     10.095
+    ],
+    [
+     5.562,
+     10.095
+    ]
+   ]
+  },
+  {
+   "id": "distribuidor",
+   "nombre": "Vestíbulo y pasillo",
+   "tipo": "circulacion",
+   "poligono": [
+    [
+     3.689,
+     0.0
+    ],
+    [
+     3.689,
+     2.483
+    ],
+    [
+     4.581,
+     2.483
+    ],
+    [
+     4.581,
+     8.427
+    ],
+    [
+     5.562,
+     8.427
+    ],
+    [
+     5.562,
+     5.184
+    ],
+    [
+     5.916,
+     5.184
+    ],
+    [
+     5.916,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "rellano",
+   "nombre": "Entrada",
+   "tipo": "circulacion",
+   "poligono": [
+    [
+     5.916,
+     -1.27
+    ],
+    [
+     4.856,
+     -1.27
+    ],
+    [
+     4.856,
+     -0.2
+    ],
+    [
+     5.916,
+     -0.2
+    ]
+   ]
+  },
+  {
+   "id": "dorm1",
+   "nombre": "Dormitorio 1",
+   "poligono": [
+    [
+     10.532,
+     7.016
+    ],
+    [
+     5.642,
+     7.016
+    ],
+    [
+     5.642,
+     10.095
+    ],
+    [
+     10.532,
+     10.095
+    ]
+   ]
+  },
+  {
+   "id": "dorm2",
+   "nombre": "Dormitorio 2",
+   "poligono": [
+    [
+     5.996,
+     3.477
+    ],
+    [
+     5.996,
+     5.264
+    ],
+    [
+     5.642,
+     5.264
+    ],
+    [
+     5.642,
+     6.936
+    ],
+    [
+     10.532,
+     6.936
+    ],
+    [
+     10.532,
+     3.477
+    ]
+   ]
+  },
+  {
+   "id": "dorm3",
+   "nombre": "Dormitorio 3",
+   "poligono": [
+    [
+     10.532,
+     -0.0
+    ],
+    [
+     5.996,
+     -0.0
+    ],
+    [
+     5.996,
+     3.397
+    ],
+    [
+     10.532,
+     3.397
+    ]
+   ]
+  }
+ ],
+ "medianeras": [
+  {
+   "lado": "S",
+   "de": [
+    -1,
+    0
+   ],
+   "a": [
+    20,
+    0
+   ]
+  }
+ ],
+ "pilares": [
+  {
+   "estancia": "bano",
+   "esquina": "SO",
+   "dx": 0.25,
+   "dy": 0.2
+  },
+  {
+   "estancia": "distribuidor",
+   "esquina": "SE",
+   "dx": 0.2,
+   "dy": 0.2
+  }
+ ],
+ "puertas": [
+  {
+   "entre": [
+    "rellano",
+    "exterior"
+   ],
+   "lado": "S",
+   "tipo": "paso",
+   "ancho": "total"
+  },
+  {
+   "entre": [
+    "rellano",
+    "distribuidor"
+   ],
+   "ancho": 0.8,
+   "desde": 0.05,
+   "abre_hacia": "distribuidor",
+   "bisagra": "E"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "exterior"
+   ],
+   "lado": "S",
+   "ancho": 0.8,
+   "desde": 0.05,
+   "abre_hacia": "distribuidor",
+   "bisagra": "O"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "comedor"
+   ],
+   "desde": 0.2,
+   "abre_hacia": "comedor",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "salon"
+   ],
+   "desde_fin": 0.1,
+   "abre_hacia": "salon",
+   "bisagra": "N"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "bano"
+   ],
+   "ancho": 0.62,
+   "desde_fin": 0.02,
+   "abre_hacia": "bano",
+   "bisagra": "N"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "cocina"
+   ],
+   "ancho": 0.7,
+   "desde": 0.05,
+   "abre_hacia": "cocina",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "despensa"
+   ],
+   "ancho": 0.7,
+   "desde_fin": 0.05,
+   "abre_hacia": "distribuidor",
+   "bisagra": "E"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "dorm1"
+   ],
+   "desde": 0.1,
+   "abre_hacia": "dorm1",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "dorm2"
+   ],
+   "desde_fin": 0.1,
+   "abre_hacia": "dorm2",
+   "bisagra": "N"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "dorm3"
+   ],
+   "desde": 0.25,
+   "abre_hacia": "dorm3",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "cocina",
+    "galeria"
+   ],
+   "tipo": "balconera",
+   "ancho": 0.8,
+   "desde": 0.1
+  },
+  {
+   "entre": [
+    "aseo",
+    "galeria"
+   ],
+   "ancho": 0.6,
+   "desde": 0.08,
+   "abre_hacia": "galeria",
+   "bisagra": "O"
+  },
+  {
+   "entre": [
+    "bano",
+    "galeria"
+   ],
+   "tipo": "ventana",
+   "ancho": 0.5,
+   "desde": 0.05
+  }
+ ],
+ "ventanas": [
+  {
+   "estancia": "galeria",
+   "lado": "O",
+   "ancho": 3.05,
+   "desde": 0.1
+  },
+  {
+   "estancia": "salon",
+   "lado": "O",
+   "ancho": 1.5,
+   "desde": 0.58
+  },
+  {
+   "estancia": "comedor",
+   "lado": "O",
+   "ancho": 1.05,
+   "desde": 0.72
+  },
+  {
+   "estancia": "dorm1",
+   "lado": "E",
+   "ancho": 1.3,
+   "desde": 1.18
+  },
+  {
+   "estancia": "dorm2",
+   "lado": "E",
+   "ancho": 1.35
+  },
+  {
+   "estancia": "dorm3",
+   "lado": "E",
+   "ancho": 1.35,
+   "desde_fin": 0.18
+  }
+ ],
+ "mobiliario": [
+  {
+   "tipo": "encimera",
+   "estancia": "cocina",
+   "contra": "N",
+   "desde": 0,
+   "ancho": 3.3
+  },
+  {
+   "tipo": "fregadero",
+   "estancia": "cocina",
+   "contra": "N",
+   "desde": 1.3,
+   "sep": 0.05
+  },
+  {
+   "tipo": "placa",
+   "estancia": "cocina",
+   "contra": "N",
+   "desde": 2.4,
+   "sep": 0.03
+  },
+  {
+   "tipo": "mesa",
+   "estancia": "cocina",
+   "contra": "S",
+   "desde": 1.2,
+   "ancho": 0.8,
+   "fondo": 0.8
+  },
+  {
+   "tipo": "inodoro",
+   "estancia": "aseo",
+   "contra": "E",
+   "desde_fin": 0.05
+  },
+  {
+   "tipo": "lavabo",
+   "estancia": "aseo",
+   "contra": "E",
+   "desde": 0.2,
+   "ancho": 0.45,
+   "fondo": 0.35
+  },
+  {
+   "tipo": "inodoro",
+   "estancia": "bano",
+   "contra": "S",
+   "desde": 0.4
+  },
+  {
+   "tipo": "lavabo",
+   "estancia": "bano",
+   "contra": "S",
+   "desde": 1.0
+  },
+  {
+   "tipo": "banera",
+   "estancia": "bano",
+   "contra": "S",
+   "desde_fin": 0,
+   "ancho": 1.4,
+   "fondo": 0.65
+  },
+  {
+   "tipo": "armario",
+   "estancia": "dorm1",
+   "contra": "O",
+   "desde_fin": 0,
+   "ancho": 1.2
+  },
+  {
+   "tipo": "cama",
+   "estancia": "dorm1",
+   "contra": "N",
+   "en": 8.25,
+   "ancho": 1.35,
+   "fondo": 1.9
+  },
+  {
+   "tipo": "armario",
+   "estancia": "dorm2",
+   "contra": "N",
+   "desde": 1.6,
+   "ancho": 1.4
+  },
+  {
+   "tipo": "cama",
+   "estancia": "dorm2",
+   "contra": "S",
+   "en": 8.51,
+   "ancho": 1.35,
+   "fondo": 1.9
+  },
+  {
+   "tipo": "cama",
+   "estancia": "dorm3",
+   "contra": "S",
+   "en": 8.21
+  }
+ ],
+ "supuestos": []
+}

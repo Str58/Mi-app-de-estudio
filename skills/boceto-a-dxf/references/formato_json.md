@@ -15,6 +15,54 @@ Ejemplo completo y válido: `ejemplos/piso_ejemplo.json`. Cópialo y adáptalo.
   - sin ninguna de las tres, el elemento queda centrado.
   - En las puertas interiores el tramo de referencia es la parte de pared que comparten las dos estancias.
 
+## Modo cadenas (recomendado): el motor cuadra las cotas
+Las estancias se describen con sus cotas, sin coordenadas, y se dicen las filas y columnas del boceto. El módulo `scripts/cadenas.py` calcula las posiciones con un ajuste robusto:
+- los muros son fijos;
+- la circulación absorbe primero los descuadres;
+- si una cota normal no cuadra, se concentra el ajuste en esa cota y se avisa;
+- de las cotas con alternativas, elige la que cierra.
+
+Ejemplo real completo: `ejemplos/bergamin/planta_cadenas.json`.
+
+```jsonc
+"estancias": [
+  {"id":"cocina", "dx":3.48, "dy":2.46},
+  {"id":"bano", "nombre":"Baño", "dx":3.46, "dy":["1'58","1'28"]},   // cota dudosa: dos lecturas
+  {"id":"salon", "dx":4.50, "dy":3.64, "recortes":[{"por":"galeria","muro":0.30}]},   // entrante que deja la galería
+  {"id":"despensa", "dx":0.98, "dy":1.59, "recortes":[{"esquina":"NE","dx":0.30,"dy":0.30}]},
+  {"id":"pasillo_alto", "parte":true, "tipo":"circulacion", "dx":1.00, "dy":"?"},  // "?" = sin cota
+  {"id":"pasillo_bajo", "parte":true, "tipo":"circulacion", "dx":1.28, "dy":"?"},
+  {"id":"distribuidor", "nombre":"Pasillo", "union":["pasillo_bajo","pasillo_alto"]}  // forma en L = unión de partes
+],
+"cadenas": [   // eje x: de oeste a este; eje y: de sur a norte
+  {"nombre":"fila cocina", "eje":"x", "items":["galeria", {"muro":0.30}, "cocina", "pasillo_alto", "dorm1"],
+   "desde":"O", "hasta":"E"},
+  {"nombre":"columna", "eje":"y", "items":["comedor", "salon", "bano", "cocina"], "desde":"S", "hasta":"N"},
+  {"nombre":"pasillo 8,43", "eje":"y", "items":["vestibulo", {"muro":0}, "pasillo_bajo"], "total":8.43},
+  {"eje":"y", "items":["comedor", {"cota":2.52}, {"muro":0.30}, "galeria"]}   // tramo acotado que no es estancia
+],
+"alineaciones": [
+  {"eje":"x", "lado":"O", "estancias":["pasillo_bajo","pasillo_alto"]},          // misma cara oeste
+  {"eje":"y", "a":"pasillo_bajo", "lado_a":"N", "b":"dorm2_alto", "lado_b":"S", "sep":0.08}  // cara + separación
+]
+```
+
+**Reglas**
+- Entre dos elementos consecutivos de una cadena hay un tabique de 0,08, salvo que se ponga `{"muro":x}`. Con `{"muro":0}` las piezas se tocan: son partes de una misma estancia.
+- `desde` y `hasta` admiten:
+  - una fachada con nombre (`"O"`, `"E"`, `"S"`, `"N"`, u otro nombre como `"Og"` si esa fachada va retranqueada);
+  - un número;
+  - la cara de una estancia: `{"estancia":"x","lado":"N"}`.
+
+  Las cadenas que comparten un nombre de fachada acaban en la misma línea.
+- Cada estancia o parte tiene que aparecer en al menos una cadena de cada eje, o en una alineación. Si no, el motor da un error `C#` y no dibuja.
+- `"flexible": true/false` fuerza si una estancia absorbe descuadres. Por defecto, solo la circulación.
+- `"total"` pesa la mitad que la cota de una estancia, salvo que se indique `"peso"`. `{"cota":x}` pesa como una estancia.
+- Las estancias de las cadenas se convierten en polígonos; el resultado se guarda en `salida/planta_resuelta.json`. En el modo cadenas, `puertas`, `ventanas`, `mobiliario`, `pilares` y `medianeras` funcionan igual que en el modo de coordenadas. Las puertas y los muebles se refieren a la estancia completa (el id de la `union`), no a sus partes.
+- **Mezcla de modos**: las estancias de coordenadas (`rect`, `contorno`, `pegado`) pueden convivir con las de cadenas y apoyarse en ellas con `pegado`.
+
+## Modo de coordenadas
+
 ## Claves
 ```jsonc
 {
@@ -29,6 +77,7 @@ Ejemplo completo y válido: `ejemplos/piso_ejemplo.json`. Cópialo y adáptalo.
   "puertas": [ ... ], "ventanas": [ ... ], "mobiliario": [ ... ],
   "control": {"exterior_dx": 10.6, "exterior_dy": 8.3, "interior_dx": 10.0, "interior_dy": 7.7},  // cotas totales del boceto
   "rotular_nombres": true,
+  "acotar": true,            // capa COTAS: luces interiores, huecos y totales (false = sin cotas)
   "supuestos": ["texto de cada decisión tomada al leer el boceto"]
 }
 ```

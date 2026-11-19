@@ -2,38 +2,33 @@ INFORME DEL PLANO
 ============================================================
 
 SUPERFICIES UTILES
-  Comedor                          8,95 m2   (salon)
-  Salón                           15,24 m2   (salon)
+  Aseo                             1,20 m2   (bano)
+  Galería                          2,85 m2   (almacen)
+  Cocina                           8,53 m2   (cocina)
   Baño                             4,38 m2   (bano)
-  Cocina                           8,56 m2   (cocina)
-  Galería                          2,83 m2   (almacen)
-  Aseo                             1,18 m2   (bano)
+  Salón                           15,23 m2   (salon)
+  Comedor                          8,96 m2   (salon)
   Despensa                         1,56 m2   (almacen)
-  Vestíbulo y pasillo             11,86 m2   (circulacion)
+  Vestíbulo y pasillo             12,28 m2   (circulacion)
   Entrada                          1,13 m2   (circulacion)
-  Dormitorio 1                    14,75 m2   (dormitorio)
-  Dormitorio 2                    16,12 m2   (dormitorio)
-  Dormitorio 3                    15,47 m2   (dormitorio)
-  TOTAL UTIL                     102,04 m2
-  CONSTRUIDA (contorno)          118,79 m2
+  Dormitorio 1                    15,06 m2   (dormitorio)
+  Dormitorio 2                    16,28 m2   (dormitorio)
+  Dormitorio 3                    15,41 m2   (dormitorio)
+  TOTAL UTIL                     102,86 m2
+  CONSTRUIDA (contorno)          119,57 m2
 
 ERRORES (0) - hay que corregirlos en el JSON:
   ninguno
 
-AVISOS (3) - revisar; si son correctos, explicarlos al entregar:
-  A1. 'comedor' mide solo 8,95 m2 (minimo razonable 9,0 m2): revisa cotas
-  A2. 'aseo' mide solo 1,18 m2 (minimo razonable 1,5 m2): revisa cotas
-  A3. 'aseo' tiene menos de 0,90 m de anchura libre: revisa cotas
-
-SUPUESTOS DE LECTURA DEL BOCETO:
-  - Tabiques de 0,08 en todo el interior; el del pasillo es uno solo y recto.
-  - Muro de 0,30 entre la galería/aseo y la cocina, el baño y el salón (antigua fachada).
-  - La galería y el aseo sobresalen 0,15 m de la fachada oeste para respetar 0,87 + 0,30 + 3,48. Así cuadra el entrante del salón: 1,03 de ancho, 2,52 de pared y ventana de 1,50 (0,44 + 1,50 + 0,58).
-  - Vestíbulo de 2,13 de ancho: absorbe los 0,33 m que no cuadran (comedor 3,61 + 2,46 frente a salón 4,50 + pasillo 1,28, ambos encajados con los dormitorios).
-  - Baño de 1,28 de fondo (la cota girada parece 1'58, pero solo con 1,28 cierran las tres cadenas verticales en 10,10 m).
-  - Dormitorio 1 de 4,79 de ancho como el 2 (el 4,96 no cabe entre el pasillo y la fachada).
-  - Vestíbulo de 2,48 de fondo como el comedor (el boceto dice 2,60).
-  - Pared sur hacia el rellano: medianera de 0,20, con puerta de servicio y nicho de entrada de 1,06 x 1,07.
-  - Cocina y baño ventilan a la galería: puerta-ventana de 0,80 y ventana de 0,50.
-  - Pilares de 0,25 x 0,20 en el baño y de 0,20 x 0,20 en la esquina del vestíbulo.
-  - Galería: acristalamiento corrido de 3,05 en casi toda su pared de 3,25 (marcas en los extremos).
+AVISOS (11) - revisar; si son correctos, explicarlos al entregar:
+  A1. Cota dudosa de 'bano' (dy): se elige 1,28 (frente a 1,58) porque es la que cierra las cadenas
+  A2. Ajuste: cota dx de 'pasillo_alto' pasa de 1,00 a 0,98 (-0,02); absorbe el descuadre de las cadenas por ser circulacion
+  A3. Ajuste: cota dx de 'pasillo_bajo' pasa de 1,28 a 1,34 (+0,06); absorbe el descuadre de las cadenas por ser circulacion
+  A4. Ajuste: cota dx de 'vestibulo' pasa de 2,46 a 2,23 (-0,23); absorbe el descuadre de las cadenas por ser circulacion
+  A5. Ajuste: cota dy de 'vestibulo' pasa de 2,60 a 2,48 (-0,12); absorbe el descuadre de las cadenas por ser circulacion
+  A6. Descuadre: cota dx de 'dorm1' (4,96) no cuadra con el resto; queda en 4,89 (-0,07). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A7. Descuadre: cota dx de 'dorm2_alto' (4,79) no cuadra con el resto; queda en 4,89 (+0,10). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A8. Descuadre: pasillo 4,72: total 4,72 (4,72) no cuadra con el resto; queda en 5,18 (+0,46). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A9. 'aseo' mide solo 1,20 m2 (minimo razonable 1,5 m2): revisa cotas
+  A10. 'aseo' tiene menos de 0,90 m de anchura libre: revisa cotas
+  A11. 'comedor' mide solo 8,96 m2 (minimo razonable 9,0 m2): revisa cotas

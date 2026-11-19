@@ -1,0 +1,647 @@
+{
+ "titulo": "Bergamín 10, 3º izq.",
+ "estancias": [
+  {
+   "id": "aseo",
+   "nombre": "Aseo",
+   "tipo": "bano",
+   "dx": 0.88,
+   "dy": 1.36
+  },
+  {
+   "id": "galeria",
+   "nombre": "Galería",
+   "tipo": "almacen",
+   "dx": 0.87,
+   "dy": 3.25
+  },
+  {
+   "id": "cocina",
+   "nombre": "Cocina",
+   "dx": 3.48,
+   "dy": 2.46
+  },
+  {
+   "id": "bano",
+   "nombre": "Baño",
+   "dx": 3.46,
+   "dy": [
+    "1'58",
+    "1'28"
+   ]
+  },
+  {
+   "id": "salon",
+   "nombre": "Salón",
+   "dx": 4.5,
+   "dy": 3.64,
+   "recortes": [
+    {
+     "por": "galeria",
+     "muro": 0.3
+    }
+   ]
+  },
+  {
+   "id": "comedor",
+   "nombre": "Comedor",
+   "dx": 3.61,
+   "dy": 2.48
+  },
+  {
+   "id": "despensa",
+   "nombre": "Despensa",
+   "dx": 0.98,
+   "dy": 1.59
+  },
+  {
+   "id": "pasillo_alto",
+   "parte": true,
+   "tipo": "circulacion",
+   "dx": 1.0,
+   "dy": "?"
+  },
+  {
+   "id": "pasillo_bajo",
+   "parte": true,
+   "tipo": "circulacion",
+   "dx": 1.28,
+   "dy": "?"
+  },
+  {
+   "id": "vestibulo",
+   "parte": true,
+   "tipo": "circulacion",
+   "dx": 2.46,
+   "dy": 2.6
+  },
+  {
+   "id": "distribuidor",
+   "nombre": "Vestíbulo y pasillo",
+   "tipo": "circulacion",
+   "union": [
+    "vestibulo",
+    "pasillo_bajo",
+    "pasillo_alto"
+   ]
+  },
+  {
+   "id": "rellano",
+   "nombre": "Entrada",
+   "tipo": "circulacion",
+   "dx": 1.06,
+   "dy": 1.07,
+   "flexible": false
+  },
+  {
+   "id": "dorm1",
+   "nombre": "Dormitorio 1",
+   "dx": 4.96,
+   "dy": 3.08
+  },
+  {
+   "id": "dorm2_alto",
+   "parte": true,
+   "dx": 4.79,
+   "dy": "?"
+  },
+  {
+   "id": "dorm2_bajo",
+   "parte": true,
+   "dx": 4.55,
+   "dy": 1.79
+  },
+  {
+   "id": "dorm2",
+   "nombre": "Dormitorio 2",
+   "union": [
+    "dorm2_alto",
+    "dorm2_bajo"
+   ]
+  },
+  {
+   "id": "dorm3",
+   "nombre": "Dormitorio 3",
+   "dx": 4.53,
+   "dy": 3.4
+  }
+ ],
+ "cadenas": [
+  {
+   "nombre": "fila aseo",
+   "eje": "x",
+   "items": [
+    "aseo",
+    {
+     "muro": 0.3
+    },
+    "cocina",
+    "despensa",
+    "dorm1"
+   ],
+   "desde": "Og",
+   "hasta": "E"
+  },
+  {
+   "nombre": "fila cocina",
+   "eje": "x",
+   "items": [
+    "galeria",
+    {
+     "muro": 0.3
+    },
+    "cocina",
+    "pasillo_alto",
+    "dorm1"
+   ],
+   "desde": "Og",
+   "hasta": "E"
+  },
+  {
+   "nombre": "fila baño",
+   "eje": "x",
+   "items": [
+    "galeria",
+    {
+     "muro": 0.3
+    },
+    "bano",
+    "pasillo_alto",
+    "dorm2_alto"
+   ],
+   "desde": "Og",
+   "hasta": "E"
+  },
+  {
+   "nombre": "fila salón",
+   "eje": "x",
+   "items": [
+    "salon",
+    "pasillo_bajo",
+    "dorm2_bajo"
+   ],
+   "desde": "O",
+   "hasta": "E"
+  },
+  {
+   "nombre": "fila comedor",
+   "eje": "x",
+   "items": [
+    "comedor",
+    "vestibulo",
+    "dorm3"
+   ],
+   "desde": "O",
+   "hasta": "E"
+  },
+  {
+   "nombre": "columna cocina",
+   "eje": "y",
+   "items": [
+    "comedor",
+    "salon",
+    "bano",
+    "cocina"
+   ],
+   "desde": "S",
+   "hasta": "N"
+  },
+  {
+   "nombre": "columna galería",
+   "eje": "y",
+   "items": [
+    "comedor",
+    {
+     "cota": 2.52
+    },
+    {
+     "muro": 0.3
+    },
+    "galeria",
+    "aseo"
+   ],
+   "desde": "S",
+   "hasta": "N"
+  },
+  {
+   "nombre": "columna pasillo",
+   "eje": "y",
+   "items": [
+    "vestibulo",
+    {
+     "muro": 0
+    },
+    "pasillo_bajo",
+    {
+     "muro": 0
+    },
+    "pasillo_alto",
+    "despensa"
+   ],
+   "desde": "S",
+   "hasta": "N"
+  },
+  {
+   "nombre": "pasillo 8,43",
+   "eje": "y",
+   "items": [
+    "vestibulo",
+    {
+     "muro": 0
+    },
+    "pasillo_bajo",
+    {
+     "muro": 0
+    },
+    "pasillo_alto"
+   ],
+   "total": 8.43
+  },
+  {
+   "nombre": "pasillo 4,72",
+   "eje": "y",
+   "items": [
+    "vestibulo",
+    {
+     "muro": 0
+    },
+    "pasillo_bajo"
+   ],
+   "total": 4.72
+  },
+  {
+   "nombre": "columna dormitorios",
+   "eje": "y",
+   "items": [
+    "dorm3",
+    "dorm2_bajo",
+    {
+     "muro": 0
+    },
+    "dorm2_alto",
+    "dorm1"
+   ],
+   "desde": "S",
+   "hasta": "N"
+  },
+  {
+   "nombre": "dormitorio 2 total",
+   "eje": "y",
+   "items": [
+    "dorm3",
+    {
+     "cota": 3.46
+    },
+    "dorm1"
+   ]
+  },
+  {
+   "nombre": "entrada",
+   "eje": "y",
+   "items": [
+    "rellano",
+    {
+     "muro": 0.2
+    },
+    "vestibulo"
+   ]
+  }
+ ],
+ "alineaciones": [
+  {
+   "eje": "x",
+   "lado": "O",
+   "estancias": [
+    "pasillo_bajo",
+    "pasillo_alto",
+    "despensa"
+   ]
+  },
+  {
+   "eje": "x",
+   "lado": "E",
+   "estancias": [
+    "pasillo_bajo",
+    "vestibulo",
+    "rellano"
+   ]
+  },
+  {
+   "eje": "y",
+   "lado": "N",
+   "estancias": [
+    "comedor",
+    "vestibulo"
+   ]
+  },
+  {
+   "eje": "y",
+   "a": "pasillo_bajo",
+   "lado_a": "N",
+   "b": "dorm2_alto",
+   "lado_b": "S",
+   "sep": 0.08
+  }
+ ],
+ "medianeras": [
+  {
+   "lado": "S",
+   "de": [
+    -1,
+    0
+   ],
+   "a": [
+    20,
+    0
+   ]
+  }
+ ],
+ "pilares": [
+  {
+   "estancia": "bano",
+   "esquina": "SO",
+   "dx": 0.25,
+   "dy": 0.2
+  },
+  {
+   "estancia": "distribuidor",
+   "esquina": "SE",
+   "dx": 0.2,
+   "dy": 0.2
+  }
+ ],
+ "puertas": [
+  {
+   "entre": [
+    "rellano",
+    "exterior"
+   ],
+   "lado": "S",
+   "tipo": "paso",
+   "ancho": "total"
+  },
+  {
+   "entre": [
+    "rellano",
+    "distribuidor"
+   ],
+   "ancho": 0.8,
+   "desde": 0.05,
+   "abre_hacia": "distribuidor",
+   "bisagra": "E"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "exterior"
+   ],
+   "lado": "S",
+   "ancho": 0.8,
+   "desde": 0.05,
+   "abre_hacia": "distribuidor",
+   "bisagra": "O"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "comedor"
+   ],
+   "desde": 0.2,
+   "abre_hacia": "comedor",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "salon"
+   ],
+   "desde_fin": 0.1,
+   "abre_hacia": "salon",
+   "bisagra": "N"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "bano"
+   ],
+   "ancho": 0.62,
+   "desde_fin": 0.02,
+   "abre_hacia": "bano",
+   "bisagra": "N"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "cocina"
+   ],
+   "ancho": 0.7,
+   "desde": 0.05,
+   "abre_hacia": "cocina",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "despensa"
+   ],
+   "ancho": 0.7,
+   "desde_fin": 0.05,
+   "abre_hacia": "distribuidor",
+   "bisagra": "E"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "dorm1"
+   ],
+   "desde": 0.1,
+   "abre_hacia": "dorm1",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "dorm2"
+   ],
+   "desde_fin": 0.1,
+   "abre_hacia": "dorm2",
+   "bisagra": "N"
+  },
+  {
+   "entre": [
+    "distribuidor",
+    "dorm3"
+   ],
+   "desde": 0.25,
+   "abre_hacia": "dorm3",
+   "bisagra": "S"
+  },
+  {
+   "entre": [
+    "cocina",
+    "galeria"
+   ],
+   "tipo": "balconera",
+   "ancho": 0.8,
+   "desde": 0.1
+  },
+  {
+   "entre": [
+    "aseo",
+    "galeria"
+   ],
+   "ancho": 0.6,
+   "desde": 0.08,
+   "abre_hacia": "galeria",
+   "bisagra": "O"
+  },
+  {
+   "entre": [
+    "bano",
+    "galeria"
+   ],
+   "tipo": "ventana",
+   "ancho": 0.5,
+   "desde": 0.05
+  }
+ ],
+ "ventanas": [
+  {
+   "estancia": "galeria",
+   "lado": "O",
+   "ancho": 3.05,
+   "desde": 0.1
+  },
+  {
+   "estancia": "salon",
+   "lado": "O",
+   "ancho": 1.5,
+   "desde": 0.58
+  },
+  {
+   "estancia": "comedor",
+   "lado": "O",
+   "ancho": 1.05,
+   "desde": 0.72
+  },
+  {
+   "estancia": "dorm1",
+   "lado": "E",
+   "ancho": 1.3,
+   "desde": 1.18
+  },
+  {
+   "estancia": "dorm2",
+   "lado": "E",
+   "ancho": 1.35
+  },
+  {
+   "estancia": "dorm3",
+   "lado": "E",
+   "ancho": 1.35,
+   "desde_fin": 0.18
+  }
+ ],
+ "mobiliario": [
+  {
+   "tipo": "encimera",
+   "estancia": "cocina",
+   "contra": "N",
+   "desde": 0,
+   "ancho": 3.3
+  },
+  {
+   "tipo": "fregadero",
+   "estancia": "cocina",
+   "contra": "N",
+   "desde": 1.3,
+   "sep": 0.05
+  },
+  {
+   "tipo": "placa",
+   "estancia": "cocina",
+   "contra": "N",
+   "desde": 2.4,
+   "sep": 0.03
+  },
+  {
+   "tipo": "mesa",
+   "estancia": "cocina",
+   "contra": "S",
+   "desde": 1.2,
+   "ancho": 0.8,
+   "fondo": 0.8
+  },
+  {
+   "tipo": "inodoro",
+   "estancia": "aseo",
+   "contra": "E",
+   "desde_fin": 0.05
+  },
+  {
+   "tipo": "lavabo",
+   "estancia": "aseo",
+   "contra": "E",
+   "desde": 0.2,
+   "ancho": 0.45,
+   "fondo": 0.35
+  },
+  {
+   "tipo": "inodoro",
+   "estancia": "bano",
+   "contra": "S",
+   "desde": 0.4
+  },
+  {
+   "tipo": "lavabo",
+   "estancia": "bano",
+   "contra": "S",
+   "desde": 1.0
+  },
+  {
+   "tipo": "banera",
+   "estancia": "bano",
+   "contra": "S",
+   "desde_fin": 0,
+   "ancho": 1.4,
+   "fondo": 0.65
+  },
+  {
+   "tipo": "armario",
+   "estancia": "dorm1",
+   "contra": "O",
+   "desde_fin": 0,
+   "ancho": 1.2
+  },
+  {
+   "tipo": "cama",
+   "estancia": "dorm1",
+   "contra": "N",
+   "en": 8.25,
+   "ancho": 1.35,
+   "fondo": 1.9
+  },
+  {
+   "tipo": "armario",
+   "estancia": "dorm2",
+   "contra": "N",
+   "desde": 1.6,
+   "ancho": 1.4
+  },
+  {
+   "tipo": "cama",
+   "estancia": "dorm2",
+   "contra": "S",
+   "en": 8.51,
+   "ancho": 1.35,
+   "fondo": 1.9
+  },
+  {
+   "tipo": "cama",
+   "estancia": "dorm3",
+   "contra": "S",
+   "en": 8.21
+  }
+ ],
+ "supuestos": []
+}
