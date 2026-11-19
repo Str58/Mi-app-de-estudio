@@ -1025,6 +1025,49 @@ def genera(spec, salida):
             aud.a(f"Cota total {key.replace('_', ' ')}: el boceto dice {fmt(num(ctrl[key]))} m y el plano da "
                   f"{fmt(val)} m (diferencia {fmt(val - num(ctrl[key]))} m)")
 
+    # 12b. escaleras: tramos con peldanos, muro o barandilla central, meseta y flecha de subida
+    for es in spec.get("escaleras", []):
+        r = es["rect"]
+        x0, y0 = num(r["x"]), num(r["y"])
+        x1, y1 = x0 + num(r["dx"]), y0 + num(r["dy"])
+        L_ = "ESCALERAS"
+        prims.append(dict(L=L_, k="pl", cerr=True, pts=[(x0, y0), (x1, y0), (x1, y1), (x0, y1)]))
+        ejx = es.get("eje", "x") == "x"          # direccion de los tramos
+        n = int(es.get("tramos", 2))
+        hu = num(es.get("huella", 0.28))
+        mc = num(es.get("central", 0.10)) if n == 2 else 0.0
+        meseta_al_fin = es.get("meseta", "fin") == "fin"   # meseta en el extremo de coordenada mayor
+        a0, a1 = (x0, x1) if ejx else (y0, y1)   # a lo largo de los tramos
+        b0, b1 = (y0, y1) if ejx else (x0, x1)   # a lo ancho
+        anch = (b1 - b0 - mc) / n
+        P2 = (lambda a, b: (a, b)) if ejx else (lambda a, b: (b, a))
+        mes = anch if n == 2 else 0.0
+        s0, s1 = (a0, a1 - mes) if meseta_al_fin else (a0 + mes, a1)
+        tramos_b = [(b0, b0 + anch), (b1 - anch, b1)] if n == 2 else [(b0, b1)]
+        if n == 2:
+            prims.append(dict(L=L_, k="pl", cerr=True, pts=[P2(s0, b0 + anch), P2(s1, b0 + anch), P2(s1, b1 - anch), P2(s0, b1 - anch)]))
+            prims.append(dict(L=L_, k="pl", cerr=False, pts=[P2(s1, b0), P2(s1, b1)] if meseta_al_fin else [P2(s0, b0), P2(s0, b1)]))
+        k = 1
+        while s0 + k * hu < s1 - 1e-6:
+            a = s0 + k * hu
+            for (c0, c1) in tramos_b:
+                prims.append(dict(L=L_, k="pl", cerr=False, pts=[P2(a, c0), P2(a, c1)]))
+            k += 1
+        # flecha: sube por el primer tramo (lado b de "sube_por") hacia la meseta y vuelve por el otro
+        orden = tramos_b if es.get("sube_por", "alto") == "bajo" or n == 1 else list(reversed(tramos_b))
+        cm = [(c0 + c1) / 2 for c0, c1 in orden]
+        ini, fin = (s0 + 0.10, s1 - 0.05) if meseta_al_fin else (s1 - 0.10, s0 + 0.05)
+        amid = (s1 + a1) / 2 if meseta_al_fin else (a0 + s0) / 2
+        pts = [P2(ini, cm[0]), P2(amid, cm[0])] + ([P2(amid, cm[1]), P2(ini, cm[1])] if n == 2 else [P2(fin, cm[0])])
+        prims.append(dict(L=L_, k="pl", cerr=False, pts=pts))
+        prims.append(dict(L=L_, k="ci", c=pts[0], r=0.05))
+        (ux, uy), (vx, vy) = pts[-2], pts[-1]
+        dl = math.hypot(vx - ux, vy - uy) or 1
+        dx_, dy_ = (vx - ux) / dl, (vy - uy) / dl
+        prims.append(dict(L=L_, k="pl", cerr=False, pts=[(vx - 0.15 * dx_ - 0.07 * dy_, vy - 0.15 * dy_ + 0.07 * dx_), (vx, vy),
+                                                         (vx - 0.15 * dx_ + 0.07 * dy_, vy - 0.15 * dy_ - 0.07 * dx_)]))
+        prims.append(dict(L=L_, k="tx", p=P2((s0 + s1) / 2, cm[0]), h=0.12, t=es.get("texto", "SUBE")))
+
     # 13. textos ----------------------------------------------------------------
     for R in E:
         libre = R.poly.difference(MU.buffer(0.05)) if muebles else R.poly
@@ -1380,7 +1423,7 @@ def escribe_dxf(ruta, muros, prims, cotas=()):
     if "CALIBRI" not in doc.styles:
         doc.styles.add("CALIBRI", font="calibri.ttf")
     capas = {"MUROS": 7, "PUERTAS": 3, "VENTANAS": 5, "MOBILIARIO": 251, "TEXTOS": 7,
-             "ESTANCIAS": 4, "COTAS": 1, "PATINILLOS": 9}
+             "ESTANCIAS": 4, "COTAS": 1, "PATINILLOS": 9, "ESCALERAS": 30}
     for n, c in capas.items():
         if n not in doc.layers:
             doc.layers.add(n, color=c)
@@ -1447,7 +1490,7 @@ def escribe_png(ruta, muros, E, prims, aud, titulo, cotas=None):
             verts += cs
             codes += [Path.MOVETO] + [Path.LINETO] * (len(cs) - 2) + [Path.CLOSEPOLY]
         ax.add_patch(PathPatch(Path(verts, codes), fc="none", ec="black", lw=0.9))
-    col = {"PUERTAS": "#1b7f2a", "VENTANAS": "#1f5fbf", "MOBILIARIO": "#8a8a8a", "PATINILLOS": "#777777"}
+    col = {"PUERTAS": "#1b7f2a", "VENTANAS": "#1f5fbf", "MOBILIARIO": "#8a8a8a", "PATINILLOS": "#777777", "ESCALERAS": "#b06d00"}
     for p in prims:
         c = col.get(p["L"], "black")
         if p["k"] == "pl":

@@ -157,6 +157,8 @@ def engorda(m, r, eje):
 
 # extremos reales de las paredes: pixeles negros en trazos rectos largos (los textos no los tienen)
 ng = np.asarray(Image.fromarray((negro_c * 255).astype(np.uint8)).resize((W // f, H // f), Image.BOX)) > 60
+bm = max(2, max(ng.shape) // 60)                          # ignora marcos y bordes de la captura
+ng[:bm], ng[-bm:], ng[:, :bm], ng[:, -bm:] = False, False, False, False
 kp, tp = max(12, max(ng.shape) // 14), max(1, max(ng.shape) // 350)
 lp = tramos(engorda(ng, tp, 0), kp, 0) | tramos(engorda(ng, tp, 1), kp, 1)
 yy_, xx_ = np.nonzero(lp & ng)

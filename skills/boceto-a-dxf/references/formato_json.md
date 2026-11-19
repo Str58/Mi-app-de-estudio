@@ -208,6 +208,16 @@ Cada cota roja del boceto se escribe con el `id` de su recuadro en `mapa_cotas.j
 ## Cotas explícitas (`"cotas"`)
 Solo dibujan, no comprueban (es preferible usar `cotas_boceto`). Cada entrada dibuja una cota alineada entre `de` y `a` (en metros, en coordenadas de la planta). Si la diferencia en x es mayor o igual que la diferencia en y, la cota es horizontal; si no, es vertical. `desp` desplaza la línea de cota en perpendicular (+ arriba o a la derecha). Se dibujan siempre, no se descartan como duplicadas y van en la capa COTAS. Úsalas para reproducir **toda** cota del boceto que no salga sola (estrechamientos, pilares, fondos parciales). Funcionan en modo de coordenadas y en modo cadenas.
 
+## Escaleras (`"escaleras"`)
+La escalera es una estancia (`"tipo":"circulacion"`, normalmente en `abiertas` con el pasillo) y además se dibuja en la capa ESCALERAS:
+```json
+"escaleras": [{"rect":{"x":2.65,"y":4.84,"dx":2.25,"dy":1.75}, "eje":"x", "tramos":2, "central":0.11,
+               "meseta":"fin", "sube_por":"alto", "huella":0.28}]
+```
+- `eje`: dirección de los tramos. `tramos`: 1 (recta) o 2 (en U, con `central` = muro o barandilla entre tramos).
+- `meseta`: `"fin"` (en el extremo de coordenada mayor) o `"ini"`. `sube_por`: tramo por el que se sube (`"alto"` o `"bajo"`).
+- Dibuja el contorno, los peldaños cada `huella`, la meseta, el muro central y la flecha de subida con el texto «SUBE».
+
 ## Qué audita el motor
 **Errores (E#)**: la entrega queda bloqueada hasta corregirlos.
 - Estancias que se solapan.
