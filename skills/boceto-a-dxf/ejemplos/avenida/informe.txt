@@ -1,0 +1,45 @@
+INFORME DEL PLANO
+============================================================
+
+SUPERFICIES UTILES
+  Dormitorio principal            12,76 m2   (dormitorio)
+  Baño 1                           4,33 m2   (bano)
+  Dormitorio 2                     9,83 m2   (dormitorio)
+  Baño 2                           3,77 m2   (bano)
+  Distribuidor                     8,00 m2   (circulacion)
+  Salón                           21,41 m2   (salon)
+  Cocina                           9,25 m2   (cocina)
+  Recibidor                        4,42 m2   (circulacion)
+  Lavadero                         1,65 m2   (almacen)
+  Galería oeste                    7,46 m2   (terraza)
+  Dormitorio 3                     9,28 m2   (dormitorio)
+  Dormitorio 4                     9,32 m2   (dormitorio)
+  Galería este                     5,78 m2   (terraza)
+  TOTAL UTIL                      94,01 m2
+  TERRAZAS                        13,25 m2
+  CONSTRUIDA (contorno)          127,21 m2
+
+ERRORES (0) - hay que corregirlos en el JSON:
+  ninguno
+
+AVISOS (9) - revisar; si son correctos, explicarlos al entregar:
+  A1. Descuadre: cota dy de 'A_main' (2,85) no cuadra con el resto; queda en 2,76 (-0,09). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A2. Descuadre: cota dy de 'A_paso' (0,97) no cuadra con el resto; queda en 0,99 (+0,02). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A3. Descuadre: cota dy de 'bano1' (1,59) no cuadra con el resto; queda en 1,68 (+0,09). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A4. Ajuste: cota dy de 'hall_alto' pasa de 1,95 a 2,00 (+0,05); absorbe el descuadre de las cadenas por ser circulacion
+  A5. Ajuste: cota dx de 'pasillo' pasa de 0,96 a 0,98 (+0,02); absorbe el descuadre de las cadenas por ser circulacion
+  A6. Ajuste: cota dx de 'recibidor' pasa de 1,80 a 1,78 (-0,02); absorbe el descuadre de las cadenas por ser circulacion
+  A7. Descuadre: cota dx de 'dormC' (3,54) no cuadra con el resto; queda en 3,45 (-0,09). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A8. Descuadre: cota dx de 'dormD' (3,36) no cuadra con el resto; queda en 3,45 (+0,09). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A9. Hueco de 0,67 m2 entre estancias sin asignar: se dibuja como patinillo de instalaciones
+
+SUPUESTOS DE LECTURA DEL BOCETO:
+  - Texto verde «Saunier Duval / Thema ni connect»: caldera, dibujada como rectángulo junto al muro sur de la cocina.
+  - Las ventanas con h=2,25 de los dormitorios y el salón son balconeras; las de los dormitorios 3 y 4, la cocina y el salón dan a galerías acristaladas.
+  - Los dormitorios principal y 2 tienen un pasillo propio de 0,97 y 0,93; el principal incluye el baño 1 y la zona de armario.
+  - Baño 1 de 2,57 x 1,59 con la ducha en el extremo este, separada por mampara; ventana de 0,75 (h 0,60).
+  - Lavadero (estancia pequeña al sur de la cocina): sin cota de ancho, se le dan 1,00 y se comunica con la cocina por la línea azul.
+  - Galería este: no dibujo el pequeño quiebro de su esquina noreste (0,36 / 0,51).
+  - Pilar del baño 2 de 0,54 x 0,25, leído en la esquina sureste.
+  - Galería oeste: «1,41» es el ancho hasta el salón con su muro de 0,30 incluido (interior 1,11); junto a la cocina, 0,55.
+  - Las cotas sitúan los dormitorios 1 y 2 alineados con la cocina por el oeste (0,57 más al oeste que el salón), aunque el boceto los dibuja alineados con el salón: mando las cotas. Si es al revés, alguna de 3,42 / 3,32 / 2,12 / 2,57 está mal.

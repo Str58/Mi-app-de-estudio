@@ -127,6 +127,7 @@ Un hueco pequeño (menos de 1,5 m²) que quede rodeado de estancias se convierte
 ```jsonc
 {"estancia":"salon", "lado":"S", "ancho":2.00, "desde":0.60}
 {"estancia":"dorm1", "lado":"O", "ancho":1.20, "tipo":"balconera"}   // balconera a la calle
+{"estancia":"galeria", "lado":"O", "ancho":"corrido"}               // acristalamiento de pared entera
 ```
 Sin posición, la ventana queda centrada en la parte de esa pared que da al exterior. Si no cabe, se reduce o se desplaza y queda como aviso.
 

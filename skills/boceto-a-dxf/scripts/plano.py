@@ -463,7 +463,11 @@ def genera(spec, salida):
         if lado is None and len({e.dir for e in cand}) > 1:
             aud.a(f"Ventana {k} de '{R.id}' sin lado: se coloca en la fachada mas larga")
         e = (elige_lado(R, cand[0].dir, v.get("en"), lambda x: x in cand) if lado else max(cand, key=lambda x: x.L))
-        w = num(v.get("ancho", 1.20))
+        if v.get("ancho") == "corrido":  # acristalamiento de pared entera: 0,10 de pared a cada lado
+            v = dict(v, desde=0.10)
+            w = max(0.4, e.L - 0.20)
+        else:
+            w = num(v.get("ancho", 1.20))
         if w > e.L - 0.10:
             aud.a(f"Ventana {k} de '{R.id}': ancho {fmt(w)} no cabe en {fmt(e.L)} m; se reduce")
             w = max(0.4, e.L - 0.10)
