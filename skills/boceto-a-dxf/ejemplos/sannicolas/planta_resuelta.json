@@ -38,27 +38,27 @@
     ],
     [
      1.8,
-     3.1
+     3.09
     ],
     [
      0.0,
-     3.1
+     3.09
     ],
     [
      0.0,
-     4.02
+     4.01
     ],
     [
      0.8,
-     4.02
+     4.01
     ],
     [
      0.8,
-     3.99
+     3.98
     ],
     [
      1.48,
-     3.99
+     3.98
     ],
     [
      1.48,
@@ -159,13 +159,13 @@
  "pilares": [
   {
    "x": 2.52,
-   "y": 3.99,
+   "y": 3.98,
    "dx": 1.3,
    "dy": 0.37
   },
   {
    "x": 1.48,
-   "y": 3.99,
+   "y": 3.98,
    "dx": 0.32,
    "dy": 0.38
   },
@@ -300,8 +300,9 @@
   "Baño (lavabo + inodoro) con puerta de vidrio a todo lo ancho hacia el paso de la balconera. 1,74 de fondo; la pared de la ventana (0,50 × 0,50) mide 1,12 y está 0,22 retranqueada respecto al resto.",
   "Ducha de 0,61 + tabique parcial + 0,68 = 1,36 × 1,16 (interior), cerrada con cristalera hacia el paso. El tabique contiguo mide 1,14 por el lado del salón (el salón llega 2 cm menos al norte).",
   "Paso de la balconera de 1,00 entre el baño y la ducha; 5,05 desde el muro oeste del salón hasta la fachada.",
-  "Ancho del salón al norte: se toma 3,61 (cierra con 5,05 = 3,61 + 0,08 + 1,36). El 3,58 escrito en el muro norte da 3 cm menos; no se dibuja ningún saliente porque el boceto no lo tiene.",
-  "La cota 2,89 del salón no cuadra: con el pilar de bajantes a 0,28 sobre el suelo del baño, del pilar al muro norte hay 3,23."
+  "La cota 2,89 del salón no cuadra: con el pilar de bajantes a 0,28 sobre el suelo del baño, del pilar al muro norte hay 3,23.",
+  "Ancho del salón al norte: se toma 3,61 (cierra con 5,05 = 3,61 + 0,08 + 1,36). El 3,58 escrito en el muro norte da 3 cm menos; no se dibuja ningún saliente.",
+  "Tabique de la cocina hacia el paso de 0,07 para cumplir 3,02 + 0,07 = 3,09."
  ],
  "muros_exteriores": [
   {
@@ -323,176 +324,378 @@
    "espesor": 0.08
   }
  ],
- "cotas": [
+ "zonas": "zonas",
+ "cotas_boceto": [
   {
-   "de": [
-    0,
-    3.6
+   "id": "C1/C2",
+   "valor": 3.58,
+   "en": [
+    3,
+    7.9
    ],
-   "a": [
-    0.8,
-    3.6
-   ]
+   "eje": "x",
+   "no_cuadra": true
   },
   {
-   "de": [
-    0.4,
-    3.1
+   "id": "C3",
+   "valor": 0.61,
+   "en": [
+    5.4,
+    7.9
    ],
-   "a": [
-    0.4,
-    4.02
-   ]
+   "eje": "x"
   },
   {
-   "de": [
-    1.2,
-    3.1
+   "id": "C4",
+   "valor": 0.68,
+   "en": [
+    6.2,
+    7.9
    ],
-   "a": [
-    1.2,
-    3.99
-   ]
+   "eje": "x"
   },
   {
-   "de": [
-    0,
-    3.35
-   ],
-   "a": [
-    5.17,
-    3.35
-   ]
-  },
-  {
-   "de": [
-    1.8,
-    1.0
-   ],
-   "a": [
-    5.17,
-    1.0
-   ]
-  },
-  {
-   "de": [
-    5.0,
-    0
-   ],
-   "a": [
-    5.0,
-    3.88
-   ]
-  },
-  {
-   "de": [
-    1.8,
-    4.17
-   ],
-   "a": [
-    2.52,
-    4.17
-   ]
-  },
-  {
-   "de": [
-    3.82,
-    4.17
-   ],
-   "a": [
-    4.82,
-    4.17
-   ]
-  },
-  {
-   "de": [
-    1.48,
+   "id": "C5",
+   "valor": 5.05,
+   "en": [
+    3,
     6.3
    ],
-   "a": [
-    6.53,
-    6.3
-   ]
+   "eje": "x"
   },
   {
-   "de": [
-    1.48,
+   "id": "C6",
+   "valor": 3.61,
+   "en": [
+    3,
     7.2
    ],
-   "a": [
+   "eje": "x"
+  },
+  {
+   "id": "C7",
+   "valor": 1.14,
+   "de": [
     5.09,
-    7.2
-   ]
-  },
-  {
-   "de": [
-    5.0,
     6.86
    ],
    "a": [
-    5.0,
+    5.09,
     8.0
    ]
   },
   {
-   "de": [
+   "id": "C8/C9",
+   "valor": 1.16,
+   "en": [
     6.4,
-    6.86
+    7.4
+   ],
+   "eje": "y"
+  },
+  {
+   "id": "C10",
+   "valor": 1.74,
+   "en": [
+    5.8,
+    5.3
+   ],
+   "eje": "y"
+  },
+  {
+   "id": "C11",
+   "valor": 1.0,
+   "de": [
+    6.53,
+    5.78
    ],
    "a": [
-    6.4,
-    8.02
+    6.53,
+    6.78
    ]
   },
   {
+   "id": "C12",
+   "valor": 0.92,
+   "en": [
+    0.4,
+    3.5
+   ],
+   "eje": "y"
+  },
+  {
+   "id": "C13",
+   "valor": 0.8,
    "de": [
-    4.9,
-    0.22
+    0,
+    4.01
    ],
    "a": [
-    4.9,
-    1.05
+    0.8,
+    4.01
    ]
   },
   {
+   "id": "C14",
+   "valor": 0.32,
    "de": [
+    1.48,
+    3.98
+   ],
+   "a": [
+    1.8,
+    3.98
+   ]
+  },
+  {
+   "id": "C14",
+   "valor": 0.38,
+   "de": [
+    1.8,
+    3.98
+   ],
+   "a": [
+    1.8,
+    4.36
+   ]
+  },
+  {
+   "id": "C15",
+   "valor": 2.89,
+   "en": [
     4.95,
+    6.0
+   ],
+   "eje": "y",
+   "no_cuadra": true
+  },
+  {
+   "id": "C16",
+   "valor": 0.37,
+   "de": [
+    3.82,
+    3.98
+   ],
+   "a": [
+    3.82,
+    4.35
+   ]
+  },
+  {
+   "id": "C16",
+   "valor": 1.0,
+   "en": [
+    4.3,
+    4.3
+   ],
+   "eje": "x"
+  },
+  {
+   "id": "C16/C27",
+   "valor": 0.53,
+   "de": [
+    4.82,
     4.24
    ],
    "a": [
-    4.95,
+    4.82,
     4.77
    ]
   },
   {
+   "id": "C16/C27",
+   "valor": 0.35,
    "de": [
-    5.27,
+    4.82,
     4.24
    ],
    "a": [
-    5.27,
+    5.17,
+    4.24
+   ]
+  },
+  {
+   "id": "C17/C27",
+   "valor": 0.19,
+   "de": [
+    5.17,
+    4.78
+   ],
+   "a": [
+    5.36,
     4.78
    ]
   },
   {
+   "id": "C17/C27",
+   "valor": 0.54,
    "de": [
-    6.2,
-    3.96
+    5.36,
+    4.24
    ],
    "a": [
-    6.2,
+    5.36,
+    4.78
+   ]
+  },
+  {
+   "id": "C18",
+   "valor": 0.22,
+   "de": [
+    6.31,
+    5.08
+   ],
+   "a": [
+    6.53,
     5.08
    ]
   },
   {
+   "id": "C18",
+   "valor": 1.12,
    "de": [
-    5.6,
+    6.31,
     3.96
    ],
    "a": [
-    5.6,
-    5.7
+    6.31,
+    5.08
+   ]
+  },
+  {
+   "id": "C19/C21",
+   "valor": 5.17,
+   "en": [
+    2.5,
+    3.5
+   ],
+   "eje": "x"
+  },
+  {
+   "id": "C22/C29",
+   "valor": 3.02,
+   "en": [
+    1.0,
+    1.5
+   ],
+   "eje": "y"
+  },
+  {
+   "id": "C23",
+   "valor": 0.89,
+   "en": [
+    1.2,
+    3.5
+   ],
+   "eje": "y"
+  },
+  {
+   "id": "C24/C30",
+   "valor": 3.09,
+   "de": [
+    1.8,
+    0
+   ],
+   "a": [
+    1.8,
+    3.09
+   ]
+  },
+  {
+   "id": "C25",
+   "valor": 0.72,
+   "en": [
+    2.2,
+    4.2
+   ],
+   "eje": "x"
+  },
+  {
+   "id": "C28",
+   "valor": 0.5,
+   "de": [
+    6.31,
+    4.06
+   ],
+   "a": [
+    6.31,
+    4.56
+   ]
+  },
+  {
+   "id": "C33",
+   "valor": 3.88,
+   "de": [
+    5.17,
+    0
+   ],
+   "a": [
+    5.17,
+    3.88
+   ]
+  },
+  {
+   "id": "C34",
+   "valor": 3.37,
+   "en": [
+    3,
+    1.5
+   ],
+   "eje": "x"
+  },
+  {
+   "id": "C35/C38",
+   "valor": 0.83,
+   "de": [
+    5.17,
+    0.22
+   ],
+   "a": [
+    5.17,
+    1.05
+   ]
+  },
+  {
+   "id": "C35/C38",
+   "valor": 0.22,
+   "de": [
+    4.95,
+    0.22
+   ],
+   "a": [
+    5.17,
+    0.22
+   ]
+  },
+  {
+   "id": "C35/C38",
+   "valor": 0.22,
+   "de": [
+    4.95,
+    0
+   ],
+   "a": [
+    4.95,
+    0.22
+   ]
+  },
+  {
+   "id": "C36/C37",
+   "valor": 0.95,
+   "de": [
+    5.17,
+    1.05
+   ],
+   "a": [
+    5.17,
+    2.0
    ]
   }
- ]
+ ],
+ "cotas_descartadas": {
+  "C9/C18": "0,20 y 0,50: jambas del hueco de la balconera de 1,00 en fachada; no se dibujan",
+  "C20": "0,80 y 0,26: puerta de la cocina (ancho y posición, en puertas)",
+  "C26": "1,028 y 0,55 junto al pilar de bajantes: no se sabe qué tramo miden (falta una cota de posición)",
+  "C31/C32": "h=2,15: altura libre"
+ }
 }

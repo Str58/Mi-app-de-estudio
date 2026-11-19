@@ -184,8 +184,26 @@ Colocación: `contra` es la pared en la que se apoya la parte trasera del mueble
 
 `ancho` y `fondo` sustituyen a las medidas por defecto. El ancho se mide a lo largo de la pared y el fondo, hacia dentro de la estancia.
 
+## Cotas del boceto comprobadas (`"cotas_boceto"`), recomendado
+Cada cota roja del boceto se escribe con el `id` de su recuadro en `mapa_cotas.jpg` (zonas.py), su `valor` tal como está escrito y el tramo que mide. El motor **la mide en la geometría dibujada**, la dibuja en la capa COTAS y da **error** si no coincide (tolerancia de 5 mm).
+```json
+"zonas": "../zonas",                       // carpeta de zonas.py (relativa al JSON): activa la comprobación de recuadros sin usar y superpuesto.jpg
+"cotas_boceto": [
+  {"id":"C5",  "valor":5.05, "en":[3.0,6.3], "eje":"x"},            // luz libre que pasa por el punto, de pared a pared
+  {"id":"C7",  "valor":1.14, "de":[5.09,6.86], "a":[5.09,8.00]},     // entre dos puntos situados sobre caras de muro
+  {"id":"C16/C27", "valor":0.53, "de":[4.82,4.24], "a":[4.82,4.77]}, // un mismo número visto en dos recuadros
+  {"id":"C15", "valor":2.89, "en":[4.95,6.0], "eje":"y", "no_cuadra":true}  // discrepancia real del boceto: aviso, no error
+],
+"cotas_descartadas": {"C31/C32": "h=2,15: altura libre", "C20": "puerta de la cocina (en puertas)"}
+```
+- `en` + `eje`: mide la estancia (o la unión de estancias abiertas entre sí) a lo largo del eje por ese punto. Es lo más cómodo para las cotas interiores.
+- `de` + `a`: para pilares, salientes, huecos de ventana, retranqueos y cotas exteriores. Si un extremo queda suelto en medio de una estancia, avisa.
+- Un recuadro que no está ni en `cotas_boceto` ni en `cotas_descartadas` da error: así ninguna cota queda sin leer.
+- El informe resume: «COTAS DEL BOCETO COMPROBADAS: 34 (32 cumplen, 2 no)», y lista solo las que fallan.
+- Opcionales: `"desp"` desplaza la línea de cota y `"dibujar": false` comprueba sin dibujar.
+
 ## Cotas explícitas (`"cotas"`)
-Cada entrada dibuja una cota alineada entre `de` y `a` (en metros, en coordenadas de la planta). Si la diferencia en x es mayor o igual que la diferencia en y, la cota es horizontal; si no, es vertical. `desp` desplaza la línea de cota en perpendicular (+ arriba o a la derecha). Se dibujan siempre, no se descartan como duplicadas y van en la capa COTAS. Úsalas para reproducir **toda** cota del boceto que no salga sola (estrechamientos, pilares, fondos parciales). Funcionan en modo de coordenadas y en modo cadenas.
+Solo dibujan, no comprueban (es preferible usar `cotas_boceto`). Cada entrada dibuja una cota alineada entre `de` y `a` (en metros, en coordenadas de la planta). Si la diferencia en x es mayor o igual que la diferencia en y, la cota es horizontal; si no, es vertical. `desp` desplaza la línea de cota en perpendicular (+ arriba o a la derecha). Se dibujan siempre, no se descartan como duplicadas y van en la capa COTAS. Úsalas para reproducir **toda** cota del boceto que no salga sola (estrechamientos, pilares, fondos parciales). Funcionan en modo de coordenadas y en modo cadenas.
 
 ## Qué audita el motor
 **Errores (E#)**: la entrega queda bloqueada hasta corregirlos.

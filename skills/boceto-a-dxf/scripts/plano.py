@@ -7,6 +7,8 @@ Lee una descripcion JSON de la planta (ver references/formato_json.md) y genera:
   plano.dxf    plano para AutoCAD (metros, capas, muros rellenos)
   plano.png    vista previa con las incidencias marcadas y numeradas
   informe.txt  superficies, errores (E#), avisos (A#) y supuestos
+  superpuesto.jpg  (con "zonas") el plano encima del boceto, para una unica revision visual
+  + comprobacion de "cotas_boceto": cada cota del boceto medida en la geometria dibujada
 
 Uso:   python3 plano.py planta.json [carpeta_salida]
 Salida: codigo 0 = sin errores, 2 = hay errores que corregir en el JSON.
@@ -1048,16 +1050,121 @@ def genera(spec, salida):
         prims.append(dict(L="PATINILLOS", k="pl", pts=[(b[0], b[1]), (b[2], b[3])], cerr=False))
         prims.append(dict(L="PATINILLOS", k="pl", pts=[(b[0], b[3]), (b[2], b[1])], cerr=False))
 
+    explicitas = list(spec.get("cotas", [])) + comprueba_cotas_boceto(spec, E, muros, aud)
     cotas = calcula_cotas(E, ventanas, puertas, exterior, spec.get("_cotas_partes", []),
-                          spec.get("_cotas_cadenas", []), pilares, spec.get("cotas", [])) if spec.get("acotar", True) else []
+                          spec.get("_cotas_cadenas", []), pilares, explicitas) if spec.get("acotar", True) else []
     os.makedirs(salida, exist_ok=True)
     escribe_dxf(os.path.join(salida, "plano.dxf"), muros, prims, cotas)
     escribe_png(os.path.join(salida, "plano.png"), muros, E, prims, aud, spec.get("titulo", "Plano"))
     if cotas:
         escribe_png(os.path.join(salida, "plano_cotas.png"), muros, E,
                     [p for p in prims if p["L"] not in ("MOBILIARIO",)], None, spec.get("titulo", "Plano"), cotas)
+    superpone(spec, E, muros, salida, aud)
     informe = escribe_informe(os.path.join(salida, "informe.txt"), E, aud, util, terr, exterior, spec)
     return aud, informe
+
+
+# ------------------------------------------------- comprobacion de las cotas del boceto
+def carpeta_zonas(spec):
+    z = spec.get("zonas")
+    if not z:
+        return None
+    if not os.path.isabs(z):
+        z = os.path.join(spec.get("_dir_json", "."), z)
+    return z if os.path.exists(os.path.join(z, "lista_cotas.json")) else None
+
+
+def comprueba_cotas_boceto(spec, E, muros, aud):
+    """Cada cota del boceto se mide en la geometria dibujada y se compara con su valor.
+    - {"id","valor","en":[x,y],"eje":"x"|"y"}: luz libre a traves del punto, entre las dos paredes mas cercanas
+    - {"id","valor","de":[x,y],"a":[x,y]}: distancia entre dos puntos, que deben estar sobre una cara de muro
+    Devuelve las cotas a dibujar (formato de "cotas") y deja el resultado en spec["_comprobacion"]."""
+    libre = unary_union([R.poly for R in E])
+    caras = muros.boundary if not muros.is_empty else None
+    res, dib = [], []
+    for c in spec.get("cotas_boceto", []):
+        cid, val = c.get("id", "?"), c.get("valor")
+        try:
+            if "en" in c:
+                x, y = (num(v) for v in c["en"])
+                hz = c.get("eje", "x") == "x"
+                ln = LineString([(-1e3, y), (1e3, y)]) if hz else LineString([(x, -1e3), (x, 1e3)])
+                seg = ln.intersection(libre)
+                segs = [seg] if seg.geom_type == "LineString" else [g for g in getattr(seg, "geoms", []) if g.geom_type == "LineString"]
+                segs = [g for g in segs if g.distance(Point(x, y)) < 1e-6]
+                if not segs:
+                    aud.e(f"Cota {cid}: el punto {c['en']} no esta dentro de ninguna estancia", (x, y))
+                    continue
+                (x1, y1), (x2, y2) = segs[0].coords[0], segs[0].coords[-1]
+                med = abs(x2 - x1) if hz else abs(y2 - y1)
+            else:
+                (x1, y1), (x2, y2) = [tuple(num(v) for v in p) for p in (c["de"], c["a"])]
+                hz = abs(x2 - x1) >= abs(y2 - y1)
+                if hz:
+                    y2 = y1
+                else:
+                    x2 = x1
+                med = abs(x2 - x1) if hz else abs(y2 - y1)
+                for p in ((x1, y1), (x2, y2)):  # un extremo suelto en medio de una estancia no mide nada
+                    if caras is not None and caras.distance(Point(p)) > 0.012 and libre.contains(Point(p)):
+                        aud.a(f"Cota {cid}: el extremo {tuple(round(v, 3) for v in p)} no esta sobre ninguna cara de "
+                              f"muro: la cota no mide lo que dice", p)
+            if c.get("dibujar", True):
+                dib.append({"de": [x1, y1], "a": [x2, y2], "desp": c.get("desp", 0)})
+            ok = val is None or abs(med - num(val)) <= 0.005
+            res.append((cid, val, med, ok, c.get("no_cuadra")))
+            if not ok:
+                txt = f"Cota {cid}: el boceto dice {fmt(num(val), 3 if len(str(val).split('.')[-1]) > 2 else 2)} y el plano da {fmt(med)}"
+                if c.get("no_cuadra"):
+                    aud.a(txt + " (discrepancia del boceto, indicada en supuestos)", (x1, y1))
+                else:
+                    aud.e(txt, (x1, y1))
+        except (KeyError, TypeError, ValueError) as ex:
+            aud.e(f"Cota {cid}: formato incorrecto ({ex})")
+    # recuadros de cotas del boceto (zonas.py) que no se han usado
+    z = carpeta_zonas(spec)
+    if z:
+        with open(os.path.join(z, "lista_cotas.json"), encoding="utf-8") as fh:
+            ids = json.load(fh)["ids"]
+        usados = set()
+        for c in spec.get("cotas_boceto", []):
+            usados.update(re.findall(r"C\d+", str(c.get("id", ""))))
+        for k, v in spec.get("cotas_descartadas", {}).items():
+            usados.update(re.findall(r"C\d+", k))
+        for i in ids:
+            if i not in usados:
+                aud.e(f"Recuadro {i} del boceto (mapa_cotas.jpg) sin usar: ponlo en cotas_boceto o en "
+                      f"cotas_descartadas con el motivo")
+    spec["_comprobacion"] = res
+    return dib
+
+
+def superpone(spec, E, muros, salida, aud):
+    """superpuesto.jpg: el plano generado (azul) encima del boceto, encajando los extremos de las paredes.
+    El boceto no esta a escala: sirve para ver paredes que faltan, sobran o estan cambiadas de sitio."""
+    z = carpeta_zonas(spec)
+    if not z or not os.path.exists(os.path.join(z, "recorte.jpg")):
+        return
+    from PIL import Image, ImageDraw
+    with open(os.path.join(z, "lista_cotas.json"), encoding="utf-8") as fh:
+        px0, py0, px1, py1 = json.load(fh)["paredes_px"]
+    bx0, by0, bx1, by1 = unary_union([R.poly for R in E]).bounds
+    im = Image.open(os.path.join(z, "recorte.jpg")).convert("L").convert("RGB")
+    im = Image.blend(Image.new("RGB", im.size, "white"), im, 0.45)
+    sx, sy = (px1 - px0) / max(1e-6, bx1 - bx0), (py1 - py0) / max(1e-6, by1 - by0)
+    T = lambda p: (px0 + (p[0] - bx0) * sx, py1 - (p[1] - by0) * sy)
+    d = ImageDraw.Draw(im)
+    for R in E:  # el boceto dibuja las caras interiores: se superponen los contornos de las estancias
+        for g in partes(R.poly):
+            for ring in [g.exterior] + list(g.interiors):
+                d.line([T(p) for p in ring.coords], fill=(0, 70, 230), width=4)
+    for R in E:
+        c = R.poly.representative_point()
+        d.text(T((c.x, c.y)), R.nombre.upper(), fill=(0, 120, 0))
+    pad = int(0.08 * max(px1 - px0, py1 - py0))
+    im = im.crop((max(0, px0 - pad), max(0, py0 - pad), min(im.width, px1 + pad), min(im.height, py1 + pad)))
+    im.thumbnail((1300, 1300))
+    im.save(os.path.join(salida, "superpuesto.jpg"), quality=85)
 
 
 # --------------------------------------------------------------------- cotas
@@ -1376,6 +1483,12 @@ def escribe_informe(ruta, E, aud, util, terr, exterior, spec):
     L += [f"  E{i}. {m}" for i, (m, _) in enumerate(aud.err, 1)] or ["  ninguno"]
     L += ["", f"AVISOS ({len(aud.avi)}) - revisar; si son correctos, explicarlos al entregar:"]
     L += [f"  A{i}. {m}" for i, (m, _) in enumerate(aud.avi, 1)] or ["  ninguno"]
+    comp = spec.get("_comprobacion", [])
+    if comp:
+        mal = [r for r in comp if not r[3]]
+        L += ["", f"COTAS DEL BOCETO COMPROBADAS: {len(comp)} ({len(comp) - len(mal)} cumplen, {len(mal)} no)"]
+        L += [f"  {cid}: boceto {fmt(num(v))} / plano {fmt(m)}" + ("  (no cuadra en el boceto)" if nc else "  <-- NO CUMPLE")
+              for cid, v, m, ok, nc in mal]
     sup = spec.get("supuestos", [])
     if sup:
         L += ["", "SUPUESTOS DE LECTURA DEL BOCETO:"] + [f"  - {s}" for s in sup]
@@ -1395,6 +1508,7 @@ def main():
     os.makedirs(salida, exist_ok=True)
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     from cadenas import resolver
+    dir_json = os.path.dirname(os.path.abspath(sys.argv[1]))
     spec, avisos_cad, errores_cad = resolver(spec, num(spec.get("espesores", {}).get("tabique", 0.08)))
     if errores_cad:
         print("ERRORES EN LAS CADENAS DE COTAS - corrige el JSON:")
@@ -1404,6 +1518,7 @@ def main():
     with open(os.path.join(salida, "planta_resuelta.json"), "w", encoding="utf-8") as f:
         json.dump(spec, f, ensure_ascii=False, indent=1)
     spec["_avisos_cadenas"] = avisos_cad
+    spec["_dir_json"] = dir_json
     aud, informe = genera(spec, salida)
     try:
         import ezdxf
@@ -1415,7 +1530,7 @@ def main():
     except Exception as ex:  # pragma: no cover
         informe += f"\nNo se pudo auditar el DXF: {ex}\n"
     print(informe)
-    print(f"Archivos en: {os.path.abspath(salida)}  (plano.dxf, plano.png, plano_cotas.png, informe.txt, planta_resuelta.json)")
+    print(f"Archivos en: {os.path.abspath(salida)}  (plano.dxf, plano.png, plano_cotas.png, informe.txt, planta_resuelta.json y, con zonas, superpuesto.jpg)")
     sys.exit(2 if aud.err else 0)
 
 

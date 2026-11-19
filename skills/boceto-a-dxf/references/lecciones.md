@@ -1,50 +1,28 @@
-# Lecciones aprendidas de las correcciones de Ester
+# Reglas aprendidas de Ester (leer antes de cada boceto; prevalecen sobre todo)
 
-Se leen antes de cada boceto y prevalecen sobre el resto de la skill. Cada corrección nueva se añade aquí como regla general.
+Resumen de las correcciones. El detalle y los ejemplos están en `lecciones_historial.md` (hN = número de la lección).
 
-1. **Tabiques siempre de 0,08 y rectos.** Nunca se engorda un tabique ni se dobla una pared para absorber un descuadre de cotas. La diferencia la absorben los muros como saliente, nunca recortando una cota escrita (ver la 18). *(Bergamín 10, nov. 2026)*
-2. **Galerías, tendederos y terrazas cerradas**: su pared hacia las estancias interiores es la antigua fachada, de **0,30**. *(Bergamín 10)*
-3. **Marcas de hueco en los dos extremos de una pared**, aunque no estén en azul, indican un acristalamiento corrido casi a todo lo largo: la pared menos 0,10 a cada lado. Un ancho escrito más pequeño no lo anula. *(Bergamín 10, galería de 3,25)*
-4. **Cotas giradas**: un 2 trazado deprisa puede parecer un 5 al girarlo. Si duda, se escriben las dos lecturas como alternativa y el motor elige la que cierra las cadenas. *(Bergamín 10, baño de 1,28 que parecía 1'58)*
-5. **Pared hacia el rellano o la escalera**: es medianera de 0,20, aunque tenga puertas. Puede haber una puerta principal y otra de servicio. *(Bergamín 10)*
-6. **Ventanas medidas deprisa**: sus cotas pueden estar en **rojo dentro de un óvalo azul** (`0'95 h:2'25` = ancho 0,95; la altura se ignora). Lo que va dentro del óvalo es de la ventana más cercana. *(Avenida 25-2, nov. 2026)*
-7. **Ventana como línea azul paralela a la pared**, en lugar de dos rayitas perpendiculares: la línea marca el hueco (posición y longitud). Es poco frecuente, pero hay que reconocerla. *(Avenida 25-2)*
-8. **Números boca abajo o girados**: se confirman siempre en `cotas_rojas_giro_izq/der.png` antes de escribirlos. Un 1 mal trazado leído como 7 descuadra toda la planta. *(Avenida 25-2: «4'12» leído como 4'72)*
-9. **Mandan las cotas, no las alineaciones del dibujo.** En las cadenas solo se ponen las alineaciones que haga falta. Si el motor da un descuadre grande o una dimensión negativa, lo primero que se sospecha es una alineación tomada del dibujo, y se quita. *(Avenida 25-2: los dormitorios 1 y 2 quedan alineados con la cocina, no con el salón)*
-10. **Ventanas con h = 2,25** son balconeras. Si dan a una galería acristalada, se describen como `puertas` de tipo balconera entre la estancia y la galería. *(Avenida 25-2)*
-11. **Las medidas de las estancias son sagradas.** Una cota de estancia no se cambia nunca para cuadrar el plano. Las diferencias las absorben primero la circulación y después los **muros, engordando como salientes**, y el informe dice dónde. Una parte con cota (`dx` o `dy` numérico) nunca lleva `"flexible": true`. *(Avenida 25-2, corrección de Ester)*
-12. **Puertas interiores siempre de 0,80** y la de entrada de 0,90, salvo cota escrita. No se estrechan para que quepan: si el motor dice que no caben, lo que está mal es la lectura de las cotas del tramo. *(Avenida 25-2)*
-13. **Pilares y salientes**: hay que buscar todos los cuadraditos y escalones dibujados en los muros. Una cota pequeña (0,15–0,60) junto a un muro, o dos cotas de una misma estancia que difieren (1,40 / 1,59), indican un saliente de esa medida, y se dibuja en `pilares`. *(Avenida 25-2: saliente de 1,37 × 0,19 en el baño)*
-14. **Cotas del DXF**: en metros (5,32, nunca 532), en la capa COTAS, con la misma medida que el boceto para cada estancia o tramo. **Las puertas no se acotan**; las ventanas sí. *(Avenida 25-2)*
-15. **Más confusiones de números girados**: 1'13 leído como 1'43 y 1'17 leído como 1'41. Todo número boca abajo se lee en `cotas_rojas_giro_180.png`. *(Avenida 25-2, corrección de Ester)*
-16. **Piezas pequeñas** (despensas, lavaderos) entre la cocina y una galería: sus cotas suelen estar escritas dentro o justo al lado (Avenida: despensa de 0,71 × 1,30). No se confunden con las de la galería contigua (1,65 en la galería). *(Avenida 25-2)*
-17. **Geometría al centímetro**: el motor redondea las caras a 0,01 m, así que en AutoCAD se mide 4,69 y no 4,686. *(Avenida 25-2)*
-18. **Ninguna cota escrita se toca**, tampoco las de pasillos y vestíbulos ni las totales. Solo absorben las piezas sin medir (`"?"` o `"flexible": true`) y los muros, como salientes. Comprobación final: todas las cotas del boceto deben aparecer en la capa COTAS, exactas al centímetro. *(Avenida 25-2, corrección de Ester)*
-19. **Estancias húmedas** (baños, aseos, cocinas): el boceto se queda corto por el alicatado, así que pueden ganar unos centímetros (hasta 10). **Los tabiques no**: un tabique solo engorda si no queda otra salida, y se avisa. *(Avenida 25-2, corrección de Ester)*
-20. **Estilo de dibujo de referencia** («CALLE IDOIA 16, 3º izq.», C. Soto): sin sombreados en muros ni suelos; puertas con marco en cada jamba y la hoja entre ellos; ventanas con línea exterior y carpintería doble en la cara interior. *(Ester)*
-21. **Menos cotas**: si una ventana deja menos de 0,30 de muro a un lado, solo se acotan la ventana y el muro completo, nunca el trocito. No se repiten cotas. *(Avenida 25-2)*
-22. **Si un baño o una estancia no llega a la fachada**, engorda el muro de fachada (por dentro) y el baño conserva sus cotas exactas. Un muro grueso entre estancias suele ser una zona de **bajantes**, y en los baños las bajantes aparecen como chichones en las esquinas. *(Avenida 25-2, corrección de Ester)*
-23. **Alineaciones**: los dormitorios del mismo lado suelen alinearse con la fachada de la cocina o del salón. Si las cotas no cierran, prueba la otra alineación antes de engordar tabiques. Ninguna estancia tiene «chichones» en la entrada: los tramos de una misma estancia en L van alineados (añade la alineación). *(Avenida 25-2)*
-24. **«1'90» girado era 1'50**: en cotas giradas, el 5 y el 9 se confunden. Si hay duda, se ponen las dos lecturas como alternativa. *(Avenida 25-2)*
-25. **Mobiliario al estilo del plano final de Carlos** (Avenida 25-2):
-    - camas limpias: la doble con franja de mesitas y la individual con línea de cabecera;
-    - armarios con línea doble, sin aspa;
-    - sofá en L con cojines y mesa de centro delante;
-    - mueble de TV en la pared de enfrente;
-    - mesa con 4 sillas en la cocina;
-    - plato de ducha con sumidero de rejilla;
-    - lavabo en encimera.
+**Lectura de cotas**
+1. Cada número rojo debe tener su tramo: todos van en `cotas_boceto` (con su `id` C# de `mapa_cotas.jpg`) o en `cotas_descartadas` con el motivo. El motor mide cada uno en el plano dibujado y da error si no coincide (h28, h18).
+2. Una cota es de la pared junto a la que está escrita y hacia donde apunta su flecha, no de la orientación del texto. Si una cota está por fuera de un tabique y otra por dentro, cada una mide su cara (1,14 en el salón y 1,16 en la ducha) (h34).
+3. Confusiones habituales al girar: 1↔7, 2↔5, 5↔9, 13↔43, 17↔41. Si hay duda, se ponen las dos lecturas como alternativa y el motor elige la que cierra (h4, h8, h15, h24).
+4. Las cotas de lado a lado (por ejemplo, de la entrada a la pared de enfrente) mandan sobre los anchos deducidos. Primero se cierran las cadenas con las cotas escritas y después se deduce lo que no tiene cota (h35).
+5. Una cota que no cierra no se fuerza ni se compensa con un saliente inventado: se marca `"no_cuadra": true`, se explica en `supuestos` y se le dice a Ester (h29, h34).
+6. Lo que va dentro de un óvalo azul es la ventana más cercana: ancho, y `h=` es la altura, que se ignora. Si h ≈ 2,10–2,25, es una balconera (h6, h10).
 
-    Trazo fino gris, sin rellenos. El ejemplo está en `ejemplos/avenida/planta_cadenas.json`. *(Ester)*
-26. **No inventar estancias**: una estancia solo existe si el boceto dibuja sus paredes en todos sus lados (o el nombre o el mobiliario lo indican). Una zona sin muro que la separe es **parte del espacio contiguo**, aunque tenga sus propias cotas (en San Nicolás, la zona sur de 3,37 × 3,88 es el salón, y por eso el pilar queda «en medio de la estancia grande»). Comprobar, antes de cerrar cada estancia, que **hay línea negra en cada lado**. *(San Nicolás 20-22, corrección de Ester)*
-27. **Puertas con `lado`**: si dos estancias comparten más de una pared, indicar siempre en qué pared va la puerta. Si no, el motor la pone en el tramo común más largo. *(San Nicolás)*
-28. **Todas las cotas del boceto deben aparecer en el DXF.** Antes de escribir el JSON, haz una lista numerada con cada cota roja del boceto: léela en las cuatro orientaciones (`cotas_rojas.png` y sus versiones `_giro_izq`, `_giro_der` y `_giro_180`) y anota a qué tramo corresponde. Al final, comprueba una por una que están en `plano_cotas.png`. Si el motor no genera alguna sola, añádela en `"cotas"` (cotas explícitas). *(San Nicolás, corrección de Ester)*
-29. **Cada cota fija una geometría: no se «redondea» a otra cercana.** Si el boceto dice que la ventana mide 1,00 y la franja donde va mide 1,00, el plano no puede dar 0,91. Si una cota no cierra con las demás (en San Nicolás, el 2,89 del salón), **no se fuerza**: se dibuja lo que dicen las cotas que sí cierran y se indica la discrepancia en `supuestos` y en el mensaje a Ester. *(San Nicolás)*
-30. **Estrechamientos y salientes**: cuando cambia el ancho de un espacio (entrada → salón, pasillo con pilar, franja hacia fachada), cada tramo de distinto ancho es una parte de la estancia (`poligono` o una unión de rectángulos) con su propia cota. No se deben unificar en un rectángulo. *(San Nicolás: recibidor de 0,80 → paso de 0,89 → salón)*
-31. **Bajantes en baños y cocinas**: un pilar de bajantes suele sobresalir **hacia los dos lados** del tabique (hacia el baño y hacia la estancia vecina). Dibuja los dos salientes con sus cotas (en San Nicolás: 0,35 × 0,53 hacia el salón y 0,19 × 0,54 hacia el baño). *(San Nicolás, corrección de Ester)*
-32. **Las puertas deben caber en un tramo de pared continuo.** Si la pared que comparten dos estancias tiene un quiebro de 1–2 cm, la puerta se coloca en el tramo que la admite (con `desde`). Si ningún tramo cabe, se usa el ancho máximo posible y se indica en `supuestos`. No se debe falsear la pared para que quepa. *(San Nicolás, corredera del cuarto de caldera)*
-33. **Una línea azul sobre un tabique interior es una cristalera** (puerta de vidrio o mampara), no una puerta normal ni una ventana. Se escribe en `puertas` con `"tipo": "cristalera"` y, si el trazo azul ocupa casi toda la pared, con `"ancho": "total"`. Da paso y se dibuja como acristalamiento. Una estancia pequeña cerrada con cristalera junto a un baño suele ser **la ducha**, no un cuarto de instalaciones. *(San Nicolás, corrección de Ester)*
-34. **Cada cota va con la pared junto a la que está escrita y hacia donde apunta su flecha, no con la orientación del texto.** Ester escribe en horizontal muchas cotas verticales (el 1,74 y el 1,12 del baño). La cota que está junto a la pared de una ventana es la longitud de esa pared. Si una cota está por fuera de un tabique (en el lado del salón) y otra por dentro, cada una mide su cara: en San Nicolás, 1,14 por el lado del salón y 1,16 dentro de la ducha. No se inventan salientes para hacerlas cuadrar. *(San Nicolás)*
-35. **Ninguna medida se deduce de un largo supuesto si hay una cota que la fija.** Las cotas largas de lado a lado («desde la entrada hasta la pared de enfrente: 5,17») mandan sobre el ancho deducido de una estancia. Primero se cierran las cadenas con las cotas escritas y después se deducen las medidas sin cota (el largo del pilar, el ancho de la cocina). *(San Nicolás: la cocina medía 2,07 por suponer el pilar y debía medir 1,72)*
-36. **Los marcos de las puertas no sobresalen del muro.** Su fondo es de 0,08 en las puertas interiores y de unos 0,10 en la de entrada, enrasados con la cara hacia la que abre la hoja. Lo aplica el motor. *(Ester)*
-37. **Si las cotas no fijan la posición relativa de dos paredes que están casi en línea** (por ejemplo, un tabique de baño y el muro del pasillo, ambos junto a un pilar), no se inventa un escalón: se alinean y se indica en `supuestos` qué cota faltaría para confirmarlo. *(San Nicolás)*
+**Geometría**
+7. Las cotas de las estancias y de los tramos son sagradas. Las diferencias las absorben las piezas sin medir y los muros, como salientes; nunca los tabiques (h1, h11, h18).
+8. Espesores: tabique de 0,08; pared hacia la galería (la antigua fachada) de 0,30; pared hacia el rellano o la escalera (medianera) de 0,20. Las estancias húmedas pueden ganar hasta 0,10 por el alicatado y los tabiques no (h1, h2, h5, h19).
+9. No se inventan estancias: una estancia solo existe si tiene pared negra en todos sus lados. Una zona sin muro es parte del espacio contiguo (h26).
+10. Cada tramo de distinto ancho (estrechamientos, franjas hacia la fachada) es una parte propia con su cota, no un rectángulo único (h30). Una estancia en L no tiene «chichones» en la entrada (h23).
+11. Se dibujan todos los pilares y salientes. Una cota pequeña (0,15–0,60) junto a un muro, o dos cotas distintas de una misma estancia, indican un saliente. Los pilares de bajantes suelen salir hacia los dos lados del tabique. Un muro grueso entre estancias suele ser una zona de bajantes (h13, h22, h31).
+12. Alineaciones: solo las necesarias. Si algo descuadra, lo primero que se sospecha es una alineación tomada del dibujo. Si dos paredes casi alineadas no tienen cota que las relacione, se alinean y se indica qué cota falta (h9, h23, h37).
+13. Si un baño no llega a la fachada, engorda el muro de fachada por dentro y el baño conserva sus cotas (h22).
+
+**Huecos**
+14. Puertas interiores de 0,80 y la de entrada de 0,90, salvo cota. No se estrechan: si no caben, la lectura está mal. Deben caber en un tramo de pared continuo (h12, h32). Si dos estancias comparten más de una pared, se indica el `lado` (h27).
+15. Azul sobre un tabique interior = cristalera (`"tipo": "cristalera"`). Un cuarto pequeño cerrado con cristalera junto al baño es la ducha (h33).
+16. Ventanas: dos rayitas, una línea azul paralela a la pared o marcas en los dos extremos de una pared (acristalamiento corrido, la pared menos 0,10 a cada lado) (h3, h7).
+17. Piezas pequeñas (despensas, lavaderos): sus cotas están dentro o al lado; no se confunden con las de la pieza contigua (h16).
+
+**Lo aplica el motor (no hay que hacer nada):** cotas en metros, sin acotar puertas y sin duplicados; muro completo + ventana cuando queda poco muro al lado; geometría al centímetro; sin sombreados; puertas con marcos dentro del muro (0,08 / 0,10); ventanas al estilo de «Idoia 16»; mobiliario al estilo de Carlos; letra Calibri (h14, h17, h20, h21, h25, h36).

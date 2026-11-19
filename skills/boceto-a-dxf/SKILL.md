@@ -11,27 +11,23 @@ Si Ester da instrucciones nuevas sobre sus bocetos, esas instrucciones prevalece
 ## Reglas de oro
 1. **No preguntar nunca.** Toda ambigüedad se resuelve con la tabla de decisiones de abajo, se dibuja y se anota en `"supuestos"`.
 2. **Menos de 5 minutos.** No escribas código de geometría: el motor `scripts/plano.py` ya dibuja, comprueba y exporta. Tu trabajo es **leer el boceto y escribir un JSON**.
-3. **Todas las cotas del boceto deben estar en el plano.** Haz una lista numerada con cada cota roja (leída en las cuatro orientaciones), asígnala a un tramo y, al final, comprueba que aparece en `plano_cotas.png`. Si falta alguna, añádela en `"cotas"`. Si una cota no cierra, no la fuerces: indícalo (lecciones 28 y 29).
-4. **No se entrega con errores.** Solo se entrega cuando el informe da **0 errores** y cada aviso está revisado.
+3. **Todas las cotas del boceto se comprueban.** Cada recuadro C# de `mapa_cotas.jpg` va en `cotas_boceto` (con su valor y el tramo que mide) o en `cotas_descartadas` con el motivo. El motor mide cada cota en la geometría dibujada y da error si no coincide o si falta algún recuadro. Una cota que no cierra se marca `"no_cuadra": true` y se explica; no se fuerza.
+4. **Ahorrar imágenes.** Cada imagen leída cuesta mucho más que el texto. Lee solo `mapa_cotas.jpg`, `hoja_cotas_*.png` y, si hace falta, `ventanas_azul.png`. Revisa los resultados con el texto del informe y mira una sola imagen al final (`superpuesto.jpg`).
+5. **No se entrega con errores.** Solo se entrega cuando el informe da **0 errores** y cada aviso está revisado.
 
 ## Flujo (con tiempos objetivo)
-**0. Preparar (unos 10 s).** Lee `references/lecciones.md`: son correcciones de Ester que prevalecen sobre todo lo demás. `SKILL_DIR` es la carpeta de esta skill. El motor instala solo sus dependencias si faltan.
+**0. Preparar (unos 10 s).** Lee `references/lecciones.md` (reglas cortas de Ester, que prevalecen sobre todo lo demás; el detalle está en `lecciones_historial.md` y solo se consulta si hace falta). `SKILL_DIR` es la carpeta de esta skill. El motor instala solo sus dependencias si faltan.
 ```bash
 python3 SKILL_DIR/scripts/zonas.py BOCETO.jpg TRABAJO/zonas
 ```
-Genera:
-- `completo.jpg`: el dibujo recortado, con cuadrícula A–J / 1–10 para situar las cosas;
-- 4 zonas ampliadas;
-- `cotas_rojas.png`, más tres versiones giradas (90° a cada lado y 180°) para leer derechas las cotas escritas en vertical o boca abajo;
-- `ventanas_azul.png`: solo lo azul, para localizar todas las ventanas.
+Lo que hay que leer (unas 4 imágenes en total):
+- `mapa_cotas.jpg`: el boceto con un recuadro azul y su número (C1, C2…) sobre cada grupo de cotas rojas. Dice **a qué pared va cada cota** y sirve para entender las estancias.
+- `hoja_cotas_1.png`, `_2`…: cada recuadro ampliado y en sus **4 giros** (0°, 90°, 180°, 270°). Cada número se lee en el giro en el que queda derecho, sin girar ni ampliar nada más. Un recuadro puede contener varias cotas.
+- `ventanas_azul.png`: solo si hay dudas con las ventanas o las cristaleras.
 
-**1. Leer (unos 90 s).** Una sola pasada:
-1. `completo.jpg`: qué estancias hay y cuáles están en la misma fila o columna.
-2. Las zonas: cada cota, puerta y ventana.
-3. `ventanas_azul.png`: comprueba que cada trazo azul (rayita, línea paralela u óvalo) tiene su ventana.
-4. **Cotas giradas**: todo número escrito en vertical o boca abajo se lee en `cotas_rojas_giro_izq/der/180.png`, nunca sobre el dibujo sin girar, porque confunde 1 con 4 o 7, y 2 con 5. Si sigue dudoso, recorta esa zona, amplíala y gírala.
+Imágenes de reserva, solo si algo no se ve: `completo.jpg` (cuadrícula A–J / 1–10), `zona_F_C.jpg` y `cotas_rojas*.png`.
 
-**No hagas cuentas ni intentes cuadrar nada.** Copia cada cota tal cual. Si un número es dudoso, escribe las dos lecturas: `"dy": ["1'58","1'28"]`.
+**1. Leer (unos 60 s).** Recorre los recuadros C1, C2… en orden. Para cada uno, anota el valor de cada cota y el tramo que mide (lecciones 1 a 6). **No hagas cuentas ni intentes cuadrar nada.** Si un número es dudoso, escribe las dos lecturas: `"dy": ["1'58","1'28"]`.
 
 **2. Escribir `TRABAJO/planta.json` en modo cadenas (unos 2 min).** Formato y ejemplo completo en `references/formato_json.md` y `ejemplos/bergamin/planta_cadenas.json`:
 - **Estancias** con sus cotas `dx` (ancho E-O) y `dy` (fondo N-S), sin coordenadas. Pasillos y vestíbulos llevan `"tipo":"circulacion"`, porque son los que absorben los descuadres. Una cota que no aparece en el boceto se pone como `"?"`.
@@ -54,15 +50,17 @@ Antes de escribir el JSON, repasa:
 
 Si la planta es muy simple, también vale el modo de coordenadas (`rect`, `pegado`, `contorno`).
 
-**3. Generar y auditar (unos 5 s por vuelta, 3 vueltas como máximo).**
+**3. Añadir `cotas_boceto` y generar (unos 5 s por vuelta, 3 vueltas como máximo).** En el JSON van `"zonas": "RUTA a TRABAJO/zonas"`, una entrada en `cotas_boceto` por cada cota leída y `cotas_descartadas` para las que no son geométricas (alturas `h=`, notas, puertas ya descritas). Formato en `references/formato_json.md`.
 ```bash
 python3 SKILL_DIR/scripts/plano.py TRABAJO/planta.json TRABAJO/salida
 ```
 - Los errores `C#` son de las cadenas, por ejemplo una estancia que no está en ninguna cadena de un eje. Se corrigen en las cadenas.
-- Corrige en el JSON cada error `E#`. El mensaje dice qué falla y la vista previa lo marca con un círculo rojo numerado.
+- Corrige en el JSON cada error `E#`. Uno de la forma «Cota C12: el boceto dice 2,89 y el plano da 3,23» significa una cota mal leída, mal asignada o una geometría equivocada. Se busca la causa; **nunca se cambia el valor para que cuadre**. Si es una discrepancia real del boceto, se marca `"no_cuadra": true`.
+- Un error «Recuadro C7 sin usar» indica una cota que se ha quedado sin leer.
 - Revisa cada aviso `A#`. Corrígelo si es una mala lectura; si es fiel al boceto, explícalo al entregar.
+- Todo esto se revisa **con el texto del informe**, sin abrir imágenes.
 
-**4. Mirar `plano.png` una vez (unos 20 s).** Repasa la lista de comprobación de abajo. `plano_cotas.png` muestra las cotas resultantes por si hay que comparar con el boceto.
+**4. Una sola mirada al final (unos 20 s): `superpuesto.jpg`.** Es el plano (contornos azules de las estancias) encima del boceto. Como el boceto no está a escala, no busques desplazamientos: busca **paredes que falten o sobren, estancias inventadas, pilares o huecos sin dibujar**. Solo se abre `plano.png` si hay que revisar puertas o mobiliario.
 
 **5. Entregar.** Envía `plano.dxf` y `plano.png` con SendUserFile. Después, en pocas líneas: la tabla de superficies del informe, los supuestos tomados y los avisos que se mantienen. Las dudas se presentan como «supuse X; si es Y, dímelo y lo regenero» y nunca bloquean la entrega.
 
@@ -112,7 +110,7 @@ python3 SKILL_DIR/scripts/plano.py TRABAJO/planta.json TRABAJO/salida
 | Estancia sin puerta dibujada | Añadir una de 0,80 hacia la circulación más próxima y anotar el supuesto. |
 | Elemento indescifrable que no afecta a la geometría | Omitirlo y anotarlo. |
 
-## Lista de comprobación final (sobre `plano.png`)
+## Lista de comprobación final (sobre `superpuesto.jpg` y el informe)
 El motor ya comprueba casi todo esto. Repasar a la vista:
 - Cada estancia está cerrada por paredes en todo su perímetro, salvo los huecos de puertas, pasos y ventanas.
 - Todas las estancias tienen puerta y se llega a ellas desde la entrada por pasillos y distribuidores.
