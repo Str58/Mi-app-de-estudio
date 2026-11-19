@@ -148,18 +148,37 @@ Sin posición, la ventana queda centrada en la parte de esa pared que da al exte
 {"tipo":"fregadero", "estancia":"cocina", "contra":"E", "en":1.2, "sep":0.05} // sep = separación de la pared
 {"tipo":"rect", "x":2.0, "y":1.5, "contra":"S", "ancho":1.0, "fondo":0.5}  // absoluto (x,y = centro)
 ```
-Tipos y medidas por defecto (ancho × fondo, en m):
+Tipos y medidas por defecto (ancho × fondo, en m). El dibujo sigue el estilo del plano final de Carlos Soto:
 
-| Tipo | Medidas | Tipo | Medidas | Tipo | Medidas |
-|---|---|---|---|---|---|
-| cama / cama_doble | 1,50×2,00 | cama_individual | 0,90×1,90 | sofa | 2,00×0,90 |
-| sillon | 0,80×0,80 | mesa | 1,60×0,90 | mesa_redonda | 1,10 |
-| armario | 1,20×0,60 | mesita | 0,45×0,40 | escritorio | 1,20×0,60 |
-| comoda | 1,00×0,50 | mueble_tv | 1,60×0,45 | inodoro | 0,40×0,70 |
-| bide | 0,40×0,55 | lavabo | 0,60×0,45 | ducha | 0,80×0,80 |
-| banera | 1,60×0,70 | encimera | 2,40×0,60 | fregadero | 0,80×0,50 |
-| placa | 0,60×0,55 | frigorifico | 0,60×0,65 | lavadora | 0,60×0,60 |
-| rect | 1,00×0,60 | | | | |
+| Tipo | Medidas | Dibujo |
+|---|---|---|
+| cama / cama_doble | 1,50 × 2,00 | colchón y franja de cabecero con mesitas (0,40 a cada lado) |
+| cama_individual | 0,90 × 1,90 | colchón con línea de cabecera a 0,35 |
+| sofa | 2,20 × 0,90 | doble contorno, respaldo, brazos y cojines |
+| sofa_chaise | 2,60 × 0,90 | sofá con chaise longue de 0,80 en su extremo inicial |
+| sillon | 0,80 × 0,80 | como el sofá |
+| mesa_centro | 1,10 × 0,55 | rectángulo |
+| mesa | 1,60 × 0,90 | rectángulo |
+| mesa_comedor | 1,40 × 0,80 | mesa con sillas a los dos lados largos |
+| mesa_redonda | 1,10 | círculo |
+| mueble_tv | 2,20 × 0,45 | rectángulo con la pantalla |
+| armario | 1,20 × 0,60 | rectángulo con línea doble en el frente |
+| mesita | 0,45 × 0,40 | rectángulo |
+| escritorio | 1,20 × 0,60 | rectángulo |
+| comoda | 1,00 × 0,50 | rectángulo |
+| inodoro | 0,38 × 0,68 | cisterna con círculo y taza en U |
+| bide | 0,36 × 0,55 | taza en U |
+| lavabo | 0,80 × 0,48 | encimera con seno redondeado y grifo |
+| ducha / plato_ducha | 0,80 × 0,80 | plato con sumidero cuadrado con rejilla |
+| banera | 1,60 × 0,70 | contorno interior redondeado y desagüe |
+| encimera | 2,40 × 0,60 | rectángulo |
+| fregadero | 0,80 × 0,50 | seno redondeado |
+| placa | 0,60 × 0,55 | 4 fuegos |
+| frigorifico | 0,60 × 0,65 | rectángulo con línea de puerta |
+| lavadora | 0,60 × 0,60 | círculo |
+| rect | 1,00 × 0,60 | rectángulo |
+
+Colocación: `contra` es la pared en la que se apoya la parte trasera del mueble (el cabecero, el respaldo o la cisterna). `en` es la coordenada absoluta de su centro a lo largo de esa pared y sirve para elegir el tramo de pared en estancias en L. `sep` es la separación respecto a la pared; por ejemplo, la mesa de centro va a 1,25–1,35 del muro del sofá.
 
 `ancho` y `fondo` sustituyen a las medidas por defecto. El ancho se mide a lo largo de la pared y el fondo, hacia dentro de la estancia.
 

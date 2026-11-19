@@ -757,30 +757,41 @@
  ],
  "mobiliario": [
   {
-   "tipo": "cama_individual",
+   "tipo": "cama_doble",
    "estancia": "dormA",
    "contra": "N",
-   "desde": 1.0
+   "en": 1.95
   },
   {
-   "tipo": "cama",
+   "tipo": "armario",
+   "estancia": "dormA",
+   "contra": "E",
+   "desde_fin": 0,
+   "ancho": 1.1,
+   "fondo": 0.6
+  },
+  {
+   "tipo": "cama_individual",
    "estancia": "dormB",
-   "contra": "S",
-   "desde": 0
+   "contra": "O",
+   "desde": 0,
+   "ancho": 1.05,
+   "fondo": 2.0
   },
   {
    "tipo": "armario",
    "estancia": "dormB",
    "contra": "E",
-   "desde": 0.1,
-   "ancho": 1.4
+   "desde": 0,
+   "ancho": 1.6,
+   "fondo": 0.6
   },
   {
-   "tipo": "cama",
+   "tipo": "cama_individual",
    "estancia": "dormC",
-   "contra": "N",
-   "desde_fin": 0.1,
-   "ancho": 1.35,
+   "contra": "E",
+   "desde_fin": 0,
+   "ancho": 1.0,
    "fondo": 1.9
   },
   {
@@ -788,14 +799,15 @@
    "estancia": "dormC",
    "contra": "O",
    "desde_fin": 0,
-   "ancho": 1.0
+   "ancho": 1.2,
+   "fondo": 0.6
   },
   {
-   "tipo": "cama",
+   "tipo": "cama_individual",
    "estancia": "dormD",
-   "contra": "N",
-   "desde_fin": 0.1,
-   "ancho": 1.35,
+   "contra": "E",
+   "desde_fin": 0,
+   "ancho": 1.0,
    "fondo": 1.9
   },
   {
@@ -803,61 +815,102 @@
    "estancia": "dormD",
    "contra": "O",
    "desde_fin": 0,
-   "ancho": 1.0
+   "ancho": 1.2,
+   "fondo": 0.6
   },
   {
-   "tipo": "lavabo",
-   "estancia": "bano1",
+   "tipo": "sofa_chaise",
+   "estancia": "salon",
    "contra": "N",
-   "desde": 0.15,
-   "sep": 0.19
+   "en": 2.03,
+   "ancho": 2.5,
+   "fondo": 0.8,
+   "sep": 0.22
+  },
+  {
+   "tipo": "mesa_centro",
+   "estancia": "salon",
+   "contra": "N",
+   "en": 2.65,
+   "sep": 1.35,
+   "ancho": 1.0,
+   "fondo": 0.5
+  },
+  {
+   "tipo": "mueble_tv",
+   "estancia": "salon",
+   "contra": "S",
+   "desde": 0.95,
+   "ancho": 2.2,
+   "fondo": 0.27
+  },
+  {
+   "tipo": "mesa_comedor",
+   "estancia": "cocina",
+   "contra": "O",
+   "desde_fin": 0.05,
+   "sep": 1.4,
+   "ancho": 1.25,
+   "fondo": 0.7
+  },
+  {
+   "tipo": "encimera",
+   "estancia": "cocina",
+   "contra": "S",
+   "desde_fin": 0,
+   "ancho": 2.6,
+   "fondo": 0.6
   },
   {
    "tipo": "inodoro",
    "estancia": "bano1",
    "contra": "N",
-   "desde": 1.3,
-   "sep": 0
-  },
-  {
-   "tipo": "ducha",
-   "estancia": "bano1",
-   "contra": "E",
-   "desde": 0,
-   "ancho": 1.4,
-   "fondo": 0.7
-  },
-  {
-   "tipo": "banera",
-   "estancia": "bano2",
-   "contra": "O",
-   "desde": 0.05,
-   "ancho": 1.45,
-   "fondo": 0.7
+   "desde": 0.95
   },
   {
    "tipo": "lavabo",
+   "estancia": "bano1",
+   "contra": "S",
+   "desde_fin": 0.75,
+   "ancho": 0.9
+  },
+  {
+   "tipo": "plato_ducha",
+   "estancia": "bano1",
+   "contra": "E",
+   "desde": 0,
+   "ancho": 1.59,
+   "fondo": 0.75
+  },
+  {
+   "tipo": "inodoro",
    "estancia": "bano2",
    "contra": "N",
    "desde": 0.05
   },
   {
-   "tipo": "inodoro",
+   "tipo": "bide",
    "estancia": "bano2",
    "contra": "N",
-   "desde_fin": 0.15
+   "desde": 0.65
   },
   {
-   "tipo": "rect",
-   "estancia": "cocina",
+   "tipo": "plato_ducha",
+   "estancia": "bano2",
+   "contra": "O",
+   "desde_fin": 0,
+   "ancho": 1.59,
+   "fondo": 0.75
+  },
+  {
+   "tipo": "lavabo",
+   "estancia": "bano2",
    "contra": "S",
-   "desde_fin": 0.1,
-   "ancho": 0.45,
-   "fondo": 0.35
+   "desde": 0.78,
+   "ancho": 0.75
   }
  ],
  "supuestos": [
-  "Texto verde «Saunier Duval / Thema ni connect»: caldera, dibujada como rectángulo junto al muro sur de la cocina.",
   "Las ventanas con h=2,25 de los dormitorios y el salón son balconeras; las de los dormitorios 3 y 4, la cocina y el salón dan a galerías acristaladas.",
   "Los dormitorios principal y 2 tienen un pasillo propio de 0,97 y 0,93; el principal incluye el baño 1 y la zona de armario.",
   "Baño 1 de 2,57 x 1,59 con la ducha en el extremo este, separada por mampara; ventana de 0,75 (h 0,60).",

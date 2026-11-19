@@ -36,7 +36,6 @@ AVISOS (11) - revisar; si son correctos, explicarlos al entregar:
   A11. Macizo de muro de mas de 0,38 m de grueso: ¿falta una estancia, un patinillo o hay un descuadre de cotas?
 
 SUPUESTOS DE LECTURA DEL BOCETO:
-  - Texto verde «Saunier Duval / Thema ni connect»: caldera, dibujada como rectángulo junto al muro sur de la cocina.
   - Las ventanas con h=2,25 de los dormitorios y el salón son balconeras; las de los dormitorios 3 y 4, la cocina y el salón dan a galerías acristaladas.
   - Los dormitorios principal y 2 tienen un pasillo propio de 0,97 y 0,93; el principal incluye el baño 1 y la zona de armario.
   - Baño 1 de 2,57 x 1,59 con la ducha en el extremo este, separada por mampara; ventana de 0,75 (h 0,60).

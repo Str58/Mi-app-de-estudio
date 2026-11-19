@@ -292,13 +292,15 @@ def posicion(spec, a, b, w):
 
 
 # ------------------------------------------------------------------ mobiliario
-MUEBLES = {  # ancho (a lo largo de la pared), fondo
-    "cama": (1.50, 2.00), "cama_individual": (0.90, 1.90), "cama_doble": (1.50, 2.00),
-    "sofa": (2.00, 0.90), "sillon": (0.80, 0.80), "mesa": (1.60, 0.90), "mesa_redonda": (1.10, 1.10),
+MUEBLES = {  # ancho (a lo largo de la pared), fondo  -- estilo del plano de referencia de Carlos Soto
+    "cama": (1.50, 2.00), "cama_doble": (1.50, 2.00), "cama_individual": (0.90, 1.90),
+    "sofa": (2.20, 0.90), "sofa_chaise": (2.60, 0.90), "sillon": (0.80, 0.80),
+    "mesa": (1.60, 0.90), "mesa_comedor": (1.40, 0.80), "mesa_centro": (1.10, 0.55), "mesa_redonda": (1.10, 1.10),
     "armario": (1.20, 0.60), "mesita": (0.45, 0.40), "escritorio": (1.20, 0.60), "comoda": (1.00, 0.50),
-    "inodoro": (0.40, 0.70), "bide": (0.40, 0.55), "lavabo": (0.60, 0.45), "ducha": (0.80, 0.80),
-    "banera": (1.60, 0.70), "encimera": (2.40, 0.60), "fregadero": (0.80, 0.50), "placa": (0.60, 0.55),
-    "frigorifico": (0.60, 0.65), "lavadora": (0.60, 0.60), "rect": (1.00, 0.60), "mueble_tv": (1.60, 0.45),
+    "mueble_tv": (2.20, 0.45),
+    "inodoro": (0.38, 0.68), "bide": (0.36, 0.55), "lavabo": (0.80, 0.48), "ducha": (0.80, 0.80),
+    "plato_ducha": (0.80, 0.80), "banera": (1.60, 0.70), "encimera": (2.40, 0.60), "fregadero": (0.80, 0.50),
+    "placa": (0.60, 0.55), "frigorifico": (0.60, 0.65), "lavadora": (0.60, 0.60), "rect": (1.00, 0.60),
 }
 
 
@@ -310,38 +312,105 @@ def rect(a, b, c, d):
     return [(a, b), (c, b), (c, d), (a, d)]
 
 
+def rrect(a, b, c, d, r, n=5):
+    """rectangulo de esquinas redondeadas"""
+    r = min(r, (c - a) / 2, (d - b) / 2)
+    pts = []
+    for cx, cy, a0 in ((c - r, b + r, -90), (c - r, d - r, 0), (a + r, d - r, 90), (a + r, b + r, 180)):
+        for k in range(n + 1):
+            t = math.radians(a0 + 90 * k / n)
+            pts.append((cx + r * math.cos(t), cy + r * math.sin(t)))
+    return pts
+
+
+def taza_u(a, c, v0, v1, n=14):
+    """forma en U (taza de inodoro, bide): lados rectos desde v0 y semicirculo al fondo hasta v1"""
+    r = (c - a) / 2
+    vc = v1 - r
+    pts = [(a, v0), (a, vc)]
+    for k in range(1, n):
+        t = math.pi + math.pi * k / n  # de 180 a 360 grados, hacia +v
+        pts.append((a + r + r * math.cos(t), vc - r * math.sin(t)))
+    return pts + [(c, vc), (c, v0)]
+
+
+def sumidero(cx, cy, s=0.10):
+    """sumidero cuadrado con rejilla"""
+    P = [("pl", rect(cx - s / 2, cy - s / 2, cx + s / 2, cy + s / 2), True)]
+    for k in (1, 2, 3):
+        f = -s / 2 + s * k / 4
+        P += [("ln", (cx + f, cy - s / 2), (cx + f, cy + s / 2)), ("ln", (cx - s / 2, cy + f), (cx + s / 2, cy + f))]
+    return P
+
+
+def silla(u0, v0, ancho=0.42, respaldo_lado="v-"):
+    """silla: asiento cuadrado y respaldo como barra fina por fuera"""
+    a = ancho
+    P = [("pl", rect(u0, v0, u0 + a, v0 + a), True)]
+    if respaldo_lado == "v-":
+        P.append(("pl", rect(u0 + 0.03, v0 - 0.06, u0 + a - 0.03, v0 - 0.025), True))
+    elif respaldo_lado == "v+":
+        P.append(("pl", rect(u0 + 0.03, v0 + a + 0.025, u0 + a - 0.03, v0 + a + 0.06), True))
+    elif respaldo_lado == "u-":
+        P.append(("pl", rect(u0 - 0.06, v0 + 0.03, u0 - 0.025, v0 + a - 0.03), True))
+    else:
+        P.append(("pl", rect(u0 + a + 0.025, v0 + 0.03, u0 + a + 0.06, v0 + a - 0.03), True))
+    return P
+
+
 def dibujo_mueble(t, W, D):
+    """Mobiliario al estilo del plano de referencia de Carlos Soto: trazo fino, formas limpias.
+    Coordenadas locales: u a lo largo de la pared (0..W), v hacia dentro de la estancia (0..D)."""
     P = [("pl", rect(0, 0, W, D), True)]
-    if t.startswith("cama"):
-        n = 2 if W >= 1.3 else 1
-        aw = (W - 0.15 * (n + 1)) / n
-        for i in range(n):
-            x0 = 0.15 + i * (aw + 0.15)
-            P.append(("pl", rect(x0, 0.08, x0 + aw, 0.38), True))
-        P.append(("ln", (0, 0.60), (W, 0.60)))
-    elif t in ("sofa", "sillon"):
-        P += [("ln", (0, 0.22), (W, 0.22)), ("ln", (0.18, 0.22), (0.18, D)), ("ln", (W - 0.18, 0.22), (W - 0.18, D))]
+    if t in ("cama", "cama_doble"):
+        # colchon + franja de cabecero con mesitas a ambos lados (mas ancha que la cama)
+        P.append(("pl", rect(-0.40, 0, W + 0.40, 0.40), True))
+    elif t == "cama_individual":
+        P.append(("ln", (0, 0.35), (W, 0.35)))  # cabecera
+    elif t in ("sofa", "sofa_chaise", "sillon"):
+        e = 0.025
+        P.append(("pl", rect(e, e, W - e, D - e), True))  # doble contorno
+        P += [("ln", (0, 0.22), (W, 0.22)), ("ln", (0.20, 0.22), (0.20, D)), ("ln", (W - 0.20, 0.22), (W - 0.20, D))]
+        n = max(1, round((W - 0.40) / 0.60))
+        for k in range(1, n):
+            uk = 0.20 + (W - 0.40) * k / n
+            P += [("ln", (uk, 0), (uk, 0.22)), ("ln", (uk, 0.22), (uk, D))]
+        if t == "sofa_chaise":  # chaise longue en el extremo inicial
+            L = 0.80
+            P += [("pl", rect(0, D, L + 0.20, D + L), True), ("pl", rect(e, D, L + 0.20 - e, D + L - e), True),
+                  ("ln", (0.20, D), (0.20, D + L)), ("ln", (0.20, D + L - 0.25), (L + 0.20, D + L - 0.25))]
+    elif t == "mesa_comedor":
+        n = max(1, int(W // 0.60))
+        for k in range(n):
+            u0 = W * (k + 0.5) / n - 0.21
+            P += silla(u0, -0.16, respaldo_lado="v-") + silla(u0, D - 0.26, respaldo_lado="v+")
     elif t == "mesa_redonda":
         P = [("ci", (W / 2, D / 2), min(W, D) / 2)]
+    elif t == "mueble_tv":
+        P += [("pl", rect(W * 0.12, 0.14, W * 0.88, 0.19), True), ("pl", rect(W * 0.25, 0.09, W * 0.75, 0.14), True)]
     elif t == "armario":
-        P += [("ln", (0, 0), (W, D)), ("ln", (W, 0), (0, D))]
+        P.append(("ln", (0, D - 0.03), (W, D - 0.03)))  # frente de puertas (linea doble)
     elif t == "inodoro":
-        P = [("pl", rect(0.02, 0, W - 0.02, 0.18), True), ("pl", elipse(W / 2, 0.44, W / 2 - 0.02, 0.25), True)]
+        P = [("pl", rect(0, 0, W, 0.18), True), ("ci", (W / 2, 0.09), 0.025),
+             ("pl", taza_u(0.02, W - 0.02, 0.18, D), False)]
     elif t == "bide":
-        P = [("pl", elipse(W / 2, D / 2, W / 2 - 0.02, D / 2 - 0.02), True), ("ci", (W / 2, 0.15), 0.03)]
+        P = [("pl", taza_u(0, W, 0.0, D) + [(0, 0.0)], True), ("ci", (W / 2, 0.10), 0.02)]
     elif t == "lavabo":
-        P.append(("pl", elipse(W / 2, D / 2 + 0.02, W / 2 - 0.08, D / 2 - 0.08), True))
-    elif t == "ducha":
-        P += [("ln", (0, 0), (W, D)), ("ci", (W / 2, D / 2), 0.04)]
+        P.append(("pl", rrect(0.08, 0.10, W - 0.08, D - 0.06, 0.07), True))
+        P += [("ci", (W / 2, 0.08), 0.025), ("ln", (W / 2 - 0.025, 0.08), (W / 2 + 0.025, 0.08)),
+              ("ln", (W / 2, 0.055), (W / 2, 0.105)), ("ln", (W / 2, 0.105), (W / 2 - 0.02, 0.17))]
+    elif t in ("ducha", "plato_ducha"):
+        P += sumidero(W / 2, D / 2)
     elif t == "banera":
-        P += [("pl", rect(0.07, 0.07, W - 0.07, D - 0.07), True), ("ci", (W - 0.20, D / 2), 0.03)]
+        P += [("pl", rrect(0.07, 0.07, W - 0.07, D - 0.07, 0.15), True), ("ci", (W - 0.20, D / 2), 0.03)]
     elif t == "fregadero":
-        P = [("pl", rect(0, 0, W, D), True), ("pl", rect(0.06, 0.06, W - 0.06, D - 0.06), True), ("ci", (W / 2, D / 2), 0.03)]
+        P = [("pl", rect(0, 0, W, D), True), ("pl", rrect(0.06, 0.06, W - 0.06, D - 0.06, 0.05), True),
+             ("ci", (W / 2, D / 2), 0.03)]
     elif t == "placa":
         r = min(W, D) / 5
         P += [("ci", (W * a, D * b), r) for a in (0.28, 0.72) for b in (0.28, 0.72)]
-    elif t in ("frigorifico",):
-        P.append(("ln", (0, 0), (W, D)))
+    elif t == "frigorifico":
+        P.append(("ln", (0, D - 0.05), (W, D - 0.05)))
     elif t == "lavadora":
         P.append(("ci", (W / 2, D / 2), min(W, D) * 0.35))
     return P
@@ -1170,7 +1239,7 @@ def escribe_dxf(ruta, muros, prims, cotas=()):
     doc.header["$MEASUREMENT"] = 1
     if "CALIBRI" not in doc.styles:
         doc.styles.add("CALIBRI", font="calibri.ttf")
-    capas = {"MUROS": 7, "PUERTAS": 3, "VENTANAS": 5, "MOBILIARIO": 2, "TEXTOS": 7,
+    capas = {"MUROS": 7, "PUERTAS": 3, "VENTANAS": 5, "MOBILIARIO": 251, "TEXTOS": 7,
              "ESTANCIAS": 4, "COTAS": 1, "PATINILLOS": 9}
     for n, c in capas.items():
         if n not in doc.layers:
@@ -1238,7 +1307,7 @@ def escribe_png(ruta, muros, E, prims, aud, titulo, cotas=None):
             verts += cs
             codes += [Path.MOVETO] + [Path.LINETO] * (len(cs) - 2) + [Path.CLOSEPOLY]
         ax.add_patch(PathPatch(Path(verts, codes), fc="none", ec="black", lw=0.9))
-    col = {"PUERTAS": "#1b7f2a", "VENTANAS": "#1f5fbf", "MOBILIARIO": "#b08900", "PATINILLOS": "#777777"}
+    col = {"PUERTAS": "#1b7f2a", "VENTANAS": "#1f5fbf", "MOBILIARIO": "#8a8a8a", "PATINILLOS": "#777777"}
     for p in prims:
         c = col.get(p["L"], "black")
         if p["k"] == "pl":

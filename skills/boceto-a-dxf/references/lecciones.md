@@ -26,3 +26,13 @@ Se leen antes de cada boceto y prevalecen sobre el resto de la skill. Cada corre
 22. **Si un baño o una estancia no llega a la fachada**, engorda el muro de fachada (por dentro) y el baño conserva sus cotas exactas. Un muro grueso entre estancias suele ser una zona de **bajantes**, y en los baños las bajantes aparecen como chichones en las esquinas. *(Avenida 25-2, corrección de Ester)*
 23. **Alineaciones**: los dormitorios del mismo lado suelen alinearse con la fachada de la cocina o del salón. Si las cotas no cierran, prueba la otra alineación antes de engordar tabiques. Ninguna estancia tiene «chichones» en la entrada: los tramos de una misma estancia en L van alineados (añade la alineación). *(Avenida 25-2)*
 24. **«1'90» girado era 1'50**: en cotas giradas, el 5 y el 9 se confunden. Si hay duda, se ponen las dos lecturas como alternativa. *(Avenida 25-2)*
+25. **Mobiliario al estilo del plano final de Carlos** (Avenida 25-2):
+    - camas limpias: la doble con franja de mesitas y la individual con línea de cabecera;
+    - armarios con línea doble, sin aspa;
+    - sofá en L con cojines y mesa de centro delante;
+    - mueble de TV en la pared de enfrente;
+    - mesa con 4 sillas en la cocina;
+    - plato de ducha con sumidero de rejilla;
+    - lavabo en encimera.
+
+    Trazo fino gris, sin rellenos. El ejemplo está en `ejemplos/avenida/planta_cadenas.json`. *(Ester)*

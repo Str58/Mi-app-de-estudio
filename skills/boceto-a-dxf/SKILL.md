@@ -139,7 +139,18 @@ Referencia: plano «boceto-717_final» (arquitecto C. Soto, 1:50).
 - **Sin sombreados**, ni en muros ni en suelos: los muros van solo con su contorno (capa MUROS).
 - Puertas (como en el plano de referencia «CALLE IDOIA 16»): un **marco** de 0,04 en cada jamba, la hoja como rectángulo fino entre los marcos y un arco de 90°.
 - Ventanas y balconeras (mismo plano de referencia): una línea en la cara exterior y la **carpintería como línea doble pegada a la cara interior**. Sin líneas en las jambas.
-- Armario: rectángulo con una X.
+- **Mobiliario** (estilo del plano final de Carlos Soto, Avenida 25-2), en la capa MOBILIARIO, en trazo fino gris (color 251) y con formas limpias, sin rellenos:
+  - **Cama doble**: colchón 1,50 × 2,00 y franja de cabecero con mesitas, 0,40 a cada lado y 0,40 de fondo.
+  - **Cama individual**: colchón 0,90–1,05 × 1,90–2,00 con una línea de cabecera a 0,35. Suele ir en una esquina, con la cabecera contra la pared corta.
+  - **Armario**: rectángulo de 0,60 de fondo con línea doble en el frente, sin aspa.
+  - **Sofá**: doble contorno, respaldo de 0,22, brazos de 0,20 y cojines de unos 0,60. Variante en L con chaise longue (`sofa_chaise`). Delante, **mesa de centro** rectangular.
+  - **Mueble de TV**: rectángulo de 0,27–0,45 de fondo con la pantalla dibujada encima.
+  - **Mesa de comedor** con sillas: cada silla, asiento cuadrado de 0,42 y respaldo como barra fina por fuera; 2 sillas por lado cada 0,60 de mesa.
+  - **Cocina**: encimera como rectángulo de 0,60 a lo largo de la pared.
+  - **Inodoro**: cisterna rectangular con un círculo y taza en U.
+  - **Bidé**: en U, con un círculo pequeño.
+  - **Lavabo**: encimera con seno de esquinas redondeadas y grifo.
+  - **Plato de ducha**: rectángulo con sumidero cuadrado con rejilla en el centro. En los baños pequeños, el plato ocupa todo un lado.
 - Cada estancia lleva su nombre y su **superficie útil** («10,93 m2») en la capa ESTANCIAS.
 - La capa COTAS (con `"acotar": false` no se genera) lleva, siempre en metros:
   - cada estancia, o cada tramo de las que tienen forma en L, acotada con las mismas medidas del boceto, por dentro;
