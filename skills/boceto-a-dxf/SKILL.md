@@ -40,8 +40,8 @@ Genera:
 
 El motor calcula todas las coordenadas y elige las alternativas que cierran las cadenas. **Las cotas escritas de las estancias no se tocan.** Los descuadres se absorben en este orden:
 1. lo que no tiene cota (`"?"`);
-2. **las estancias húmedas** (baños, aseos, cocinas, lavaderos), que pueden **crecer** hasta 10 cm, porque el boceto se queda corto por el alicatado;
-3. los muros gruesos (fachadas, galerías), como saliente;
+2. los muros gruesos: fachadas, galerías y zonas de bajantes. Si una estancia no llega a la línea de fachada, la fachada engorda por dentro y por fuera sigue recta;
+3. **las estancias húmedas** (baños, aseos, cocinas, lavaderos), que pueden **crecer** hasta 10 cm, porque el boceto se queda corto por el alicatado;
 4. pasillos y vestíbulos;
 5. **los tabiques, solo como último recurso**.
 

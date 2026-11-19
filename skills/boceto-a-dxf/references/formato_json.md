@@ -58,8 +58,8 @@ Ejemplo real completo: `ejemplos/bergamin/planta_cadenas.json`.
 - Cada estancia o parte tiene que aparecer en al menos una cadena de cada eje, o en una alineación. Si no, el motor da un error `C#` y no dibuja.
 - **Orden en que se absorben los descuadres**:
   1. `"?"` y `"flexible": true`;
-  2. estancias húmedas (baño, aseo, cocina, lavadero, wc), que **solo crecen**, hasta 10 cm;
-  3. muros gruesos (más de 0,12), que solo engordan, como saliente;
+  2. muros gruesos (más de 0,12) y **muros de fachada**: si una estancia de una cadena con `"desde"`/`"hasta"` de fachada no llega a la línea, ese hueco se rellena como muro y la fachada sigue recta;
+  3. estancias húmedas (baño, aseo, cocina, lavadero, wc), que **solo crecen**, hasta 10 cm;
   4. pasillos, vestíbulos y distribuidores con cota;
   5. tabiques (0,12 o menos), solo engordando;
   6. totales y tramos `{"cota"}`;

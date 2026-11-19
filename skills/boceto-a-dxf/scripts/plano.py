@@ -407,8 +407,11 @@ def genera(spec, salida):
 
     # 3. contorno del edificio ------------------------------------------------
     RU = unary_union([R.poly0 for R in E])
+    # muro de fachada mas grueso donde una estancia no llega a la linea de fachada (cadenas)
+    mac = [box(*m) for m in spec.get("_macizos", [])]
+    RU_cerr = unary_union([RU] + mac) if mac else RU
     # cierra huecos entre estancias de hasta 0,70 (muros gruesos y salientes): no son entrantes de fachada
-    cerrado = RU.buffer(0.35, join_style=2, mitre_limit=10).buffer(-0.35, join_style=2, mitre_limit=10)
+    cerrado = RU_cerr.buffer(0.35, join_style=2, mitre_limit=10).buffer(-0.35, join_style=2, mitre_limit=10)
     patios = [construye_estancia(dict(p, id="patio"), est, aud) for p in spec.get("patios", [])]
     piezas = []
     for P in partes(cerrado):

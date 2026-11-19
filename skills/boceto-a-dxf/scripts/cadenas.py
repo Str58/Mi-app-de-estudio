@@ -23,9 +23,9 @@ from shapely.ops import unary_union
 FIJO = 1e9      # peso de las ecuaciones duras (alineaciones, fachadas, partes que se tocan)
 NORMAL = 50.0   # peso de la cota de una estancia: intocable (antes que tocarla, engorda un tabique)
 FLEX = 0.2      # peso de la cota de una estancia de circulacion / flexible: absorbe primero
-HUMEDA = 0.3    # banos, aseos, cocinas, lavaderos: pueden CRECER hasta 10 cm (alicatado: el boceto se queda corto)
+HUMEDA = 0.6    # banos, aseos, cocinas, lavaderos: pueden CRECER hasta 10 cm (alicatado: el boceto se queda corto)
 MAX_HUMEDA = 0.10
-MURO = 0.6      # muro grueso (fachada, galeria, medianera): puede engordar (= saliente)
+MURO = 0.25     # muro grueso (fachada, galeria, medianera): engorda antes que crecer un bano (bajantes, salientes)
 CIRCULA = 1.5   # pasillo / vestibulo / distribuidor con cota: cede antes que un tabique
 TABIQUE = 3.0   # tabique (<= 0,12): solo engorda como ultimo recurso
 TRAMO = 20.0    # peso de un tramo acotado {"cota": x}
@@ -188,16 +188,22 @@ def resolver(spec, tabique=0.08):
             continue
         for clave, cara in (("desde", piezas[0][0]), ("hasta", piezas[-1][1])):
             pieza = piezas[0][2] if clave == "desde" else piezas[-1][2]
+            gv = None
             if clave in c and isinstance(c[clave], str) and pieza in R:
                 try:
                     _num(c[clave])
                 except ValueError:
-                    fachadas.append((eje, pieza, "ini" if clave == "desde" else "fin", c[clave]))
+                    # la estancia puede quedarse corta de la fachada: ese hueco es muro de fachada mas grueso
+                    gv = v(f"G:{len(var)}")
+                    previas.append([{gv: 1}, 0.0, MURO, f"{etiqueta}: muro de fachada {c[clave]} junto a '{pieza}'", ("muro",)])
+                    fachadas.append((eje, pieza, "ini" if clave == "desde" else "fin", c[clave], gv))
             if clave in c:
                 coefs, k0 = extremo(c[clave], eje)
                 coef = dict(cara)
                 for k2, x in coefs.items():
                     coef[k2] = coef.get(k2, 0) - x
+                if gv is not None:
+                    coef[gv] = 1 if clave == "hasta" else -1
                 duras.append([coef, -k0 if coefs == {} else 0.0, FIJO, f"{etiqueta}: {clave}"])
                 if coefs == {}:
                     anclas[eje].add(piezas[0][2] if clave == "desde" else piezas[-1][2])
@@ -384,20 +390,24 @@ def resolver(spec, tabique=0.08):
                 grupo = [z]
     snap = lambda eje, z: mapa.get((eje, round(z, 6)), round(z, 2))
     rects = {}
+    macizos = []
     for i in ids:
         # caras redondeadas al milimetro: dos caras que deben coincidir quedan identicas
         # origen redondeado al cm y fin = origen + medida al cm: cada estancia mide exactamente su cota
         x0, y0 = snap("x", val(f"X:{i}")), snap("y", val(f"Y:{i}"))
         W, H = round(val(f"W:{i}"), 2), round(val(f"H:{i}"), 2)
         # las estancias que tocan una fachada con nombre quedan exactamente en ella (sin escalones de 1 cm)
-        for eje_f, pieza, lado, nombre in fachadas:
+        for eje_f, pieza, lado, nombre, gv in fachadas:
             if pieza != i:
                 continue
             F = round(val("F:" + nombre), 2)
+            g = round(max(0.0, float(x[gv])), 2)
             if eje_f == "x":
-                x0 = F if lado == "ini" else round(F - W, 2)
+                x0 = round(F + g, 2) if lado == "ini" else round(F - g - W, 2)
             else:
-                y0 = F if lado == "ini" else round(F - H, 2)
+                y0 = round(F + g, 2) if lado == "ini" else round(F - g - H, 2)
+            if g >= 0.01:  # macizo entre la estancia y la linea de fachada
+                macizos.append((eje_f, lado, F, g, i))
         x1, y1 = round(x0 + W, 2), round(y0 + H, 2)
         X, Y = x0, y0
         if W <= 0.05 or H <= 0.05:
@@ -465,6 +475,15 @@ def resolver(spec, tabique=0.08):
             lo, hi = rangos[0][k0], rangos[0][k1]
         out["_cotas_cadenas"].append({"eje": eje_, "a": round(a_, 2), "b": round(b_, 2),
                                       "perp": round(lo + (hi - lo) * 0.25, 2)})
+    out["_macizos"] = []
+    for eje_f, lado, F, g, i in macizos:
+        b_ = rects0[i].bounds if i in rects0 else rects[i].bounds
+        if eje_f == "x":
+            xa, xb = (F, F + g) if lado == "ini" else (F - g, F)
+            out["_macizos"].append([xa, b_[1], xb, b_[3]])
+        else:
+            ya, yb = (F, F + g) if lado == "ini" else (F - g, F)
+            out["_macizos"].append([b_[0], ya, b_[2], yb])
     out["_cotas_partes"] = [
         {"estancia": duenos.get(i, i), "rect": [round(z, 3) for z in rects0[i].bounds],
          "dx": R[i]["dx"] not in ("?", None), "dy": R[i]["dy"] not in ("?", None)} for i in ids]

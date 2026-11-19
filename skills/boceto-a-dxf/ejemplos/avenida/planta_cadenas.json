@@ -17,7 +17,10 @@
   {
    "id": "A_paso",
    "parte": true,
-   "dx": 1.9,
+   "dx": [
+    "1'90",
+    "1'50"
+   ],
    "dy": 0.97
   },
   {
@@ -430,13 +433,10 @@
    }
   },
   {
-   "nombre": "dorm. 2 - baño 2 (saliente 0,25)",
+   "nombre": "dorm. 2 - baño 2",
    "eje": "x",
    "items": [
     "B_main",
-    {
-     "muro": 0.25
-    },
     "bano2"
    ]
   }
@@ -447,7 +447,8 @@
    "lado": "O",
    "estancias": [
     "A_main",
-    "B_main"
+    "B_main",
+    "K_izq"
    ]
   },
   {
@@ -507,6 +508,14 @@
    "b": "hall_alto",
    "lado_b": "S",
    "sep": 0.08
+  },
+  {
+   "eje": "y",
+   "lado": "S",
+   "estancias": [
+    "A_paso",
+    "A_main"
+   ]
   }
  ],
  "pilares": [
@@ -853,12 +862,15 @@
   "Los dormitorios principal y 2 tienen un pasillo propio de 0,97 y 0,93; el principal incluye el baño 1 y la zona de armario.",
   "Baño 1 de 2,57 x 1,59 con la ducha en el extremo este, separada por mampara; ventana de 0,75 (h 0,60).",
   "Pilar del baño 2 de 0,54 x 0,25, leído en la esquina sureste.",
-  "Las cotas sitúan los dormitorios 1 y 2 alineados con la cocina por el oeste (0,57 más al oeste que el salón), aunque el boceto los dibuja alineados con el salón: mando las cotas. Si es al revés, alguna de 3,42 / 3,32 / 2,12 / 2,57 está mal.",
-  "Salientes leídos del boceto: 1,37 x 0,19 en el baño 1 (de ahí 1,40 / 1,59), 0,70 x 0,28 en el baño 2, escalones de 0,36 y 0,51 en la galería este y 0,25 entre el dormitorio 2 y el baño 2.",
   "Todas las puertas interiores de 0,80; la de entrada de 0,90.",
   "Galería oeste: 1,17 de ancho junto al salón y 0,55 junto a la cocina y la despensa.",
   "Despensa de 0,71 x 1,30 entre la cocina y la galería; se comunica con la cocina por el hueco marcado en azul.",
   "Balconera del salón (2,30) a 1,13 de la cara norte del salón (por debajo del pilar de 0,49 x 0,19).",
-  "Cota 1,65 de la galería oeste: desde su fondo hasta la balconera de la cocina (1,30 + tabique + 0,34 = 1,72; 7 cm de diferencia, que no se lleva a ningún tabique)."
+  "Cota 1,65 de la galería oeste: desde su fondo hasta la balconera de la cocina (1,30 + tabique + 0,34 = 1,72; 7 cm de diferencia, que no se lleva a ningún tabique).",
+  "Dormitorios 1 y 2 alineados por el oeste con la cocina (corrección de Ester).",
+  "Pasillo del dormitorio principal: «1'90» girado se lee 1,50 (el motor elige la lectura que cierra); el dormitorio mide unos 4,90 de largo.",
+  "Baño 2 entre tabiques de 0,08, con dos chichones de bajantes: 0,70 x 0,28 (NO) y 0,54 x 0,25 (SE).",
+  "Muro grueso entre el dormitorio 4 y la galería este: bajantes (confirmado por Ester).",
+  "Saliente de 1,37 x 0,19 en el baño 1 (1,40 / 1,59) y escalones de 0,36 y 0,51 en la galería este."
  ]
 }
