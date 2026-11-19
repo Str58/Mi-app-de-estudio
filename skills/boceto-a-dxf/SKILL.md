@@ -38,7 +38,14 @@ Genera:
 - **Cadenas**: cada fila (eje x, de oeste a este) y cada columna (eje y, de sur a norte) del boceto. Se escriben como la lista de estancias en orden, con `{"muro": 0.30}` donde el muro no es un tabique de 0,08. Se añaden `"desde":"O"` / `"hasta":"E"` cuando la cadena toca fachada. Una cota suelta que no es una estancia, como un tramo de pared o un total, va como `{"cota": 2.52}` o `"total"`.
 - **Alineaciones**: caras que el boceto dibuja en la misma línea sin estar en la misma cadena, por ejemplo los dos tramos de un pasillo.
 
-El motor calcula todas las coordenadas y elige las alternativas que cierran las cadenas. **Ninguna cota escrita se toca**, ni de estancias ni de pasillos ni totales: los descuadres los absorben los muros, que engordan como salientes, y el informe dice dónde. La geometría sale exacta al centímetro y la capa COTAS reproduce todas las cotas del boceto. **Las cuentas no las hace el modelo.**
+El motor calcula todas las coordenadas y elige las alternativas que cierran las cadenas. **Las cotas escritas de las estancias no se tocan.** Los descuadres se absorben en este orden:
+1. lo que no tiene cota (`"?"`);
+2. **las estancias húmedas** (baños, aseos, cocinas, lavaderos), que pueden **crecer** hasta 10 cm, porque el boceto se queda corto por el alicatado;
+3. los muros gruesos (fachadas, galerías), como saliente;
+4. pasillos y vestíbulos;
+5. **los tabiques, solo como último recurso**.
+
+El informe dice qué ha cedido y dónde. La geometría sale exacta al centímetro y la capa COTAS reproduce todas las cotas del boceto. **Las cuentas no las hace el modelo.**
 
 Antes de escribir el JSON, repasa:
 - **Pilares y salientes**: todo cuadradito o escalón en un muro, y toda cota pequeña junto a un muro, va en `pilares`.
@@ -129,14 +136,15 @@ Referencia: plano «boceto-717_final» (arquitecto C. Soto, 1:50).
 | TEXTOS | Resumen de superficies y título |
 | PATINILLOS | Patinillos de instalaciones |
 - Textos y cotas en letra **Calibri** (estilo de texto CALIBRI, `calibri.ttf`). La geometría sale exacta al centímetro.
-- Muros con sombreado sólido gris de estilo *outermost*.
-- Puertas: hoja como rectángulo de 0,04 más un arco de 90°.
-- Ventanas y balconeras: carpintería de 3 líneas finas.
+- **Sin sombreados**, ni en muros ni en suelos: los muros van solo con su contorno (capa MUROS).
+- Puertas (como en el plano de referencia «CALLE IDOIA 16»): un **marco** de 0,04 en cada jamba, la hoja como rectángulo fino entre los marcos y un arco de 90°.
+- Ventanas y balconeras (mismo plano de referencia): una línea en la cara exterior y la **carpintería como línea doble pegada a la cara interior**. Sin líneas en las jambas.
 - Armario: rectángulo con una X.
 - Cada estancia lleva su nombre y su **superficie útil** («10,93 m2») en la capa ESTANCIAS.
 - La capa COTAS (con `"acotar": false` no se genera) lleva, siempre en metros:
   - cada estancia, o cada tramo de las que tienen forma en L, acotada con las mismas medidas del boceto, por dentro;
-  - cada ventana o balconera como cadena esquina – hueco – esquina, medida desde la cara de la estancia aunque haya un pilar en la esquina;
+  - cada ventana o balconera como cadena esquina – hueco – esquina, medida desde la cara de la estancia aunque haya un pilar en la esquina. Si a un lado queda menos de 0,30 de muro, solo se acotan la ventana y el muro completo;
+  - sin cotas repetidas: si el muro completo ya está acotado como medida de la estancia, no se repite;
   - las cotas totales y los tramos sueltos de las cadenas (`total`, `{"cota": x}`);
   - el tamaño de pilares y salientes, y su distancia a la pared más próxima;
   - las dos cotas totales exteriores.

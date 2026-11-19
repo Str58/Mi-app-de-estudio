@@ -20,12 +20,16 @@ import numpy as np
 from shapely.geometry import box
 from shapely.ops import unary_union
 
-FIJO = 1e4      # peso de las ecuaciones duras (alineaciones, fachadas, partes que se tocan)
-NORMAL = 5.0    # peso de la cota de una estancia: casi intocable
+FIJO = 1e9      # peso de las ecuaciones duras (alineaciones, fachadas, partes que se tocan)
+NORMAL = 50.0   # peso de la cota de una estancia: intocable (antes que tocarla, engorda un tabique)
 FLEX = 0.2      # peso de la cota de una estancia de circulacion / flexible: absorbe primero
-MURO = 0.6      # peso del espesor de un muro: absorbe despues, solo engordando (= saliente)
-TRAMO = 1.0     # peso de un tramo acotado {"cota": x}
-TOTAL = 1.0     # peso de una cota total de cadena: por encima de los muros
+HUMEDA = 0.3    # banos, aseos, cocinas, lavaderos: pueden CRECER hasta 10 cm (alicatado: el boceto se queda corto)
+MAX_HUMEDA = 0.10
+MURO = 0.6      # muro grueso (fachada, galeria, medianera): puede engordar (= saliente)
+CIRCULA = 1.5   # pasillo / vestibulo / distribuidor con cota: cede antes que un tabique
+TABIQUE = 3.0   # tabique (<= 0,12): solo engorda como ultimo recurso
+TRAMO = 20.0    # peso de un tramo acotado {"cota": x}
+TOTAL = 20.0    # peso de una cota total de cadena
 CIRC = ("pasillo", "distrib", "recib", "hall", "vestib", "entrada")
 
 
@@ -75,6 +79,18 @@ def resolver(spec, tabique=0.08):
         # se marca expresamente como flexible (piezas sin medir); el resto lo absorben los muros
         return bool(r.get("flexible", False))
 
+    duenos_u = {p_: u for u in ests if "union" in u for p_ in u["union"]}
+
+    def humeda(r):
+        u = duenos_u.get(r["id"], {})
+        txt = " ".join(str(z.get(k_, "")) for z in (r, u) for k_ in ("id", "nombre", "tipo")).lower()
+        return any(k_ in txt for k_ in ("bano", "baño", "aseo", "cocina", "lavadero", "wc"))
+
+    def circulacion(r):
+        u = duenos_u.get(r["id"], {})
+        txt = " ".join(str(z.get(k_, "")) for z in (r, u) for k_ in ("id", "nombre", "tipo")).lower()
+        return any(k_ in txt for k_ in CIRC) or "circulacion" in txt
+
     for i in ids:
         r = R[i]
         for eje, k in (("dx", "W"), ("dy", "H")):
@@ -86,6 +102,10 @@ def resolver(spec, tabique=0.08):
             if isinstance(val, list):
                 alternativas.append((idx, [_num(x) for x in val], i, eje, peso))
                 previas.append([{idx: 1}, _num(val[0]), peso, f"cota {eje} de '{i}'", ("alt", len(alternativas) - 1)])
+            elif peso == NORMAL and humeda(r):
+                previas.append([{idx: 1}, _num(val), HUMEDA, f"cota {eje} de '{i}'", ("humeda",)])
+            elif peso == NORMAL and circulacion(r):
+                previas.append([{idx: 1}, _num(val), CIRCULA, f"cota {eje} de '{i}'", ("circ",)])
             else:
                 previas.append([{idx: 1}, _num(val), peso, f"cota {eje} de '{i}'", None])
 
@@ -159,7 +179,8 @@ def resolver(spec, tabique=0.08):
                     mv = v(f"M:{len(var)}")
                     coef[mv] = coef.get(mv, 0) - 1
                     duras.append([coef, 0.0, FIJO, f"{etiqueta}: muro"])
-                    previas.append([{mv: 1}, w, MURO, f"{etiqueta}: muro entre '{piezas[-1][2]}' y '{nodo}'", ("muro",)])
+                    previas.append([{mv: 1}, w, TABIQUE if w <= 0.12 else MURO,
+                                    f"{etiqueta}: muro entre '{piezas[-1][2]}' y '{nodo}'", ("muro",)])
                 uf(eje, piezas[-1][2], nodo)
             piezas.append((ini, fin, nodo))
             muro_pend = None
@@ -256,18 +277,25 @@ def resolver(spec, tabique=0.08):
         extra = []
         for _ in range(12):
             x, res, coste = resuelve_base(prev, extra)
-            nuevos = [i for i, (p, r_) in enumerate(zip(prev, res))
-                      if p[4] == ("muro",) and r_ < -0.002 and i not in [e[0] for e in extra]]
+            ya = [e[0] for e in extra]
+            nuevos = []
+            for i, (p, r_) in enumerate(zip(prev, res)):
+                if i in ya or p[4] not in (("muro",), ("humeda",)):
+                    continue
+                if r_ < -0.002:  # no puede adelgazar / encoger
+                    nuevos.append((i, p))
+                elif p[4] == ("humeda",) and r_ > MAX_HUMEDA + 0.002:  # crece como maximo 10 cm
+                    nuevos.append((i, [p[0], p[1] + MAX_HUMEDA, p[2], p[3], p[4]]))
             if not nuevos:
                 return x, res, coste
-            extra += [(i, prev[i]) for i in nuevos]
+            extra += nuevos
         return x, res, coste
 
     def resuelve_base(prev, extra):
         fijas = {i for i, _ in extra}
         w = np.array([p[2] for p in prev])
         x = None
-        for _ in range(25):
+        for _ in range(80):
             filas, b = [], []
             for coef, rhs, peso, _d in duras + [[p[0], p[1], FIJO, p[3]] for _i, p in extra]:
                 f = np.zeros(n)
@@ -287,7 +315,7 @@ def resolver(spec, tabique=0.08):
             bb = np.concatenate([b, np.zeros(n)])
             x = np.linalg.lstsq(A, bb, rcond=None)[0]
             res = np.array([sum(val * x[k2] for k2, val in c.items()) - r for c, r, _p, _d, _a in prev])
-            w = np.array([p[2] for p in prev]) / np.maximum(np.abs(res), 0.005)
+            w = np.array([p[2] for p in prev]) / np.maximum(np.abs(res), 0.002)
         res = np.array([sum(val * x[k2] for k2, val in c.items()) - r for c, r, _p, _d, _a in prev])
         coste = float(sum(p[2] * abs(r_) for p, r_ in zip(prev, res)))
         return x, res, coste
@@ -320,10 +348,14 @@ def resolver(spec, tabique=0.08):
         if abs(r_) < 0.015:
             continue
         valor = rhs + r_
+        if _a == ("humeda",):
+            avisos.append(f"Estancia humeda: {d} pasa de {_fmt(rhs)} a {_fmt(valor)} (+{_fmt(r_)}); el boceto "
+                          f"se queda corto por el alicatado y absorbe el descuadre")
+            continue
         if _a == ("muro",):
             avisos.append(f"Saliente: {d} pasa de {_fmt(rhs)} a {_fmt(valor)} (+{_fmt(r_)}) para respetar las cotas "
                           f"de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.")
-        elif peso == FLEX:
+        elif peso in (FLEX, CIRCULA):
             avisos.append(f"Ajuste: {d} pasa de {_fmt(rhs)} a {_fmt(valor)} ({'+' if r_ > 0 else ''}{_fmt(r_)}); "
                           f"absorbe el descuadre de las cadenas por ser circulacion")
         else:
@@ -409,7 +441,7 @@ def resolver(spec, tabique=0.08):
             if faltan:
                 errores.append(f"'{r['id']}': partes inexistentes {faltan}")
                 continue
-            u = unary_union([rects[p].buffer(0.002, join_style=2) for p in r["union"]]).buffer(-0.002, join_style=2)
+            u = unary_union([rects[p].buffer(0.006, join_style=2) for p in r["union"]]).buffer(-0.006, join_style=2)
             nr["poligono"] = a_poligono(u, r["id"])
             nuevas.append(nr)
         else:

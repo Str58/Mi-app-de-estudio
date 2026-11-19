@@ -348,6 +348,15 @@ def dibujo_mueble(t, W, D):
 
 
 # --------------------------------------------------------------------- motor
+def dibuja_ventana(prims, axis, s0, s1, c_int, c_ext):
+    """Estilo del plano de referencia (C. Soto): linea en la cara exterior y carpinteria
+    como linea doble pegada a la cara interior. Sin lineas en las jambas (las cierra el muro)."""
+    t = c_ext - c_int
+    carp = math.copysign(min(0.06, abs(t) * 0.25), t)
+    for c in (c_ext, c_int + carp, c_int):
+        prims.append(dict(L="VENTANAS", k="pl", pts=[xy(axis, s0, c), xy(axis, s1, c)], cerr=False))
+
+
 def genera(spec, salida):
     aud = Auditoria()
     for m in spec.pop("_avisos_cadenas", []):
@@ -398,7 +407,8 @@ def genera(spec, salida):
 
     # 3. contorno del edificio ------------------------------------------------
     RU = unary_union([R.poly0 for R in E])
-    cerrado = RU.buffer(0.21, join_style=2, mitre_limit=10).buffer(-0.21, join_style=2, mitre_limit=10)
+    # cierra huecos entre estancias de hasta 0,70 (muros gruesos y salientes): no son entrantes de fachada
+    cerrado = RU.buffer(0.35, join_style=2, mitre_limit=10).buffer(-0.35, join_style=2, mitre_limit=10)
     patios = [construye_estancia(dict(p, id="patio"), est, aud) for p in spec.get("patios", [])]
     piezas = []
     for P in partes(cerrado):
@@ -499,7 +509,7 @@ def genera(spec, salida):
                     continue
                 gap = (eb.c - ea.c) * sg(ea)
                 o0, o1 = max(ea.s0, eb.s0), min(ea.s1, eb.s1)
-                if -TOL <= gap <= 0.45 and o1 - o0 >= 0.25:
+                if -TOL <= gap <= 0.60 and o1 - o0 >= 0.25:
                     res.append((ea, eb, gap, o0, o1))
         return res
 
@@ -696,11 +706,7 @@ def genera(spec, salida):
                 aud.e(f"Ventana {v['k']} de '{v['R'].id}' sobre una medianera: no es posible abrir huecos en "
                       f"medianeras", xy(e.axis, (v["s0"] + v["s1"]) / 2, e.c))
                 break
-        for fr in (0.25, 0.5, 0.75):
-            c = c0 + (c1 - c0) * fr
-            prims.append(dict(L="VENTANAS", k="pl", pts=[xy(e.axis, v["s0"], c), xy(e.axis, v["s1"], c)], cerr=False))
-        for s in (v["s0"], v["s1"]):
-            prims.append(dict(L="VENTANAS", k="pl", pts=[xy(e.axis, s, c0), xy(e.axis, s, c1)], cerr=False))
+        dibuja_ventana(prims, e.axis, v["s0"], v["s1"], e.c, c1 if sg(e) > 0 else c0)
 
     for d in puertas:
         ea = d["ea"]
@@ -783,10 +789,7 @@ def genera(spec, salida):
         sp = d["spec"]
         if d["tipo"] in ("paso", "balconera", "ventana"):
             if d["tipo"] in ("balconera", "ventana"):
-                c0, c1 = sorted((ea.c, d["c_other"]))
-                for fr in (0.25, 0.5, 0.75):
-                    c = c0 + (c1 - c0) * fr
-                    prims.append(dict(L="VENTANAS", k="pl", pts=[xy(ea.axis, d["s0"], c), xy(ea.axis, d["s1"], c)], cerr=False))
+                dibuja_ventana(prims, ea.axis, d["s0"], d["s1"], ea.c, d["c_other"])
             continue
         lados = []  # (estancia hacia la que abre, c de su cara, signo hacia dentro)
         if B is None:
@@ -845,7 +848,15 @@ def genera(spec, salida):
         barridos.append(secp)
         d["abre"] = Rr
         d["cf"], d["vs"] = cf, vs
-        w = d["w"]
+        # marcos en las dos jambas (estilo del plano de referencia) y hoja entre ellos
+        MARCO = 0.04
+        cmin, cmax = sorted((ea.c, d["c_other"]))
+        for sa, sb in ((d["s0"], d["s0"] + MARCO), (d["s1"] - MARCO, d["s1"])):
+            prims.append(dict(L="PUERTAS", k="pl", cerr=True,
+                              pts=[xy(ea.axis, sa, cmin - 0.01), xy(ea.axis, sb, cmin - 0.01),
+                                   xy(ea.axis, sb, cmax + 0.01), xy(ea.axis, sa, cmax + 0.01)]))
+        sh = sh + us * MARCO
+        w = d["w"] - 2 * MARCO
         tip = xy(ea.axis, sh, cf + vs * w)
         hing = xy(ea.axis, sh, cf)
         hoja = [hing, tip, xy(ea.axis, sh + us * 0.04, cf + vs * w), xy(ea.axis, sh + us * 0.04, cf)]
@@ -1043,6 +1054,12 @@ def calcula_cotas(E, ventanas, puertas, exterior, partes_cad=(), cadenas_cot=(),
         """esquina - hueco - esquina, como en el boceto (posicion y ancho de la ventana)"""
         ang = 0 if e.axis == "h" else 90
         a0, a1 = extremos_pared(R, e, s0, s1) if R is not None else (e.s0, e.s1)
+        if min(s0 - a0, a1 - s1) < 0.30:
+            # poco muro a un lado: solo la ventana y, en otra linea mas separada, el muro completo
+            cotas.append(dict(p1=xy(e.axis, s0, c_med), p2=xy(e.axis, s1, c_med), base=xy(e.axis, s0, c_base), ang=ang))
+            c_base2 = c_base + (c_base - c_med) * 0.9
+            cotas.append(dict(p1=xy(e.axis, a0, c_med), p2=xy(e.axis, a1, c_med), base=xy(e.axis, a0, c_base2), ang=ang))
+            return
         for a, b in ((a0, s0), (s0, s1), (s1, a1)):
             if b - a > 0.03:
                 cotas.append(dict(p1=xy(e.axis, a, c_med), p2=xy(e.axis, b, c_med), base=xy(e.axis, a, c_base), ang=ang))
@@ -1121,7 +1138,19 @@ def calcula_cotas(E, ventanas, puertas, exterior, partes_cad=(), cadenas_cot=(),
     sn = lambda z: round(z, 2) if abs(z - round(z, 2)) < 0.0025 else z
     for c in cotas:
         c["p1"], c["p2"] = tuple(sn(z) for z in c["p1"]), tuple(sn(z) for z in c["p2"])
-    return cotas
+    # sin duplicados: misma direccion y mismos extremos a lo largo del eje (se queda la primera,
+    # que es la de la estancia, por dentro)
+    unicas, vistas = [], []
+    for c in cotas:
+        k = 0 if c["ang"] == 0 else 1
+        a, b = sorted((c["p1"][k], c["p2"][k]))
+        perp = c["base"][1 - k]
+        if any(c["ang"] == v[0] and abs(a - v[1]) < 0.015 and abs(b - v[2]) < 0.015 and abs(perp - v[3]) < 3.0
+               for v in vistas):
+            continue
+        vistas.append((c["ang"], a, b, perp))
+        unicas.append(c)
+    return unicas
 
 
 def valor_cota(c):
@@ -1138,7 +1167,7 @@ def escribe_dxf(ruta, muros, prims, cotas=()):
     doc.header["$MEASUREMENT"] = 1
     if "CALIBRI" not in doc.styles:
         doc.styles.add("CALIBRI", font="calibri.ttf")
-    capas = {"MUROS": 7, "MUROS_RELLENO": 8, "PUERTAS": 3, "VENTANAS": 5, "MOBILIARIO": 2, "TEXTOS": 7,
+    capas = {"MUROS": 7, "PUERTAS": 3, "VENTANAS": 5, "MOBILIARIO": 2, "TEXTOS": 7,
              "ESTANCIAS": 4, "COTAS": 1, "PATINILLOS": 9}
     for n, c in capas.items():
         if n not in doc.layers:
@@ -1153,12 +1182,7 @@ def escribe_dxf(ruta, muros, prims, cotas=()):
         msp.add_lwpolyline(list(P.exterior.coords)[:-1], close=True, dxfattribs={"layer": "MUROS"})
         for r in P.interiors:
             msp.add_lwpolyline(list(r.coords)[:-1], close=True, dxfattribs={"layer": "MUROS"})
-        h = msp.add_hatch(color=8, dxfattribs={"layer": "MUROS_RELLENO"})
-        h.set_solid_fill(color=8)
-        h.dxf.hatch_style = const.HATCH_STYLE_OUTERMOST
-        h.paths.add_polyline_path(list(P.exterior.coords)[:-1], is_closed=True, flags=const.BOUNDARY_PATH_EXTERNAL)
-        for r in P.interiors:
-            h.paths.add_polyline_path(list(r.coords)[:-1], is_closed=True, flags=const.BOUNDARY_PATH_OUTERMOST)
+        # sin sombreado: los muros van solo con su contorno (criterio de Ester)
     for p in prims:
         at = {"layer": p["L"]}
         if p["k"] == "pl":
@@ -1203,14 +1227,14 @@ def escribe_png(ruta, muros, E, prims, aud, titulo, cotas=None):
     k = 15 / max(W, H)
     fig, ax = plt.subplots(figsize=(max(6, W * k), max(6, H * k)))
     for R in E:
-        ax.add_patch(PathPatch(Path(list(R.poly.exterior.coords)), fc="#f4f1ea", ec="none"))
+        pass  # sin color de suelo
     for P in partes(muros):
         verts, codes = [], []
         for ring in [P.exterior] + list(P.interiors):
             cs = list(ring.coords)
             verts += cs
             codes += [Path.MOVETO] + [Path.LINETO] * (len(cs) - 2) + [Path.CLOSEPOLY]
-        ax.add_patch(PathPatch(Path(verts, codes), fc="#4a4a4a", ec="black", lw=0.8))
+        ax.add_patch(PathPatch(Path(verts, codes), fc="none", ec="black", lw=0.9))
     col = {"PUERTAS": "#1b7f2a", "VENTANAS": "#1f5fbf", "MOBILIARIO": "#b08900", "PATINILLOS": "#777777"}
     for p in prims:
         c = col.get(p["L"], "black")

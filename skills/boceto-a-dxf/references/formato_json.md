@@ -57,10 +57,15 @@ Ejemplo real completo: `ejemplos/bergamin/planta_cadenas.json`.
   Las cadenas que comparten un nombre de fachada acaban en la misma línea.
 - Cada estancia o parte tiene que aparecer en al menos una cadena de cada eje, o en una alineación. Si no, el motor da un error `C#` y no dibuja.
 - **Orden en que se absorben los descuadres**:
-  1. lo que no tiene cota (`"?"`) o se marca `"flexible": true`;
-  2. los muros de las cadenas, que solo pueden engordar: es un saliente y el informe dice dónde.
+  1. `"?"` y `"flexible": true`;
+  2. estancias húmedas (baño, aseo, cocina, lavadero, wc), que **solo crecen**, hasta 10 cm;
+  3. muros gruesos (más de 0,12), que solo engordan, como saliente;
+  4. pasillos, vestíbulos y distribuidores con cota;
+  5. tabiques (0,12 o menos), solo engordando;
+  6. totales y tramos `{"cota"}`;
+  7. el resto de estancias, que nunca ceden salvo una contradicción imposible, marcada como «Descuadre».
 
-  **Toda cota escrita se respeta**, también las de pasillos y vestíbulos y las totales. Si aun así no cierra, el informe marca la cota que se ha movido como «Descuadre», y eso indica una mala lectura. `"flexible": true` solo se usa en piezas sin medir.
+  Las húmedas y la circulación se reconocen por el id, el nombre o el tipo, también en las partes de una `union`.
 - `"total"` pesa la mitad que la cota de una estancia, salvo que se indique `"peso"`. `{"cota":x}` pesa como una estancia.
 - Las estancias de las cadenas se convierten en polígonos; el resultado se guarda en `salida/planta_resuelta.json`. En el modo cadenas, `puertas`, `ventanas`, `mobiliario`, `pilares` y `medianeras` funcionan igual que en el modo de coordenadas. Las puertas y los muebles se refieren a la estancia completa (el id de la `union`), no a sus partes.
 - **Mezcla de modos**: las estancias de coordenadas (`rect`, `contorno`, `pegado`) pueden convivir con las de cadenas y apoyarse en ellas con `pegado`.

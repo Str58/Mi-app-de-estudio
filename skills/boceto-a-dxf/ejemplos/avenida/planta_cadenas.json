@@ -145,7 +145,7 @@
    "dy": 2.48
   },
   {
-   "id": "lavadero",
+   "id": "despensa",
    "nombre": "Despensa",
    "tipo": "almacen",
    "dx": 0.71,
@@ -320,7 +320,7 @@
     {
      "muro": 0.3
     },
-    "lavadero"
+    "despensa"
    ],
    "desde": "Og"
   },
@@ -328,7 +328,7 @@
    "nombre": "columna oeste",
    "eje": "y",
    "items": [
-    "lavadero",
+    "despensa",
     "K_izq",
     "S_izq",
     "B_main",
@@ -439,23 +439,6 @@
     },
     "bano2"
    ]
-  },
-  {
-   "nombre": "galería oeste 1,65",
-   "eje": "y",
-   "items": [
-    {
-     "cota": 1.65
-    },
-    {
-     "muro": 0
-    },
-    "K_izq"
-   ],
-   "desde": {
-    "estancia": "lavadero",
-    "lado": "S"
-   }
   }
  ],
  "alineaciones": [
@@ -713,7 +696,7 @@
   {
    "entre": [
     "cocina",
-    "lavadero"
+    "despensa"
    ],
    "tipo": "balconera",
    "ancho": 0.61,
@@ -876,6 +859,6 @@
   "Galería oeste: 1,17 de ancho junto al salón y 0,55 junto a la cocina y la despensa.",
   "Despensa de 0,71 x 1,30 entre la cocina y la galería; se comunica con la cocina por el hueco marcado en azul.",
   "Balconera del salón (2,30) a 1,13 de la cara norte del salón (por debajo del pilar de 0,49 x 0,19).",
-  "Cota 1,65 de la galería oeste: desde el fondo de la despensa hasta la cocina; el muro entre despensa y cocina queda más grueso que un tabique."
+  "Cota 1,65 de la galería oeste: desde su fondo hasta la balconera de la cocina (1,30 + tabique + 0,34 = 1,72; 7 cm de diferencia, que no se lleva a ningún tabique)."
  ]
 }
