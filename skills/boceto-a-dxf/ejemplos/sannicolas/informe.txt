@@ -24,3 +24,4 @@ SUPUESTOS DE LECTURA DEL BOCETO:
   - Cocina: 2,07 de ancho (sale de las cadenas: 5,17 − 1,00 − 0,72 − 1,30 − 0,08) × 3,02; puerta a 0,26 desde el muro oeste.
   - Franja de la balconera: 1,00, con la balconera de 1,00 a todo lo ancho.
   - La cota 2,89 del salón no cuadra: con baño 1,74 + franja 1,00 (balconera de 1,00) + caldera 1,16 y el pilar de bajantes a 0,28 sobre el fondo del baño, el salón mide 3,25 desde ese pilar. Si el 2,89 es correcto, alguna de esas cotas está mal.
+  - Corredera del cuarto de caldera de 0,70: la pared sur tiene un quiebro de 2 cm (fondos 1,14 y 1,16) y el tramo continuo más largo mide 0,75, así que no cabe una de 0,80.
