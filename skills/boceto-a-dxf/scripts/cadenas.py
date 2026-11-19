@@ -105,8 +105,7 @@ def resolver(spec, tabique=0.08):
                 previas.append([{idx: 1}, _num(val[0]), peso, f"cota {eje} de '{i}'", ("alt", len(alternativas) - 1)])
             elif peso == NORMAL and humeda(r):
                 previas.append([{idx: 1}, _num(val), HUMEDA, f"cota {eje} de '{i}'", ("humeda",)])
-            elif peso == NORMAL and circulacion(r):
-                previas.append([{idx: 1}, _num(val), CIRCULA, f"cota {eje} de '{i}'", ("circ",)])
+            # (h18) las cotas escritas de pasillos y vestibulos tampoco se tocan: peso NORMAL como cualquier estancia
             else:
                 previas.append([{idx: 1}, _num(val), peso, f"cota {eje} de '{i}'", None])
 

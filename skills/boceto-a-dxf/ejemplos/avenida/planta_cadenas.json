@@ -1,5 +1,5 @@
 {
- "titulo": "Avenida 25-2",
+ "titulo": "Avenida 25-2, 7º 3 dcha.",
  "estancias": [
   {
    "id": "A_main",
@@ -17,10 +17,7 @@
   {
    "id": "A_paso",
    "parte": true,
-   "dx": [
-    "1'90",
-    "1'50"
-   ],
+   "dx": "?",
    "dy": 0.97
   },
   {
@@ -439,6 +436,18 @@
     "B_main",
     "bano2"
    ]
+  },
+  {
+   "nombre": "dormitorio principal total 4,90",
+   "eje": "x",
+   "items": [
+    "A_main",
+    {
+     "muro": 0
+    },
+    "A_paso"
+   ],
+   "total": 4.9
   }
  ],
  "alineaciones": [
@@ -449,16 +458,6 @@
     "A_main",
     "B_main",
     "K_izq"
-   ]
-  },
-  {
-   "eje": "x",
-   "lado": "E",
-   "estancias": [
-    "bano1",
-    "hall_alto",
-    "pasillo",
-    "recibidor"
    ]
   },
   {
@@ -515,6 +514,22 @@
    "estancias": [
     "A_paso",
     "A_main"
+   ]
+  },
+  {
+   "eje": "x",
+   "lado": "E",
+   "estancias": [
+    "bano1",
+    "hall_alto"
+   ]
+  },
+  {
+   "eje": "x",
+   "lado": "E",
+   "estancias": [
+    "pasillo",
+    "recibidor"
    ]
   }
  ],
@@ -752,7 +767,8 @@
   {
    "estancia": "galeria_o",
    "lado": "S",
-   "ancho": "corrido"
+   "ancho": 0.4,
+   "desde": 0.075
   }
  ],
  "mobiliario": [
@@ -921,9 +937,693 @@
   "Balconera del salón (2,30) a 1,13 de la cara norte del salón (por debajo del pilar de 0,49 x 0,19).",
   "Cota 1,65 de la galería oeste: desde su fondo hasta la balconera de la cocina (1,30 + tabique + 0,34 = 1,72; 7 cm de diferencia, que no se lleva a ningún tabique).",
   "Dormitorios 1 y 2 alineados por el oeste con la cocina (corrección de Ester).",
-  "Pasillo del dormitorio principal: «1'90» girado se lee 1,50 (el motor elige la lectura que cierra); el dormitorio mide unos 4,90 de largo.",
   "Baño 2 entre tabiques de 0,08, con dos chichones de bajantes: 0,70 x 0,28 (NO) y 0,54 x 0,25 (SE).",
   "Muro grueso entre el dormitorio 4 y la galería este: bajantes (confirmado por Ester).",
-  "Saliente de 1,37 x 0,19 en el baño 1 (1,40 / 1,59) y escalones de 0,36 y 0,51 en la galería este."
- ]
+  "Saliente de 1,37 x 0,19 en el baño 1 (1,40 / 1,59) y escalones de 0,36 y 0,51 en la galería este.",
+  "Dormitorio principal de 4,90 de largo (la cota «4,90» es el total, no un tramo de 1,90 o 1,50).",
+  "Balconera del dormitorio 3: 1,35 + 1,00 + 0,35 = 2,70 frente a los 2,69 del dormitorio; se respeta el 2,69 y el 0,35 queda en 0,34.",
+  "Ventana del fondo de la galería oeste de 0,40, centrada."
+ ],
+ "zonas": "zonas",
+ "cotas_boceto": [
+  {
+   "id": "C1",
+   "valor": 0.66,
+   "de": [
+    0,
+    14.04
+   ],
+   "a": [
+    0.66,
+    14.04
+   ]
+  },
+  {
+   "id": "C2",
+   "valor": 0.35,
+   "de": [
+    0.66,
+    13.84
+   ],
+   "a": [
+    1.01,
+    13.84
+   ]
+  },
+  {
+   "id": "C2",
+   "valor": 0.2,
+   "de": [
+    1.01,
+    13.84
+   ],
+   "a": [
+    1.01,
+    14.04
+   ]
+  },
+  {
+   "id": "C3",
+   "valor": 1.37,
+   "de": [
+    3.94,
+    13.64
+   ],
+   "a": [
+    5.31,
+    13.64
+   ]
+  },
+  {
+   "id": "C4",
+   "valor": 3.42,
+   "de": [
+    0,
+    13.0
+   ],
+   "a": [
+    3.42,
+    13.0
+   ],
+   "sin_cara": true
+  },
+  {
+   "id": "C5",
+   "valor": 1.4,
+   "estancia": "bano1",
+   "eje": "y",
+   "frac": [
+    0.2,
+    0.5
+   ],
+   "humeda": true
+  },
+  {
+   "id": "C6",
+   "valor": 2.57,
+   "estancia": "bano1",
+   "eje": "x",
+   "humeda": true
+  },
+  {
+   "id": "C7/C15",
+   "valor": 1.59,
+   "estancia": "bano1",
+   "eje": "y",
+   "frac": [
+    0.9,
+    0.5
+   ],
+   "humeda": true
+  },
+  {
+   "id": "C8",
+   "valor": 0.49,
+   "de": [
+    6.51,
+    12.24
+   ],
+   "a": [
+    6.51,
+    12.73
+   ]
+  },
+  {
+   "id": "C9/C10",
+   "valor": 0.75,
+   "de": [
+    6.51,
+    12.73
+   ],
+   "a": [
+    6.51,
+    13.48
+   ]
+  },
+  {
+   "id": "C11/C12",
+   "valor": 0.95,
+   "de": [
+    0,
+    11.34
+   ],
+   "a": [
+    0,
+    12.29
+   ]
+  },
+  {
+   "id": "C19/C20",
+   "valor": 0.95,
+   "de": [
+    0,
+    9.96
+   ],
+   "a": [
+    0,
+    10.91
+   ]
+  },
+  {
+   "id": "C13",
+   "valor": 2.85,
+   "estancia": "dormA",
+   "eje": "y",
+   "frac": [
+    0.05,
+    0.5
+   ]
+  },
+  {
+   "id": "C14",
+   "valor": 0.97,
+   "estancia": "dormA",
+   "eje": "y",
+   "frac": [
+    0.9,
+    0.1
+   ]
+  },
+  {
+   "id": "C21",
+   "valor": 4.9,
+   "estancia": "dormA",
+   "eje": "x",
+   "frac": [
+    0.5,
+    0.1
+   ]
+  },
+  {
+   "id": "C21",
+   "valor": 0.93,
+   "estancia": "dormB",
+   "eje": "y",
+   "frac": [
+    0.9,
+    0.85
+   ]
+  },
+  {
+   "id": "C22",
+   "valor": 0.7,
+   "de": [
+    3.4,
+    9.82
+   ],
+   "a": [
+    4.1,
+    9.82
+   ]
+  },
+  {
+   "id": "C22",
+   "valor": 0.28,
+   "de": [
+    4.1,
+    9.82
+   ],
+   "a": [
+    4.1,
+    10.1
+   ]
+  },
+  {
+   "id": "C23",
+   "valor": 1.95,
+   "estancia": "distribuidor",
+   "eje": "y",
+   "frac": [
+    0.3,
+    0.9
+   ]
+  },
+  {
+   "id": "C16",
+   "valor": 1.53,
+   "estancia": "distribuidor",
+   "eje": "x",
+   "frac": [
+    0.5,
+    0.9
+   ]
+  },
+  {
+   "id": "C24",
+   "valor": 0.52,
+   "de": [
+    10.49,
+    10.1
+   ],
+   "a": [
+    11.01,
+    10.1
+   ]
+  },
+  {
+   "id": "C24/C33",
+   "valor": 0.36,
+   "de": [
+    11.01,
+    9.74
+   ],
+   "a": [
+    11.01,
+    10.1
+   ]
+  },
+  {
+   "id": "C24/C33",
+   "valor": 0.51,
+   "de": [
+    11.36,
+    9.23
+   ],
+   "a": [
+    11.36,
+    9.74
+   ]
+  },
+  {
+   "id": "C25/C27",
+   "valor": 3.32,
+   "estancia": "dormB",
+   "eje": "x",
+   "frac": [
+    0.5,
+    0.2
+   ]
+  },
+  {
+   "id": "C26",
+   "valor": 2.4,
+   "estancia": "dormB",
+   "eje": "y",
+   "frac": [
+    0.2,
+    0.5
+   ]
+  },
+  {
+   "id": "C29",
+   "valor": 2.12,
+   "estancia": "bano2",
+   "eje": "x",
+   "frac": [
+    0.5,
+    0.4
+   ],
+   "humeda": true
+  },
+  {
+   "id": "C29",
+   "valor": 1.84,
+   "estancia": "bano2",
+   "eje": "y",
+   "frac": [
+    0.5,
+    0.5
+   ],
+   "humeda": true
+  },
+  {
+   "id": "C31",
+   "valor": 2.69,
+   "estancia": "dormC",
+   "eje": "y"
+  },
+  {
+   "id": "C42/C43",
+   "valor": 3.54,
+   "estancia": "dormC",
+   "eje": "x"
+  },
+  {
+   "id": "C32",
+   "valor": 1.0,
+   "de": [
+    10.18,
+    7.75
+   ],
+   "a": [
+    10.18,
+    8.75
+   ]
+  },
+  {
+   "id": "C33",
+   "valor": 1.35,
+   "de": [
+    10.18,
+    8.75
+   ],
+   "a": [
+    10.18,
+    10.1
+   ]
+  },
+  {
+   "id": "C44",
+   "valor": 0.35,
+   "de": [
+    10.18,
+    7.41
+   ],
+   "a": [
+    10.18,
+    7.75
+   ],
+   "no_cuadra": true
+  },
+  {
+   "id": "C35/C37",
+   "valor": 1.13,
+   "de": [
+    0.57,
+    7.5
+   ],
+   "a": [
+    0.57,
+    8.63
+   ]
+  },
+  {
+   "id": "C36",
+   "valor": 0.49,
+   "de": [
+    0.57,
+    8.44
+   ],
+   "a": [
+    1.06,
+    8.44
+   ]
+  },
+  {
+   "id": "C36",
+   "valor": 0.19,
+   "de": [
+    1.06,
+    8.44
+   ],
+   "a": [
+    1.06,
+    8.63
+   ]
+  },
+  {
+   "id": "C38",
+   "valor": 0.25,
+   "de": [
+    4.99,
+    8.2
+   ],
+   "a": [
+    4.99,
+    8.45
+   ]
+  },
+  {
+   "id": "C40",
+   "valor": 0.54,
+   "de": [
+    4.99,
+    8.45
+   ],
+   "a": [
+    5.53,
+    8.45
+   ]
+  },
+  {
+   "id": "C41/C59",
+   "valor": 0.96,
+   "estancia": "distribuidor",
+   "eje": "x",
+   "frac": [
+    0.8,
+    0.3
+   ]
+  },
+  {
+   "id": "C46",
+   "valor": 4.92,
+   "estancia": "salon",
+   "eje": "x",
+   "frac": [
+    0.5,
+    0.7
+   ]
+  },
+  {
+   "id": "C56",
+   "valor": 2.3,
+   "de": [
+    0.57,
+    5.2
+   ],
+   "a": [
+    0.57,
+    7.5
+   ]
+  },
+  {
+   "id": "C47/C58",
+   "valor": 7.05,
+   "estancia": "distribuidor",
+   "eje": "y",
+   "frac": [
+    0.8,
+    0.5
+   ]
+  },
+  {
+   "id": "C57",
+   "valor": 3.04,
+   "estancia": "salon",
+   "eje": "y",
+   "frac": [
+    0.9,
+    0.5
+   ]
+  },
+  {
+   "id": "C48/C50",
+   "valor": 2.7,
+   "estancia": "dormD",
+   "eje": "y"
+  },
+  {
+   "id": "C49/C51",
+   "valor": 3.36,
+   "estancia": "dormD",
+   "eje": "x"
+  },
+  {
+   "id": "C52/C54",
+   "valor": 1.0,
+   "de": [
+    10.01,
+    4.63
+   ],
+   "a": [
+    10.01,
+    5.63
+   ]
+  },
+  {
+   "id": "C52/C54",
+   "valor": 1.15,
+   "estancia": "galeria_e",
+   "eje": "x"
+  },
+  {
+   "id": "C53",
+   "valor": 0.44,
+   "de": [
+    10.49,
+    4.63
+   ],
+   "a": [
+    10.49,
+    5.07
+   ],
+   "sin_cara": true
+  },
+  {
+   "id": "C60/C61",
+   "valor": 4.55,
+   "estancia": "galeria_o",
+   "eje": "y",
+   "frac": [
+    0.95,
+    0.7
+   ]
+  },
+  {
+   "id": "C60/C61",
+   "valor": 1.17,
+   "estancia": "galeria_o",
+   "eje": "x",
+   "frac": [
+    0.95,
+    0.7
+   ]
+  },
+  {
+   "id": "C62/C63",
+   "valor": 4.78,
+   "estancia": "salon",
+   "eje": "y",
+   "frac": [
+    0.3,
+    0.5
+   ]
+  },
+  {
+   "id": "C64/C65/C66",
+   "valor": 4.12,
+   "estancia": "salon",
+   "eje": "x",
+   "frac": [
+    0.5,
+    0.05
+   ]
+  },
+  {
+   "id": "C64/C65/C66",
+   "valor": 4.69,
+   "estancia": "cocina",
+   "eje": "x",
+   "frac": [
+    0.5,
+    0.85
+   ]
+  },
+  {
+   "id": "C72",
+   "valor": 0.98,
+   "estancia": "cocina",
+   "eje": "y",
+   "frac": [
+    0.85,
+    0.8
+   ]
+  },
+  {
+   "id": "C67",
+   "valor": 1.8,
+   "estancia": "recibidor",
+   "eje": "x"
+  },
+  {
+   "id": "C68",
+   "valor": 2.48,
+   "estancia": "recibidor",
+   "eje": "y"
+  },
+  {
+   "id": "C69",
+   "valor": 1.0,
+   "de": [
+    0,
+    1.72
+   ],
+   "a": [
+    0,
+    2.72
+   ]
+  },
+  {
+   "id": "C69",
+   "valor": 0.34,
+   "de": [
+    0,
+    1.38
+   ],
+   "a": [
+    0,
+    1.72
+   ]
+  },
+  {
+   "id": "C70",
+   "valor": 2.39,
+   "estancia": "cocina",
+   "eje": "y",
+   "frac": [
+    0.2,
+    0.5
+   ],
+   "humeda": true
+  },
+  {
+   "id": "C71",
+   "valor": 3.3,
+   "estancia": "cocina",
+   "eje": "x",
+   "frac": [
+    0.5,
+    0.3
+   ],
+   "humeda": true
+  },
+  {
+   "id": "C74/C75",
+   "valor": 1.3,
+   "estancia": "despensa",
+   "eje": "y"
+  },
+  {
+   "id": "C76/C77",
+   "valor": 0.71,
+   "estancia": "despensa",
+   "eje": "x"
+  },
+  {
+   "id": "C78",
+   "valor": 0.55,
+   "estancia": "galeria_o",
+   "eje": "x",
+   "en": [
+    -0.6,
+    1.0
+   ]
+  },
+  {
+   "id": "C74/C75",
+   "valor": 0.4,
+   "de": [
+    -0.825,
+    0
+   ],
+   "a": [
+    -0.425,
+    0
+   ],
+   "sin_cara": true
+  },
+  {
+   "id": "C74/C75",
+   "valor": 1.65,
+   "de": [
+    -0.35,
+    0
+   ],
+   "a": [
+    -0.35,
+    1.72
+   ],
+   "no_cuadra": true,
+   "sin_cara": true
+  }
+ ],
+ "cotas_descartadas": {
+  "C17/C18": "0,30 cm (rosa): anotación, no es cota de la planta",
+  "C45/C55": "h=2,60: altura libre",
+  "C73": "h=1,75: altura de la ventana de la galería",
+  "C28/C30": "solo mobiliario (armario)",
+  "C34": "«42» en la galería este: no identificado",
+  "C39": "«2,26» junto al baño 2: no identificado"
+ }
 }

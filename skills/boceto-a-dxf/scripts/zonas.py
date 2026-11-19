@@ -162,6 +162,11 @@ lp = tramos(engorda(ng, tp, 0), kp, 0) | tramos(engorda(ng, tp, 1), kp, 1)
 yy_, xx_ = np.nonzero(lp & ng)
 if len(yy_):
     paredes = [int(xx_.min() * f), int(yy_.min() * f), int((xx_.max() + 1) * f), int((yy_.max() + 1) * f)]
+# contorno para superponer el plano: paredes negras + lineas azules largas (las galerias suelen ir en azul)
+az_c = np.asarray(azul.resize((W // f, H // f), Image.BOX)) > 60
+lz = tramos(engorda(az_c, tp, 0), kp, 0) | tramos(engorda(az_c, tp, 1), kp, 1)
+yy_, xx_ = np.nonzero((lp & ng) | (lz & az_c))
+contorno = [int(xx_.min() * f), int(yy_.min() * f), int((xx_.max() + 1) * f), int((yy_.max() + 1) * f)] if len(yy_) else paredes
 k_lin, tol = max(12, L // 22), max(1, L // 350)
 lin = (tramos(engorda(rm, tol, 0), k_lin, 0) | tramos(engorda(rm, tol, 1), k_lin, 1))
 rm = rm & ~lin                                            # quita las lineas de cota (rectas o casi)
@@ -238,6 +243,6 @@ for i, b in enumerate(cajas, 1):
     dm.text((r[2] + 2, r[1] - 4), f"C{i}", fill=(0, 0, 220), font=fuente)
 mapa.save(os.path.join(out, "mapa_cotas.jpg"), quality=88)
 with open(os.path.join(out, "lista_cotas.json"), "w", encoding="utf-8") as fh:
-    json.dump({"ids": [nm for nm, _ in celdas], "cajas": cajas, "paredes_px": paredes, "tam": [W, H]}, fh)
+    json.dump({"ids": [nm for nm, _ in celdas], "cajas": cajas, "paredes_px": paredes, "contorno_px": contorno, "tam": [W, H]}, fh)
 print(f"{len(cajas)} recuadros con cotas rojas: lee mapa_cotas.jpg y hoja_cotas_*.png")
 print("Generado en", out, ":", sorted(os.listdir(out)))

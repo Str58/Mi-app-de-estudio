@@ -1085,11 +1085,26 @@ def comprueba_cotas_boceto(spec, E, muros, aud):
     for c in spec.get("cotas_boceto", []):
         cid, val = c.get("id", "?"), c.get("valor")
         try:
-            if "en" in c:
+            if "en" in c or "estancia" in c:
+                zona = libre
+                if "estancia" in c:  # modo cadenas: sin coordenadas, por la estancia (y fraccion de su caja)
+                    Rz = next((R for R in E if R.id == c["estancia"]), None)
+                    if Rz is None:
+                        aud.e(f"Cota {cid}: estancia '{c['estancia']}' inexistente")
+                        continue
+                    zona = Rz.poly
+                    if "en" not in c:
+                        b0 = Rz.poly.bounds
+                        if "frac" in c:
+                            fx, fy = (num(v) for v in c["frac"])
+                            c = dict(c, en=[b0[0] + fx * (b0[2] - b0[0]), b0[1] + fy * (b0[3] - b0[1])])
+                        else:
+                            q = Rz.poly.representative_point()
+                            c = dict(c, en=[q.x, q.y])
                 x, y = (num(v) for v in c["en"])
                 hz = c.get("eje", "x") == "x"
                 ln = LineString([(-1e3, y), (1e3, y)]) if hz else LineString([(x, -1e3), (x, 1e3)])
-                seg = ln.intersection(libre)
+                seg = ln.intersection(zona)
                 segs = [seg] if seg.geom_type == "LineString" else [g for g in getattr(seg, "geoms", []) if g.geom_type == "LineString"]
                 segs = [g for g in segs if g.distance(Point(x, y)) < 1e-6]
                 if not segs:
@@ -1106,14 +1121,17 @@ def comprueba_cotas_boceto(spec, E, muros, aud):
                     x2 = x1
                 med = abs(x2 - x1) if hz else abs(y2 - y1)
                 for p in ((x1, y1), (x2, y2)):  # un extremo suelto en medio de una estancia no mide nada
-                    if caras is not None and caras.distance(Point(p)) > 0.012 and libre.contains(Point(p)):
+                    if not c.get("sin_cara") and caras is not None and caras.distance(Point(p)) > 0.012 and libre.contains(Point(p)):
                         aud.a(f"Cota {cid}: el extremo {tuple(round(v, 3) for v in p)} no esta sobre ninguna cara de "
                               f"muro: la cota no mide lo que dice", p)
             if c.get("dibujar", True):
                 dib.append({"de": [x1, y1], "a": [x2, y2], "desp": c.get("desp", 0)})
             ok = val is None or abs(med - num(val)) <= 0.005
-            res.append((cid, val, med, ok, c.get("no_cuadra")))
-            if not ok:
+            humeda = c.get("humeda") and val is not None and 0 < med - num(val) <= 0.10 + 1e-6
+            res.append((cid, val, med, ok or humeda, c.get("no_cuadra")))
+            if humeda and not ok:  # estancia humeda: puede crecer hasta 0,10 por el alicatado (no es error)
+                aud.a(f"Cota {cid}: el boceto dice {fmt(num(val))} y el plano da {fmt(med)} (estancia humeda, alicatado)", (x1, y1))
+            elif not ok:
                 txt = f"Cota {cid}: el boceto dice {fmt(num(val), 3 if len(str(val).split('.')[-1]) > 2 else 2)} y el plano da {fmt(med)}"
                 if c.get("no_cuadra"):
                     aud.a(txt + " (discrepancia del boceto, indicada en supuestos)", (x1, y1))
@@ -1147,7 +1165,8 @@ def superpone(spec, E, muros, salida, aud):
         return
     from PIL import Image, ImageDraw
     with open(os.path.join(z, "lista_cotas.json"), encoding="utf-8") as fh:
-        px0, py0, px1, py1 = json.load(fh)["paredes_px"]
+        lc = json.load(fh)
+        px0, py0, px1, py1 = lc.get("contorno_px", lc["paredes_px"])
     bx0, by0, bx1, by1 = unary_union([R.poly for R in E]).bounds
     im = Image.open(os.path.join(z, "recorte.jpg")).convert("L").convert("RGB")
     im = Image.blend(Image.new("RGB", im.size, "white"), im, 0.45)

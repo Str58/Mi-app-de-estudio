@@ -11,13 +11,15 @@ Resumen de las correcciones. El detalle y los ejemplos están en `lecciones_hist
 6. Lo que va dentro de un óvalo azul es la ventana más cercana: ancho, y `h=` es la altura, que se ignora. Si h ≈ 2,10–2,25, es una balconera (h6, h10).
 
 **Geometría**
-7. Las cotas de las estancias y de los tramos son sagradas. Las diferencias las absorben las piezas sin medir y los muros, como salientes; nunca los tabiques (h1, h11, h18).
+7. Las cotas de las estancias y de los tramos son sagradas, **también las de pasillos, vestíbulos y distribuidores**. Las diferencias las absorben las piezas sin medir y los muros, como salientes; nunca los tabiques (h1, h11, h18).
 8. Espesores: tabique de 0,08; pared hacia la galería (la antigua fachada) de 0,30; pared hacia el rellano o la escalera (medianera) de 0,20. Las estancias húmedas pueden ganar hasta 0,10 por el alicatado y los tabiques no (h1, h2, h5, h19).
 9. No se inventan estancias: una estancia solo existe si tiene pared negra en todos sus lados. Una zona sin muro es parte del espacio contiguo (h26).
 10. Cada tramo de distinto ancho (estrechamientos, franjas hacia la fachada) es una parte propia con su cota, no un rectángulo único (h30). Una estancia en L no tiene «chichones» en la entrada (h23).
 11. Se dibujan todos los pilares y salientes. Una cota pequeña (0,15–0,60) junto a un muro, o dos cotas distintas de una misma estancia, indican un saliente. Los pilares de bajantes suelen salir hacia los dos lados del tabique. Un muro grueso entre estancias suele ser una zona de bajantes (h13, h22, h31).
 12. Alineaciones: solo las necesarias. Si algo descuadra, lo primero que se sospecha es una alineación tomada del dibujo. Si dos paredes casi alineadas no tienen cota que las relacione, se alinean y se indica qué cota falta (h9, h23, h37).
 13. Si un baño no llega a la fachada, engorda el muro de fachada por dentro y el baño conserva sus cotas (h22).
+
+18. Si casi todos los textos del boceto están boca abajo, el boceto se ha dibujado girado: da igual para la geometría, pero los números se leen en el giro de 180° de la hoja de cotas.
 
 **Huecos**
 14. Puertas interiores de 0,80 y la de entrada de 0,90, salvo cota. No se estrechan: si no caben, la lectura está mal. Deben caber en un tramo de pared continuo (h12, h32). Si dos estancias comparten más de una pared, se indica el `lado` (h27).

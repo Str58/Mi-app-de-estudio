@@ -196,6 +196,9 @@ Cada cota roja del boceto se escribe con el `id` de su recuadro en `mapa_cotas.j
 ],
 "cotas_descartadas": {"C31/C32": "h=2,15: altura libre", "C20": "puerta de la cocina (en puertas)"}
 ```
+- **Modo cadenas (sin coordenadas):** `{"id":"C13","valor":2.85,"estancia":"dormA","eje":"y","frac":[0.05,0.5]}` mide dentro de esa estancia por el punto situado en esa fracción de su caja (por defecto, un punto interior). Para `de`/`a` se toman las coordenadas de `planta_resuelta.json` tras una primera ejecución.
+- `"humeda": true` (baños, aseos, cocinas): si el plano supera el valor en hasta 0,10, es aviso (alicatado), no error.
+- `"sin_cara": true`: el extremo no está en una pared (por ejemplo, el frente de un armario); no se avisa.
 - `en` + `eje`: mide la estancia (o la unión de estancias abiertas entre sí) a lo largo del eje por ese punto. Es lo más cómodo para las cotas interiores.
 - `de` + `a`: para pilares, salientes, huecos de ventana, retranqueos y cotas exteriores. Si un extremo queda suelto en medio de una estancia, avisa.
 - Un recuadro que no está ni en `cotas_boceto` ni en `cotas_descartadas` da error: así ninguna cota queda sin leer.

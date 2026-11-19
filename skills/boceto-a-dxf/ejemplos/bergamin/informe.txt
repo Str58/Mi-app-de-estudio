@@ -6,30 +6,30 @@ SUPERFICIES UTILES
   Galería                          2,83 m2   (almacen)
   Cocina                           8,56 m2   (cocina)
   Baño                             4,38 m2   (bano)
-  Salón                           15,25 m2   (salon)
+  Salón                           14,96 m2   (salon)
   Comedor                          8,95 m2   (salon)
   Despensa                         1,56 m2   (almacen)
-  Vestíbulo y pasillo             12,56 m2   (circulacion)
+  Vestíbulo y pasillo             12,70 m2   (circulacion)
   Entrada                          1,13 m2   (circulacion)
   Dormitorio 1                    15,28 m2   (dormitorio)
   Dormitorio 2                    16,14 m2   (dormitorio)
   Dormitorio 3                    15,40 m2   (dormitorio)
-  TOTAL UTIL                     103,24 m2
-  CONSTRUIDA (contorno)          120,42 m2
+  TOTAL UTIL                     103,10 m2
+  CONSTRUIDA (contorno)          122,00 m2
 
 ERRORES (0) - hay que corregirlos en el JSON:
   ninguno
 
 AVISOS (13) - revisar; si son correctos, explicarlos al entregar:
   A1. Cota dudosa de 'bano' (dy): se elige 1,28 (frente a 1,58) porque es la que cierra las cadenas
-  A2. Ajuste: cota dx de 'pasillo_alto' pasa de 1,00 a 0,98 (-0,02); absorbe el descuadre de las cadenas por ser circulacion
-  A3. Ajuste: cota dx de 'pasillo_bajo' pasa de 1,28 a 1,39 (+0,11); absorbe el descuadre de las cadenas por ser circulacion
-  A4. Ajuste: cota dx de 'vestibulo' pasa de 2,46 a 2,28 (-0,18); absorbe el descuadre de las cadenas por ser circulacion
-  A5. Ajuste: cota dy de 'vestibulo' pasa de 2,60 a 2,48 (-0,12); absorbe el descuadre de las cadenas por ser circulacion
-  A6. Saliente: fila baño: muro entre 'galeria' y 'bano' pasa de 0,30 a 0,33 (+0,03) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
-  A7. Saliente: fila baño: muro entre 'pasillo_alto' y 'dorm2_alto' pasa de 0,08 a 0,25 (+0,17) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
-  A8. Saliente: fila comedor: muro entre 'vestibulo' y 'dorm3' pasa de 0,08 a 0,10 (+0,02) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
-  A9. Saliente: columna galería: muro de fachada N junto a 'aseo' pasa de 0,00 a 0,03 (+0,03) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
+  A2. Descuadre: cota dx de 'pasillo_alto' (1,00) no cuadra con el resto; queda en 0,98 (-0,02). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A3. Descuadre: cota dy de 'vestibulo' (2,60) no cuadra con el resto; queda en 2,48 (-0,12). Si el boceto es correcto, revisa otra cota de esa cadena.
+  A4. Saliente: fila baño: muro entre 'galeria' y 'bano' pasa de 0,30 a 0,33 (+0,03) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
+  A5. Saliente: fila baño: muro entre 'pasillo_alto' y 'dorm2_alto' pasa de 0,08 a 0,25 (+0,17) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
+  A6. Saliente: fila salón: muro entre 'salon' y 'pasillo_bajo' pasa de 0,08 a 0,37 (+0,29) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
+  A7. Saliente: fila salón: muro entre 'pasillo_bajo' y 'dorm2_bajo' pasa de 0,08 a 0,19 (+0,11) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
+  A8. Saliente: fila comedor: muro entre 'vestibulo' y 'dorm3' pasa de 0,08 a 0,21 (+0,13) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
+  A9. Saliente: columna galería: muro entre 'seg1' y 'galeria' pasa de 0,30 a 0,33 (+0,03) para respetar las cotas de las estancias. Comprueba en el boceto si hay ahi un saliente o pilar.
   A10. Descuadre: pasillo 4,72: total 4,72 (4,72) no cuadra con el resto; queda en 5,19 (+0,47). Si el boceto es correcto, revisa otra cota de esa cadena.
   A11. 'aseo' mide solo 1,20 m2 (minimo razonable 1,5 m2): revisa cotas
   A12. 'aseo' tiene menos de 0,90 m de anchura libre: revisa cotas
