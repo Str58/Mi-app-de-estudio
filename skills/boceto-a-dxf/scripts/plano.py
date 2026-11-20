@@ -1005,10 +1005,12 @@ def genera(spec, salida):
             aud.a(f"Puerta {d['k']}: un baño no deberia abrir directamente a la cocina",
                   xy(d["ea"].axis, (d["s0"] + d["s1"]) / 2, d["ea"].c))
     # tabiques demasiado finos y macizos sospechosos
+    vidrio = {frozenset(p["entre"]) for p in spec.get("puertas", [])
+              if p.get("tipo") in ("cristalera", "vidrio", "mampara")}  # un cierre de vidrio puede medir 2 cm
     for i, A in enumerate(E):
         for B in E[i + 1:]:
             for (ea, eb, gap, o0, o1) in caras_comunes(A, B):
-                if 0.01 < gap < 0.05:
+                if 0.01 < gap < 0.05 and frozenset((A.id, B.id)) not in vidrio:
                     aud.a(f"Tabique de solo {fmt(gap * 100, 0)} cm entre '{A.id}' y '{B.id}': probable descuadre",
                           xy(ea.axis, (o0 + o1) / 2, ea.c))
     exc = unary_union([p.buffer(0.12) for p in pilares + patinillos]) if (pilares or patinillos) else Polygon()

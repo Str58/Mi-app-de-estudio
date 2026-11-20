@@ -3,33 +3,36 @@ INFORME DEL PLANO
 
 SUPERFICIES UTILES
   Cocina                           5,19 m2   (cocina)
-  Salón                           30,20 m2   (salon)
-  Baño                             2,02 m2   (bano)
-  Ducha                            1,55 m2   (bano)
-  TOTAL UTIL                      38,95 m2
-  CONSTRUIDA (contorno)           47,97 m2
+  Salón                           27,77 m2   (salon)
+  Baño                             1,99 m2   (bano)
+  Ducha                            0,68 m2   (bano)
+  Ducha 2                          0,76 m2   (bano)
+  TOTAL UTIL                      36,40 m2
+  CONSTRUIDA (contorno)           44,89 m2
 
 ERRORES (0) - hay que corregirlos en el JSON:
   ninguno
 
-AVISOS (4) - revisar; si son correctos, explicarlos al entregar:
-  A1. Quiebro de 2 cm en el contorno exterior: probable descuadre de cotas
-  A2. 'ducha' tiene menos de 0,90 m de anchura libre: revisa cotas
-  A3. Cota C1/C2: el boceto dice 3,58 y el plano da 3,61 (discrepancia del boceto, indicada en supuestos)
-  A4. Cota C15: el boceto dice 2,89 y el plano da 3,23 (discrepancia del boceto, indicada en supuestos)
+AVISOS (12) - revisar; si son correctos, explicarlos al entregar:
+  A1. Ventana 3 de 'bano' se salia de la pared: desplazada 0,05 m
+  A2. Muebles 2 (lavabo) y 4 (inodoro) se solapan
+  A3. 'ducha' mide solo 0,68 m2 (minimo razonable 1,5 m2): revisa cotas
+  A4. 'ducha' tiene menos de 0,90 m de anchura libre: revisa cotas
+  A5. 'aseo2' mide solo 0,76 m2 (minimo razonable 1,5 m2): revisa cotas
+  A6. 'aseo2' tiene menos de 0,90 m de anchura libre: revisa cotas
+  A7. Macizo de muro de mas de 0,38 m de grueso: ¿falta una estancia, un patinillo o hay un descuadre de cotas?
+  A8. Cota C1/C2: el boceto dice 3,58 y el plano da 3,61 (discrepancia del boceto, indicada en supuestos)
+  A9. Cota C8/C9: el boceto dice 1,16 y el plano da 1,12 (discrepancia del boceto, indicada en supuestos)
+  A10. Cota C10: el boceto dice 1,74 y el plano da 1,75 (estancia humeda, alicatado)
+  A11. Cota C16/C27: el boceto dice 0,35 y el plano da 0,28 (discrepancia del boceto, indicada en supuestos)
+  A12. Cota C24/C30: el boceto dice 3,09 y el plano da 3,10 (discrepancia del boceto, indicada en supuestos)
 
-COTAS DEL BOCETO COMPROBADAS: 34 (32 cumplen, 2 no)
+COTAS DEL BOCETO COMPROBADAS: 35 (31 cumplen, 4 no)
   C1/C2: boceto 3,58 / plano 3,61  (no cuadra en el boceto)
-  C15: boceto 2,89 / plano 3,23  (no cuadra en el boceto)
+  C8/C9: boceto 1,16 / plano 1,12  (no cuadra en el boceto)
+  C16/C27: boceto 0,35 / plano 0,28  (no cuadra en el boceto)
+  C24/C30: boceto 3,09 / plano 3,10  (no cuadra en el boceto)
 
 SUPUESTOS DE LECTURA DEL BOCETO:
-  - Estancia grande = recibidor + paso + salón + zona sur (sin muros entre ellos). Recibidor de 0,80 × 0,92 que se estrecha a 0,89 hasta el salón.
-  - 5,17 desde la entrada hasta la pared de enfrente (muro este de la zona sur, con la balconera de 0,95). Cocina = 5,17 − 3,37 − 0,08 = 1,72 de ancho × 3,02.
-  - El machón de 0,32 × 0,38 queda alineado con el tabique de la cocina; pilar gordo de 0,37 a 0,72 del machón y a 1,00 del pilar de bajantes (largo deducido: 1,30).
-  - Pilar de bajantes compartido: 0,35 × 0,53 hacia el salón y 0,19 × 0,54 hacia el baño, a 0,28 sobre el suelo del baño (0,35 + 0,19 ≈ 0,55 de bloque total).
-  - Baño (lavabo + inodoro) con puerta de vidrio a todo lo ancho hacia el paso de la balconera. 1,74 de fondo; la pared de la ventana (0,50 × 0,50) mide 1,12 y está 0,22 retranqueada respecto al resto.
-  - Ducha de 0,61 + tabique parcial + 0,68 = 1,36 × 1,16 (interior), cerrada con cristalera hacia el paso. El tabique contiguo mide 1,14 por el lado del salón (el salón llega 2 cm menos al norte).
-  - Paso de la balconera de 1,00 entre el baño y la ducha; 5,05 desde el muro oeste del salón hasta la fachada.
-  - La cota 2,89 del salón no cuadra: con el pilar de bajantes a 0,28 sobre el suelo del baño, del pilar al muro norte hay 3,23.
-  - Ancho del salón al norte: se toma 3,61 (cierra con 5,05 = 3,61 + 0,08 + 1,36). El 3,58 escrito en el muro norte da 3 cm menos; no se dibuja ningún saliente.
-  - Tabique de la cocina hacia el paso de 0,07 para cumplir 3,02 + 0,07 = 3,09.
+  - Geometría corregida según el plano final de Ester (DXF): referencia para comparar lecturas.
+  - Lecturas del boceto que no coinciden con el plano final: 3,58 (es 3,61), 1,16 de la ducha (es 1,12), 0,35 del pilar de bajantes (es 0,28) y 3,09 (es 3,10).

@@ -1,5 +1,5 @@
 {
- "titulo": "San Nicolás 20-22, 4º dcha.",
+ "titulo": "San Nicolás 20-22, 4º dcha. (corregido)",
  "estancias": [
   {
    "id": "cocina",
@@ -29,76 +29,92 @@
    "tipo": "salon",
    "poligono": [
     [
-     5.17,
-     0.0
-    ],
-    [
      1.8,
-     0.0
+     0
     ],
     [
-     1.8,
-     3.09
+     4.95,
+     0
     ],
     [
-     0.0,
-     3.09
-    ],
-    [
-     0.0,
-     4.01
-    ],
-    [
-     0.8,
-     4.01
-    ],
-    [
-     0.8,
-     3.98
-    ],
-    [
-     1.48,
-     3.98
-    ],
-    [
-     1.48,
-     8.0
-    ],
-    [
-     5.09,
-     8.0
-    ],
-    [
-     5.09,
-     6.86
+     4.95,
+     0.22
     ],
     [
      5.17,
-     6.86
-    ],
-    [
-     5.17,
-     6.78
-    ],
-    [
-     6.53,
-     6.78
-    ],
-    [
-     6.53,
-     5.78
-    ],
-    [
-     5.09,
-     5.78
-    ],
-    [
-     5.09,
-     3.88
+     0.22
     ],
     [
      5.17,
      3.88
+    ],
+    [
+     4.89,
+     3.88
+    ],
+    [
+     4.89,
+     4.41
+    ],
+    [
+     5.09,
+     4.41
+    ],
+    [
+     5.09,
+     5.09
+    ],
+    [
+     6.53,
+     5.09
+    ],
+    [
+     6.53,
+     6.16
+    ],
+    [
+     5.09,
+     6.16
+    ],
+    [
+     5.09,
+     7.3
+    ],
+    [
+     1.48,
+     7.3
+    ],
+    [
+     1.48,
+     4.37
+    ],
+    [
+     1.8,
+     4.37
+    ],
+    [
+     1.8,
+     3.99
+    ],
+    [
+     0.8,
+     3.99
+    ],
+    [
+     0.8,
+     4.02
+    ],
+    [
+     0,
+     4.02
+    ],
+    [
+     0,
+     3.1
+    ],
+    [
+     1.8,
+     3.1
     ]
    ]
   },
@@ -107,28 +123,44 @@
    "nombre": "Baño",
    "poligono": [
     [
-     6.31,
-     3.96
-    ],
-    [
-     5.17,
-     3.96
-    ],
-    [
-     5.17,
-     5.7
-    ],
-    [
-     6.53,
-     5.7
-    ],
-    [
-     6.53,
-     5.08
+     5.25,
+     3.32
     ],
     [
      6.31,
-     5.08
+     3.32
+    ],
+    [
+     6.31,
+     4.44
+    ],
+    [
+     6.53,
+     4.44
+    ],
+    [
+     6.53,
+     5.07
+    ],
+    [
+     5.17,
+     5.07
+    ],
+    [
+     5.17,
+     4.41
+    ],
+    [
+     5.36,
+     4.41
+    ],
+    [
+     5.36,
+     3.87
+    ],
+    [
+     5.25,
+     3.87
     ]
    ]
   },
@@ -138,20 +170,43 @@
    "tipo": "bano",
    "poligono": [
     [
-     6.53,
-     6.86
+     5.78,
+     6.18
     ],
     [
-     6.53,
-     8.02
-    ],
-    [
-     5.17,
-     8.02
+     5.78,
+     7.3
     ],
     [
      5.17,
-     6.86
+     7.3
+    ],
+    [
+     5.17,
+     6.18
+    ]
+   ]
+  },
+  {
+   "id": "aseo2",
+   "nombre": "Ducha 2",
+   "tipo": "bano",
+   "poligono": [
+    [
+     6.53,
+     6.18
+    ],
+    [
+     6.53,
+     7.3
+    ],
+    [
+     5.85,
+     7.3
+    ],
+    [
+     5.85,
+     6.18
     ]
    ]
   }
@@ -159,39 +214,9 @@
  "pilares": [
   {
    "x": 2.52,
-   "y": 3.98,
-   "dx": 1.3,
+   "y": 3.99,
+   "dx": 1.37,
    "dy": 0.37
-  },
-  {
-   "x": 1.48,
-   "y": 3.98,
-   "dx": 0.32,
-   "dy": 0.38
-  },
-  {
-   "x": 4.82,
-   "y": 4.24,
-   "dx": 0.35,
-   "dy": 0.53
-  },
-  {
-   "x": 5.17,
-   "y": 4.24,
-   "dx": 0.19,
-   "dy": 0.54
-  },
-  {
-   "x": 5.78,
-   "y": 7.57,
-   "dx": 0.07,
-   "dy": 0.45
-  },
-  {
-   "x": 4.95,
-   "y": 0,
-   "dx": 0.22,
-   "dy": 0.22
   }
  ],
  "puertas": [
@@ -233,15 +258,24 @@
    "lado": "S",
    "tipo": "cristalera",
    "ancho": "total"
+  },
+  {
+   "entre": [
+    "aseo2",
+    "salon"
+   ],
+   "lado": "S",
+   "tipo": "cristalera",
+   "ancho": "total"
   }
  ],
  "ventanas": [
   {
    "estancia": "salon",
    "lado": "E",
-   "en": 6.28,
+   "en": 5.6,
    "ancho": 1.0,
-   "desde": 0,
+   "desde": 0.035,
    "tipo": "balconera"
   },
   {
@@ -255,9 +289,8 @@
   {
    "estancia": "bano",
    "lado": "E",
-   "en": 4.3,
    "ancho": 0.5,
-   "desde": 0.1
+   "desde": 0
   }
  ],
  "mobiliario": [
@@ -270,12 +303,6 @@
    "fondo": 0.55
   },
   {
-   "tipo": "inodoro",
-   "estancia": "bano",
-   "contra": "O",
-   "en": 5.3
-  },
-  {
    "tipo": "lavabo",
    "estancia": "bano",
    "contra": "S",
@@ -286,42 +313,27 @@
   {
    "tipo": "plato_ducha",
    "estancia": "ducha",
-   "contra": "E",
+   "contra": "N",
    "desde": 0,
-   "ancho": 1.16,
-   "fondo": 0.68
+   "ancho": 0.61,
+   "fondo": 1.12
+  },
+  {
+   "tipo": "inodoro",
+   "estancia": "bano",
+   "contra": "S",
+   "desde": 0.3
   }
  ],
  "supuestos": [
-  "Estancia grande = recibidor + paso + salón + zona sur (sin muros entre ellos). Recibidor de 0,80 × 0,92 que se estrecha a 0,89 hasta el salón.",
-  "5,17 desde la entrada hasta la pared de enfrente (muro este de la zona sur, con la balconera de 0,95). Cocina = 5,17 − 3,37 − 0,08 = 1,72 de ancho × 3,02.",
-  "El machón de 0,32 × 0,38 queda alineado con el tabique de la cocina; pilar gordo de 0,37 a 0,72 del machón y a 1,00 del pilar de bajantes (largo deducido: 1,30).",
-  "Pilar de bajantes compartido: 0,35 × 0,53 hacia el salón y 0,19 × 0,54 hacia el baño, a 0,28 sobre el suelo del baño (0,35 + 0,19 ≈ 0,55 de bloque total).",
-  "Baño (lavabo + inodoro) con puerta de vidrio a todo lo ancho hacia el paso de la balconera. 1,74 de fondo; la pared de la ventana (0,50 × 0,50) mide 1,12 y está 0,22 retranqueada respecto al resto.",
-  "Ducha de 0,61 + tabique parcial + 0,68 = 1,36 × 1,16 (interior), cerrada con cristalera hacia el paso. El tabique contiguo mide 1,14 por el lado del salón (el salón llega 2 cm menos al norte).",
-  "Paso de la balconera de 1,00 entre el baño y la ducha; 5,05 desde el muro oeste del salón hasta la fachada.",
-  "La cota 2,89 del salón no cuadra: con el pilar de bajantes a 0,28 sobre el suelo del baño, del pilar al muro norte hay 3,23.",
-  "Ancho del salón al norte: se toma 3,61 (cierra con 5,05 = 3,61 + 0,08 + 1,36). El 3,58 escrito en el muro norte da 3 cm menos; no se dibuja ningún saliente.",
-  "Tabique de la cocina hacia el paso de 0,07 para cumplir 3,02 + 0,07 = 3,09."
+  "Geometría corregida según el plano final de Ester (DXF): referencia para comparar lecturas.",
+  "Lecturas del boceto que no coinciden con el plano final: 3,58 (es 3,61), 1,16 de la ducha (es 1,12), 0,35 del pilar de bajantes (es 0,28) y 3,09 (es 3,10)."
  ],
  "muros_exteriores": [
   {
    "lado": "E",
    "estancia": "bano",
    "tipo": "cerramiento"
-  },
-  {
-   "lado": "S",
-   "de": [
-    6.31,
-    5.08
-   ],
-   "a": [
-    6.53,
-    5.08
-   ],
-   "tipo": "cerramiento",
-   "espesor": 0.08
   }
  ],
  "zonas": "zonas",
@@ -331,7 +343,7 @@
    "valor": 3.58,
    "en": [
     3,
-    7.9
+    7.1
    ],
    "eje": "x",
    "no_cuadra": true
@@ -339,19 +351,13 @@
   {
    "id": "C3",
    "valor": 0.61,
-   "en": [
-    5.4,
-    7.9
-   ],
+   "estancia": "ducha",
    "eje": "x"
   },
   {
    "id": "C4",
    "valor": 0.68,
-   "en": [
-    6.2,
-    7.9
-   ],
+   "estancia": "aseo2",
    "eje": "x"
   },
   {
@@ -359,7 +365,7 @@
    "valor": 5.05,
    "en": [
     3,
-    6.3
+    5.6
    ],
    "eje": "x"
   },
@@ -368,7 +374,7 @@
    "valor": 3.61,
    "en": [
     3,
-    7.2
+    7.0
    ],
    "eje": "x"
   },
@@ -377,42 +383,43 @@
    "valor": 1.14,
    "de": [
     5.09,
-    6.86
+    6.16
    ],
    "a": [
     5.09,
-    8.0
+    7.3
    ]
   },
   {
    "id": "C8/C9",
    "valor": 1.16,
-   "en": [
-    6.4,
-    7.4
-   ],
-   "eje": "y"
+   "estancia": "ducha",
+   "eje": "y",
+   "no_cuadra": true
   },
   {
    "id": "C10",
    "valor": 1.74,
-   "en": [
-    5.8,
-    5.3
+   "estancia": "bano",
+   "eje": "y",
+   "frac": [
+    0.5,
+    0.5
    ],
-   "eje": "y"
+   "humeda": true
   },
   {
    "id": "C11",
    "valor": 1.0,
    "de": [
     6.53,
-    5.78
+    5.125
    ],
    "a": [
     6.53,
-    6.78
-   ]
+    6.125
+   ],
+   "sin_cara": true
   },
   {
    "id": "C12",
@@ -428,11 +435,11 @@
    "valor": 0.8,
    "de": [
     0,
-    4.01
+    4.02
    ],
    "a": [
     0.8,
-    4.01
+    4.02
    ]
   },
   {
@@ -440,11 +447,11 @@
    "valor": 0.32,
    "de": [
     1.48,
-    3.98
+    3.99
    ],
    "a": [
     1.8,
-    3.98
+    3.99
    ]
   },
   {
@@ -452,11 +459,11 @@
    "valor": 0.38,
    "de": [
     1.8,
-    3.98
+    3.99
    ],
    "a": [
     1.8,
-    4.36
+    4.37
    ]
   },
   {
@@ -466,27 +473,26 @@
     4.95,
     6.0
    ],
-   "eje": "y",
-   "no_cuadra": true
+   "eje": "y"
   },
   {
    "id": "C16",
    "valor": 0.37,
    "de": [
-    3.82,
-    3.98
+    3.89,
+    3.99
    ],
    "a": [
-    3.82,
-    4.35
+    3.89,
+    4.36
    ]
   },
   {
    "id": "C16",
    "valor": 1.0,
    "en": [
-    4.3,
-    4.3
+    4.4,
+    4.2
    ],
    "eje": "x"
   },
@@ -494,36 +500,37 @@
    "id": "C16/C27",
    "valor": 0.53,
    "de": [
-    4.82,
-    4.24
+    4.89,
+    3.88
    ],
    "a": [
-    4.82,
-    4.77
+    4.89,
+    4.41
    ]
   },
   {
    "id": "C16/C27",
    "valor": 0.35,
    "de": [
-    4.82,
-    4.24
+    4.89,
+    3.88
    ],
    "a": [
     5.17,
-    4.24
-   ]
+    3.88
+   ],
+   "no_cuadra": true
   },
   {
    "id": "C17/C27",
    "valor": 0.19,
    "de": [
     5.17,
-    4.78
+    4.41
    ],
    "a": [
     5.36,
-    4.78
+    4.41
    ]
   },
   {
@@ -531,11 +538,11 @@
    "valor": 0.54,
    "de": [
     5.36,
-    4.24
+    3.87
    ],
    "a": [
     5.36,
-    4.78
+    4.41
    ]
   },
   {
@@ -543,11 +550,11 @@
    "valor": 0.22,
    "de": [
     6.31,
-    5.08
+    4.44
    ],
    "a": [
     6.53,
-    5.08
+    4.44
    ]
   },
   {
@@ -555,11 +562,11 @@
    "valor": 1.12,
    "de": [
     6.31,
-    3.96
+    3.32
    ],
    "a": [
     6.31,
-    5.08
+    4.44
    ]
   },
   {
@@ -598,8 +605,9 @@
    ],
    "a": [
     1.8,
-    3.09
-   ]
+    3.1
+   ],
+   "no_cuadra": true
   },
   {
    "id": "C25",
@@ -614,13 +622,14 @@
    "id": "C28",
    "valor": 0.5,
    "de": [
-    6.31,
-    4.06
+    6.53,
+    3.32
    ],
    "a": [
-    6.31,
-    4.56
-   ]
+    6.53,
+    3.82
+   ],
+   "sin_cara": true
   },
   {
    "id": "C33",
@@ -690,12 +699,24 @@
     5.17,
     2.0
    ]
+  },
+  {
+   "id": "C26",
+   "valor": 0.28,
+   "de": [
+    4.89,
+    3.88
+   ],
+   "a": [
+    5.17,
+    3.88
+   ]
   }
  ],
  "cotas_descartadas": {
-  "C9/C18": "0,20 y 0,50: jambas del hueco de la balconera de 1,00 en fachada; no se dibujan",
-  "C20": "0,80 y 0,26: puerta de la cocina (ancho y posición, en puertas)",
-  "C26": "1,028 y 0,55 junto al pilar de bajantes: no se sabe qué tramo miden (falta una cota de posición)",
+  "C9/C18": "0,20 y 0,50: balconcillo exterior delante de la balconera de 1,00",
+  "C20": "puerta de la cocina",
+  "C26b": "1,02 y 0,55 junto al pilar: no identificados",
   "C31/C32": "h=2,15: altura libre"
  }
 }

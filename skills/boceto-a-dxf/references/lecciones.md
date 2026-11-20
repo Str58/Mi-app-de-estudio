@@ -27,6 +27,11 @@ Resumen de las correcciones. El detalle y los ejemplos están en `lecciones_hist
 21. Los escalonados y las inclinaciones se dibujan **vértice a vértice** como `poligono`, siguiendo la secuencia de tramos (recto 0,71 → perpendicular 0,37 → 0,31 → inclinado + recto con 0,45 de bajada → 0,84). No se simplifican a un rectángulo y no se confunde un tramo de pared con una puerta (en Garmendia, el 0,83 y el 0,11 del pasillo eran tramos de pared) (h Garmendia).
 22. Una cocina o un salón con «salida» a balcón: el balcón es una estancia `terraza` exterior y la salida es una `balconera` con el ancho indicado.
 
+23. **Antes de declarar que una cota «no cuadra», se prueban otras formas de encajar las estancias.** En San Nicolás, el 2,89 era correcto: fallaba mi supuesto de que el baño empezaba encima del pasillo. En realidad, el baño baja junto al muro del pasillo (con la pared de la ventana de 1,12 abajo) y el salón medía 7,30, no 8,00. Una cota que no cierra suele indicar una mala colocación de las piezas, no un error del boceto. Solo se marca `no_cuadra` cuando ninguna colocación razonable la cumple.
+24. **Las estancias de un lado no tienen por qué empezar donde acaba la pared del otro lado.** Un baño o un cuarto puede solaparse a lo largo de la pared de un pasillo o salón. Se colocan por sus propias cotas de cadena (por ejemplo, desde el pilar: pilar 0,53, encima 2,89 hasta el norte), no por la alineación del dibujo.
+25. **Las cristaleras (líneas azules entre estancias) son cierres finos de unos 2 cm, no tabiques de 8 cm.** Por eso el paso de la balconera mide 1,07 (1,00 de hueco y 3,5 cm a cada lado), y la ducha 1,12.
+26. **Una cota pequeña junto a un pilar con una marca «I» delante** (por ejemplo, «I0'28») mide el pilar (0,28 de saliente). Una línea discontinua negra delante de una balconera, con dos cotas cortas (0,20 y 0,50), es un balconcillo exterior.
+
 **Huecos**
 14. Puertas interiores de 0,80 y la de entrada de 0,90, salvo cota. No se estrechan: si no caben, la lectura está mal. Deben caber en un tramo de pared continuo (h12, h32). Si dos estancias comparten más de una pared, se indica el `lado` (h27).
 15. Azul sobre un tabique interior = cristalera (`"tipo": "cristalera"`). Un cuarto pequeño cerrado con cristalera junto al baño es la ducha (h33).
